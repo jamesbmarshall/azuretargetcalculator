@@ -185,12 +185,12 @@
 
         <div class="column">
             <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
-            <h3>Total number of new customers required: <?php echo number_format(floor(calcTotaliser($ACATotal))) ?>.</h3>
-            <h3>Total amount of ACR required: $<?php echo number_format(floor(calcTotaliser($ACRTotal))) ?>.</h3>
-            <p>During this period, you will need to add approximately <span class="keypoint"><?php echo number_format(floor(calcTotaliser($ACATotal))) ?> customers</span>,
-             contributing <span class="keypoint">$<?php echo number_format(floor(calcTotaliser($NewBusTotal))) ?> of ACR</span> to achieve your new business 
+            <h3>Total number of new customers required: <?php echo number_format(ceil(calcTotaliser($ACATotal))) ?>.</h3>
+            <h3>Total amount of ACR required: $<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?>.</h3>
+            <p>During this period, you will need to add approximately <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACATotal))) ?> customers</span>,
+             contributing <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?> of ACR</span> to achieve your new business 
              contribution of <?php echo $newBusinessPercentage * 100; ?>% to your overall plan target.
-             You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(floor(calcTotaliser($GrowthACRTotal))) ?></span> 
+             You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($GrowthACRTotal))) ?></span> 
              to cover the remaining <?php echo 100 - ($newBusinessPercentage * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.
             </p>
             <br>
@@ -209,7 +209,7 @@
                     <th>Growth ACR</th>
 
                 </tr>
-                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(floor($value)) .  "</td><td>$" . number_format(floor($ACRTotal[$key])) . "</td><td>" . number_format(floor($ACAMoM[$key])) . "</td><td>" . number_format(floor($ACATotal[$key])) . "</td><td>$" . number_format(floor($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(floor($GrowthACRMoM[$key])) . "</td><td>$" . number_format(floor($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
+                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(ceil($value)) .  "</td><td>$" . number_format(ceil($ACRTotal[$key])) . "</td><td>" . number_format(ceil($ACAMoM[$key])) . "</td><td>" . number_format(ceil($ACATotal[$key])) . "</td><td>$" . number_format(ceil($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(ceil($GrowthACRMoM[$key])) . "</td><td>$" . number_format(ceil($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
                 
                 </table>
             </span>
