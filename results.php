@@ -1,9 +1,7 @@
 <html>
     <head>
         <title>Azure Target Calculator</title>
-        <style>
-            table, th, td {border: 1px solid black;}
-        </style>
+        <link rel="stylesheet" type="text/css" href="style/style.css"/>
     </head>
 
     <body>
@@ -162,8 +160,16 @@
     calcGrowthACRTotal();
 
     ?>
+        <div class="header">
+            <?php include 'header.php';?>
+        </div>
 
-    <table>
+        <div class="topnav">
+            <?php include 'nav.php';?>
+        </div>
+
+        <div class="column">
+        <table>
         <tr>
             <th>Month</th>
             <th>ACR MoM$</th>
@@ -178,7 +184,13 @@
         </tr>
         <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(floor($value)) .  "</td><td>$" . number_format(floor($ACRTotal[$key])) . "</td><td>" . number_format(floor($ACAMoM[$key])) . "</td><td>" . number_format(floor($ACATotal[$key])) . "</td><td>$" . number_format(floor($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(floor($GrowthACRMoM[$key])) . "</td><td>$" . number_format(floor($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
         
-    </table>
+        </table>
 
+        </div>
+
+        <div class="footer">
+            <?php include 'footer.php';?>
+        </div>
+    
 </body>
 </html>
