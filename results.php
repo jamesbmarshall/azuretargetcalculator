@@ -152,11 +152,14 @@
     }
 
     function calcTotaliser($numbers) {
+        global $numberOfMonths;
         $i = 0;
 
-        foreach($numbers as $key => $value) {
-            $i = $i + $value;
+        for ($x = 0; $x <= ($numberOfMonths - 1); $x++){
+            $i = $i + $numbers[$x];
+            #echo number_format($i) . " ";
         }
+
         return $i;
     }
     
@@ -210,6 +213,8 @@
                 
                 </table>
             </span>
+            <br>
+            <br>
         </div>
 
         <div class="footer">

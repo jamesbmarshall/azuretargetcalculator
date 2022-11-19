@@ -51,14 +51,16 @@
   }
 
 .footer {
-  background-color: #F1F1F1;
+    overflow: hidden;
+  background-color: #333;
   text-align: center;
-  padding: 10px;
+  padding: 1px;
 }
 
 .footer h4 {
     font-size: smaller;
     font-weight: normal;
+    color: #ddd;
 }
 
 body {
