@@ -150,6 +150,15 @@
         }
         
     }
+
+    function calcTotaliser($numbers) {
+        $i = 0;
+
+        foreach($numbers as $key => $value) {
+            $i = $i + $value;
+        }
+        return $i;
+    }
     
     
     calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
@@ -161,6 +170,7 @@
     calcGrowthACRMoM();
     calcGrowthACRTotal();
 
+
     ?>
         <div class="header">
             <?php include 'header.php';?>
@@ -171,23 +181,35 @@
         </div>
 
         <div class="column">
-        <table>
-        <tr>
-            <th>Month</th>
-            <th>ACR MoM$</th>
-            <th>Total ACR</th>
-            <th>ACA MoM#</th>
-            <th>Total ACA</th>
-            <th>New Business ACR MoM$</th>
-            <th>New Business ACR Total</th>
-            <th>Growth ACR MoM$</th>
-            <th>Growth ACR Total</th>
+            <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
+            <h3>Total number of new customers required: <?php echo number_format(floor(calcTotaliser($ACATotal))) ?>.</h3>
+            <h3>Total amount of ACR required: $<?php echo number_format(floor(calcTotaliser($ACRTotal))) ?>.</h3>
+            <p>During this period, you will need to add approximately <span class="keypoint"><?php echo number_format(floor(calcTotaliser($ACATotal))) ?> customers</span>,
+             contributing <span class="keypoint">$<?php echo number_format(floor(calcTotaliser($NewBusTotal))) ?> of ACR</span> to achieve your new business 
+             contribution of <?php echo $newBusinessPercentage * 100; ?>% to your overall plan target.
+             You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(floor(calcTotaliser($GrowthACRTotal))) ?></span> 
+             to cover the remaining <?php echo 100 - ($newBusinessPercentage * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.
+            </p>
+            <br>
 
-        </tr>
-        <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(floor($value)) .  "</td><td>$" . number_format(floor($ACRTotal[$key])) . "</td><td>" . number_format(floor($ACAMoM[$key])) . "</td><td>" . number_format(floor($ACATotal[$key])) . "</td><td>$" . number_format(floor($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(floor($GrowthACRMoM[$key])) . "</td><td>$" . number_format(floor($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
-        
-        </table>
+            <span style="display: table; margin: 0 auto">
+                <table>
+                <tr>
+                    <th>Month</th>
+                    <th>ACR MoM$</th>
+                    <th>ACR</th>
+                    <th>ACA MoM#</th>
+                    <th># Customers</th>
+                    <th>New Business ACR MoM$</th>
+                    <th>New Business ACR</th>
+                    <th>Growth ACR MoM$</th>
+                    <th>Growth ACR</th>
 
+                </tr>
+                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(floor($value)) .  "</td><td>$" . number_format(floor($ACRTotal[$key])) . "</td><td>" . number_format(floor($ACAMoM[$key])) . "</td><td>" . number_format(floor($ACATotal[$key])) . "</td><td>$" . number_format(floor($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(floor($GrowthACRMoM[$key])) . "</td><td>$" . number_format(floor($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
+                
+                </table>
+            </span>
         </div>
 
         <div class="footer">

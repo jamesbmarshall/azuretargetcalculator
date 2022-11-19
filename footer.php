@@ -1,1 +1,1 @@
-<p>Built by James Marshall, powered by Azure App Service</p>
+<h4>Built by James Marshall, powered by Azure App Service and GitHub</4>
