@@ -11,7 +11,7 @@
     $numberOfMonths = $_GET["months"];
     $minAzureSpend = $_GET["acpc"];
     $targetMonthlyRevenue = $_GET["mrrtarget"];
-    $newBusinessPercentage = $_GET["newbus"];
+    $newBusinessPercentage = $_GET["newbus"] / 100;
 
     $ACRMoM = array();
     $ACRTotal = array();

@@ -21,10 +21,10 @@
 
             <span id="form" style="display: table; width: 40%; margin: 0 auto">
             <form action="results.php" method="get"> 
-            For how many months is your plan designed? (e.g., 1 year = 12 months, etc.) <input type="number" id="months" name="months" required><br>
-            What is the minimum average spend per customer you are aiming for in dollars? <input type="number" id="acpc" name="acpc" required><br>
-            What is the target monthly run-rate ACR you're expecting at the end of the plan period in dollars? <input type="number" id="mrrtarget" name="mrrtarget" required><br>
-            What percentage of new ACR do you expect to come from customer adds? (Decimal) <input type="number" step="any" id="newbus" name="newbus" required><br>
+            For how many months is your plan designed? (e.g., 1 year = 12 months, etc.) <input type="number" id="months" name="months" placeholder="12" required><br>
+            What is the minimum average spend per customer you are aiming for in dollars? <input type="number" id="acpc" name="acpc" placeholder="1500" required><br>
+            What is the target monthly run-rate ACR you're expecting at the end of the plan period in dollars? <input type="number" id="mrrtarget" name="mrrtarget" placeholder="1000000" required><br>
+            What percentage of new ACR do you expect to come from customer adds? <input type="number" step="any" id="newbus" name="newbus" placeholder="0-100" required><br>
             <input type="submit">
             </form>
             </span>
