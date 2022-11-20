@@ -71,6 +71,25 @@ table, th, td {
     border: 1px solid black;
 }
 
+th {
+  text-align: center;
+  background-color: #333;
+  color: #ffffff;
+  padding: 10px;
+}
+
+td {
+  text-align: right;
+}
+
+.total {
+  font-weight: bold;
+}
+
+.blank {
+  background-color: darkgray;
+}
+
 .keypoint {
     font-weight: bolder;
     font-size: large;

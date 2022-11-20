@@ -19,6 +19,7 @@
     $ACRTotal = array();
     $ACAMoM = array();
     $ACATotal = array();
+    $ACAGross = array();
     $NewBusACR = array();
     $NewBusTotal = array();
     $GrowthACRMoM = array();
@@ -75,6 +76,26 @@
                 $ACATotal[$x] = $ACAMoM[$x];
             } else {
                 $ACATotal[$x] = $ACAMoM[$x] + $ACATotal[$x -1];
+            }
+        }
+        
+    }
+
+    function calcACAGrossRunningTotal() {
+        global $ACRTotal;
+        global $ACRMoM;
+        global $ACAMoM;
+        global $ACATotal;
+        global $ACAGross;
+
+        $x = 0;
+        $y = count($ACRMoM);
+
+        for ($x = 0; $x <= $y; $x++) {            
+            if ($x == 0) {
+                $ACAGross[$x] = $ACATotal[$x];
+            } else {
+                $ACAGross[$x] = $ACATotal[$x] + $ACAGross[$x -1];
             }
         }
         
@@ -168,6 +189,7 @@
     calcACRRunningTotal();
     calcMoMACAGrowth($newBusinessPercentage, $minAzureSpend);
     calcACARunningTotal();
+    calcACAGrossRunningTotal();
     calcNewBusinessACRMoM($minAzureSpend);
     calcNewBusRunningTotal();
     calcGrowthACRMoM();
@@ -185,8 +207,9 @@
 
         <div class="column">
             <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
-            <h3>Total number of new customers required: <?php echo number_format(ceil(calcTotaliser($ACATotal))) ?>.</h3>
-            <h3>Total amount of ACR required: $<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?>.</h3>
+            <h3>Total number of new customers required: <?php echo number_format(ceil(calcTotaliser($ACATotal))) ?> consuming at least <?php echo "$" . number_format($minAzureSpend) ?> per month.</h3>
+            <h3>Total amount of ACR generated: $<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?>.</h3>
+            <h3>Annualised ACR at end of period: $<?php echo number_format(($ACRTotal[$numberOfMonths - 1] * 12)) ?>.</h3>
             <p>During this period, you will need to add approximately <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACATotal))) ?> customers</span>,
              contributing <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?> of ACR</span> to achieve your new business 
              contribution of <?php echo $newBusinessPercentage * 100; ?>% to your overall plan target.
@@ -199,18 +222,28 @@
                 <table>
                 <tr>
                     <th>Month</th>
-                    <th>ACR MoM$</th>
                     <th>ACR</th>
-                    <th>ACA MoM#</th>
+                    <th>ACR MoM$</th>
                     <th># Customers</th>
+                    <th>Monthly ACA</th>
                     <th>New Business ACR MoM$</th>
                     <th>New Business ACR</th>
                     <th>Growth ACR MoM$</th>
                     <th>Growth ACR</th>
 
                 </tr>
-                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(ceil($value)) .  "</td><td>$" . number_format(ceil($ACRTotal[$key])) . "</td><td>" . number_format(ceil($ACAMoM[$key])) . "</td><td>" . number_format(ceil($ACATotal[$key])) . "</td><td>$" . number_format(ceil($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(ceil($GrowthACRMoM[$key])) . "</td><td>$" . number_format(ceil($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
-                
+                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(ceil($ACRTotal[$key])) .  "</td><td>$" . number_format(ceil($value)) . "</td><td>" . number_format(ceil($ACAGross[$key])) . "</td><td>" . number_format(ceil($ACATotal[$key])) . "</td><td>$" . number_format(ceil($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(ceil($GrowthACRMoM[$key])) . "</td><td>$" . number_format(ceil($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
+                <tr>
+                    <td class="total">Total:</td>
+                    <td class="total">$<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?></td>
+                    <td class="blank"></td>
+                    <td class="total"><?php echo number_format(ceil(calcTotaliser($ACATotal))) ?></td>
+                    <td class="blank"></td>
+                    <td class="blank"></td>
+                    <td class="total">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?></td>
+                    <td class="blank"></td>
+                    <td class="total">$<?php echo number_format(ceil(calcTotaliser($GrowthACRTotal))) ?></td>
+                </tr>
                 </table>
             </span>
             <br>
