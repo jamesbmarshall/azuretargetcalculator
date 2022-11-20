@@ -1,14 +1,4 @@
-<html>
-    <head>
-        <title>Azure Target Calculator</title>
-        <link rel="stylesheet" type="text/css" href="style/style.css"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
-    </head>
-
-    <body>
-   
-    <?php
+<?php
     error_reporting (E_ALL ^ E_NOTICE);
     $numberOfMonths = $_GET["months"];
     $minAzureSpend = $_GET["acpc"];
@@ -24,6 +14,11 @@
     $NewBusTotal = array();
     $GrowthACRMoM = array();
     $GrowthACRTotal = array();
+
+    /*MARKETING METRIC CALCS */
+    $MQLs = 0;
+    $SQLs = 0;
+    $Wins = 0;
 
     function calcMultiplier($months) {
         $i = ($months ** 2 + $months)/2;
@@ -184,6 +179,15 @@
         return $i;
     }
     
+    function calcMarketingMetrics($customers) {
+        global $SQLs;
+        global $MQLs;
+        global $Wins;
+
+        $Wins = $customers;
+        $SQLs = $Wins * 3;
+        $MQLs = $SQLs * 5;
+    }
     
     calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
     calcACRRunningTotal();
@@ -194,9 +198,55 @@
     calcNewBusRunningTotal();
     calcGrowthACRMoM();
     calcGrowthACRTotal();
-
-
+    calcMarketingMetrics(ceil(calcTotaliser($ACATotal)));
     ?>
+    <html>
+    <head>
+        <title>Azure Target Calculator</title>
+        <link rel="stylesheet" type="text/css" href="style/style.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+        <script>
+            window.onload = function () {
+
+            var options = {
+                animationEnabled: true,
+                theme: "light2", //"light1", "light2", "dark1", "dark2"
+                title: {
+                    text: "Lead Funnel Analysis"
+                },
+                data: [{
+                    type: "funnel",
+                    toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
+                    indexLabel: "{label} ({percentage}%)",
+                    dataPoints: [
+                        { y: <?=$MQLs?>, label: "Marketing Qualified Leads" },
+                        { y: <?=$SQLs?> , label: "Sales Qualified Leads" },
+                        { y: <?=$Wins?>, label: "Customer Wins" },
+                    ]
+                }]
+            };
+            calculatePercentage();
+            $("#chartContainer").CanvasJSChart(options);
+
+            function calculatePercentage() {
+                var dataPoint = options.data[0].dataPoints;
+                var total = dataPoint[0].y;
+                for (var i = 0; i < dataPoint.length; i++) {
+                    if (i == 0) {
+                        options.data[0].dataPoints[i].percentage = 100;
+                    } else {
+                        options.data[0].dataPoints[i].percentage = ((dataPoint[i].y / total) * 100).toFixed(2);
+                    }
+                }
+            }
+
+            }
+        </script>
+    </head>
+
+    <body>    
         <div class="header">
             <?php include 'header.php';?>
         </div>
@@ -247,6 +297,38 @@
                 </table>
             </span>
             <br>
+            <br>
+            <h1>Marketing Insights</h1>
+            <p>Connecting sales outputs with marketing inputs is critical for a well defined plan. Therefore, based on the need to add <?=$Wins?> customers, the 
+            funnel chart below shows the approximate number of MQLs and SQLs required to support the pipeline estimated for the plan. This is based on 1 win requiring 
+            3x sales qualified leads, each in turn requiring 5x marketing qualified leads. These are approximations, and your business will have different conversion
+            rates which could be applied.</p>
+
+            <div id="chartContainer" style="height: 370px; width: 50%; margin: 0 auto;"></div>
+            <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+            <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+            <br>
+            <br>
+            <span style="display: table; margin: 0 auto">
+            <table>
+                <tr>
+                    <th>Stage</th>
+                    <th>Number</th>
+                </tr>
+                <tr>
+                    <td>MQLs</td>
+                    <td><?php echo number_format($MQLs)?></td>
+                </tr>
+                <tr>
+                    <td>SQLs</td>
+                    <td><?php echo number_format($SQLs)?></td>
+                </tr>
+                <tr>
+                    <td>Wins</td>
+                    <td><?php echo number_format($Wins)?></td>
+                </tr>
+            </table>
+            </span>
             <br>
         </div>
 
