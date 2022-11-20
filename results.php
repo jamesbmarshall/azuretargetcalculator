@@ -256,7 +256,7 @@
         </div>
 
         <div class="column">
-            <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
+            <h1>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h1>
             <h3>Total number of new customers required: <?php echo number_format(ceil(calcTotaliser($ACATotal))) ?> consuming at least <?php echo "$" . number_format($minAzureSpend) ?> per month.</h3>
             <h3>Total amount of ACR generated: $<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?>.</h3>
             <h3>Annualised ACR at end of period: $<?php echo number_format(($ACRTotal[$numberOfMonths - 1] * 12)) ?>.</h3>
