@@ -202,43 +202,8 @@
     ?>
 
 <?php include 'header.php';?>
-<script>
-            window.onload = function () {
-
-            var options = {
-                animationEnabled: true,
-                theme: "light2", //"light1", "light2", "dark1", "dark2"
-                title: {
-                    text: "Lead Funnel Analysis"
-                },
-                data: [{
-                    type: "funnel",
-                    toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
-                    indexLabel: "{label} ({percentage}%)",
-                    dataPoints: [
-                        { y: <?=$MQLs?>, label: "Marketing Qualified Leads" },
-                        { y: <?=$SQLs?> , label: "Sales Qualified Leads" },
-                        { y: <?=$Wins?>, label: "Customer Wins" },
-                    ]
-                }]
-            };
-            calculatePercentage();
-            $("#chartContainer").CanvasJSChart(options);
-
-            function calculatePercentage() {
-                var dataPoint = options.data[0].dataPoints;
-                var total = dataPoint[0].y;
-                for (var i = 0; i < dataPoint.length; i++) {
-                    if (i == 0) {
-                        options.data[0].dataPoints[i].percentage = 100;
-                    } else {
-                        options.data[0].dataPoints[i].percentage = ((dataPoint[i].y / total) * 100).toFixed(2);
-                    }
-                }
-            }
-
-            }
-        </script>
+<script src="scripts/d3.js"></script>
+<script src="scripts/d3-funnel.js"></script>  
 <?php include 'nav.php';?>
 
         <div class="column">
@@ -290,9 +255,34 @@
             3x sales qualified leads, each in turn requiring 5x marketing qualified leads. These are approximations, and your business will have different conversion
             rates which could be applied.</p>
 
-            <div id="chartContainer" style="height: 370px; width: 50%; margin: 0 auto;"></div>
-            <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-            <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+            <div id="funnel" style="width: 500px; margin: 0 auto"></div>
+
+<script>
+    const data = [
+        { label: 'MQLs', value: <?=$MQLs?> },
+        { label: 'SQLs', value: <?=$SQLs?> },
+        { label: 'Wins', value: <?=$Wins?> },
+    ];
+    const options = {
+        block: {
+            dynamicHeight: true,
+            minHeight: 15,
+            fill: {
+                type: 'gradient',
+            },
+        },
+        chart: {
+            bottomPinch: 1,
+            animate: 10,
+          curve: {
+            enabled: true,
+          },  
+        },
+    };
+
+    const chart = new D3Funnel('#funnel');
+    chart.draw(data, options);
+</script>
             <br>
             <br>
             <span style="display: table; margin: 0 auto">
@@ -317,7 +307,7 @@
             </span>
             <br>
         </div>
-
+         
         <div class="footer">
             <?php include 'footer.php';?>
         </div>
