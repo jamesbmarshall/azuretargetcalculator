@@ -1,20 +1,7 @@
-<html>
-    <head>
-        <title>Azure Target Calculator</title>
-        <link rel="stylesheet" type="text/css" href="style/style.css"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
-    </head>
 
-    <body>
-        <div class="header">
-            <?php include 'header.php';?>
-        </div>
-
-        <div class="topnav">
-            <?php include 'nav.php';?>
-        </div>
-
+<?php include 'header.php';?>
+<?php include 'nav.php';?>
+        
         <div class="column">
             <h2>Welcome,</h2>
             <p>This tool will help guide you in understanding the estimated Azure Consumed Revenue (ACR) and Azure Customer Adds (ACA) growth needed to hit or exceed your plan targets.<br><br>

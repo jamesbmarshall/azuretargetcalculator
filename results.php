@@ -200,14 +200,9 @@
     calcGrowthACRTotal();
     calcMarketingMetrics(ceil(calcTotaliser($ACATotal)));
     ?>
-    <html>
-    <head>
-        <title>Azure Target Calculator</title>
-        <link rel="stylesheet" type="text/css" href="style/style.css"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-        <script>
+<?php include 'header.php';?>
+<script>
             window.onload = function () {
 
             var options = {
@@ -244,16 +239,7 @@
 
             }
         </script>
-    </head>
-
-    <body>    
-        <div class="header">
-            <?php include 'header.php';?>
-        </div>
-
-        <div class="topnav">
-            <?php include 'nav.php';?>
-        </div>
+<?php include 'nav.php';?>
 
         <div class="column">
             <h1>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h1>
