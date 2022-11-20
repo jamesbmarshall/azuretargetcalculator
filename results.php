@@ -247,7 +247,7 @@
             <h3>Total amount of ACR generated: $<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?>.</h3>
             <h3>Annualised ACR at end of period: $<?php echo number_format(($ACRTotal[$numberOfMonths - 1] * 12)) ?>.</h3>
             <p>During this period, you will need to add approximately <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACATotal))) ?> customers</span>,
-             contributing <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?> of ACR</span> to achieve your new business 
+             consuming <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?> of Azure services</span> to achieve your new business 
              contribution of <?php echo $newBusinessPercentage * 100; ?>% to your overall plan target.
              You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($GrowthACRTotal))) ?></span> 
              to cover the remaining <?php echo 100 - ($newBusinessPercentage * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.
