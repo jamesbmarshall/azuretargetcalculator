@@ -207,12 +207,14 @@
 <?php include 'nav.php';?>
 
         <div class="column">
-            <h1>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h1>
-            <h3>Total number of new customers required: <?php echo number_format(ceil(calcTotaliser($ACATotal))) ?> consuming at least <?php echo "$" . number_format($minAzureSpend) ?> per month.</h3>
-            <h3>Total amount of ACR generated: $<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?>.</h3>
-            <h3>Annualised ACR at end of period: $<?php echo number_format(($ACRTotal[$numberOfMonths - 1] * 12)) ?>.</h3>
-            <p>During this period, you will need to add approximately <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACATotal))) ?> customers</span>,
-             consuming <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?> of Azure services</span> to achieve your new business 
+            <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
+            <h3>Summary</h3>
+            <p>Total number of new customers required: <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACATotal))) ?></span> consuming at least <span class="keypoint"><?php echo "$" . number_format($minAzureSpend) ?></span> per month.</p>
+            <p>Total ACR generated: <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?></span></p>
+            <p>Annualised ACR at end of period: <span class="keypoint">$<?php echo number_format(($ACRTotal[$numberOfMonths - 1] * 12)) ?></span> ($<?php echo number_format(($ACRTotal[$numberOfMonths - 1])) . " * 12" ?>)</p>
+            <h3>Details</h3>
+            <p>During this <?php echo $numberOfMonths ?> month period, you will need to add approximately <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACATotal))) ?> customers</span>,
+             consuming <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?> of Azure services</span> to achieve the new business 
              contribution of <?php echo $newBusinessPercentage * 100; ?>% to your overall plan target.
              You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($GrowthACRTotal))) ?></span> 
              to cover the remaining <?php echo 100 - ($newBusinessPercentage * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.
@@ -250,7 +252,7 @@
             <br>
             <br>
             <h1>Marketing Insights</h1>
-            <p>Connecting sales outputs with marketing inputs is critical for a well defined plan. Therefore, based on the need to add <?=$Wins?> customers, the 
+            <p>Connecting sales outputs with marketing inputs is critical for a well defined plan. Therefore, based on the need to add <?php echo number_format($Wins); ?> customers, the 
             funnel chart below shows the approximate number of MQLs and SQLs required to support the pipeline estimated for the plan. This is based on 1 win requiring 
             3x sales qualified leads, each in turn requiring 5x marketing qualified leads. These are approximations, and your business will have different conversion
             rates which could be applied.</p>
