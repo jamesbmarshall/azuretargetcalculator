@@ -72,6 +72,7 @@ body {
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
+    margin: 0px;
   }
 
 table, th, td {
@@ -122,3 +123,11 @@ input[type=number] {
     font-family: "Rubik", sans-serif;
     font-size: large;
   }
+
+  /* PAGE LOADING */
+  #cover {
+    background: #B0C4DE;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}

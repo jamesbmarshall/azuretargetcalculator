@@ -191,55 +191,61 @@
         $MQLs = $SQLs * 5;
     }
     
-    if ($targetMonthlyRevenue != null){
-        calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
-        calcACRRunningTotal();
-        
-    } elseif ($targetACRTotal != null){
-        global $numberOfMonths;
+    ?>
+
+<?php include 'header.php';?>
+
+
+<body>
+    
+<div class="header"><h1>Azure Target Calculator</h1></div>
+<?php
+if ($targetMonthlyRevenue != null){
+    calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
+    calcACRRunningTotal();
+    
+} elseif ($targetACRTotal != null){
+    global $numberOfMonths;
+    global $targetMonthlyRevenue;
+    global $ACRTotal;
+    global $targetACRTotal;
+    global $total;
+
+    $targetMonthlyRevenue = 1;
+    
+    calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
+    calcACRRunningTotal();
+    $total = calcTotaliser($ACRTotal);
+
+    # echo "Target Total: " . $targetACRTotal . " ACR Total: " . $total . "<br>";
+
+    while ($total <= $targetACRTotal) {
         global $targetMonthlyRevenue;
-        global $ACRTotal;
-        global $targetACRTotal;
         global $total;
 
-        $targetMonthlyRevenue = 1;
-        
         calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
         calcACRRunningTotal();
         $total = calcTotaliser($ACRTotal);
 
-        # echo "Target Total: " . $targetACRTotal . " ACR Total: " . $total . "<br>";
-
-        while ($total <= $targetACRTotal) {
-            global $targetMonthlyRevenue;
-            global $total;
-
-            calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
-            calcACRRunningTotal();
-            $total = calcTotaliser($ACRTotal);
-
-          #  echo $targetMonthlyRevenue . " " . $total . "<br>";
-            $targetMonthlyRevenue++;
+      #  echo $targetMonthlyRevenue . " " . $total . "<br>";
+        $targetMonthlyRevenue++;
+        
+    }        
             
-        }        
-                
-    } else {
-        echo "ERROR";
-    }
+} else {
+    echo "ERROR";
+}
 
-        calcMoMACAGrowth($newBusinessPercentage, $minAzureSpend);
-        calcACARunningTotal();
-        calcACAGrossRunningTotal();
-        calcNewBusinessACRMoM($minAzureSpend);
-        calcNewBusRunningTotal();
-        calcGrowthACRMoM();
-        calcGrowthACRTotal();
-        calcMarketingMetrics(ceil(calcTotaliser($ACATotal)));
-
-    ?>
-
-<?php include 'header.php';?>
-<script src="scripts/d3.js"></script>
+    calcMoMACAGrowth($newBusinessPercentage, $minAzureSpend);
+    calcACARunningTotal();
+    calcACAGrossRunningTotal();
+    calcNewBusinessACRMoM($minAzureSpend);
+    calcNewBusRunningTotal();
+    calcGrowthACRMoM();
+    calcGrowthACRTotal();
+    calcMarketingMetrics(ceil(calcTotaliser($ACATotal)));
+?>
+<script src="scripts/d3-funnel.min.js"></script>
 <script src="scripts/d3-funnel.js"></script>  
 <?php include 'nav.php';?>
 

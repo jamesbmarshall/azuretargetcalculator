@@ -1,5 +1,8 @@
 <?php include 'header.php';?>
+<body>
+<div class="header"><h1>Azure Target Calculator</h1></div>
 <?php include 'nav.php';?>
+
         
     <div class="column">
     <p>The Azure Target Calculator is a partner-focused coaching tool developed by James Marshall, SMB Sales Lead for Azure at Mirosoft UK. It's aim
