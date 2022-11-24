@@ -72,6 +72,7 @@ body {
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
+    margin: 0px;
   }
 
 table, th, td {
