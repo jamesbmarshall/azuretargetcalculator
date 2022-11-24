@@ -239,6 +239,13 @@
     ?>
 
 <?php include 'header.php';?>
+<script>
+    $(window).on('load', function(){
+    $('#cover').fadeOut(1000);
+})
+</script>
+<div id="cover"></div>
+
 <script src="scripts/d3.js"></script>
 <script src="scripts/d3-funnel.js"></script>  
 <?php include 'nav.php';?>
