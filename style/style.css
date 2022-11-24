@@ -126,7 +126,7 @@ input[type=number] {
   /* PAGE LOADING */
   #cover {
     background: #B0C4DE;
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 100%;
 }
