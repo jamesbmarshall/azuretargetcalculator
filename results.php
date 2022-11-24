@@ -1,7 +1,8 @@
 <script>
-    $(window).on('load', function(){
+    $(window).load(function(){
     $('#cover').fadeOut(1000);
-})
+    
+});
 
 </script>
 <?php
