@@ -1,3 +1,9 @@
+<script>
+    $(window).on('load', function(){
+    $('#cover').fadeOut(1000);
+})
+
+</script>
 <?php
     error_reporting (E_ALL ^ E_NOTICE);
     $numberOfMonths = $_GET["months"];
@@ -194,12 +200,7 @@
     ?>
 
 <?php include 'header.php';?>
-<script>
-    $(window).on('load', function(){
-    $('#cover').fadeOut(1000);
-})
 
-</script>
 
 <body>
 <div id="cover"></div>     
