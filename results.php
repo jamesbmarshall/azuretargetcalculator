@@ -1,10 +1,8 @@
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
+    $('#cover').fadeOut(1000);
 });
-    document.addEventListener('DOMContentLoaded', function() {
-        $('#cover').fadeOut(1000);
-    }, false);
 </script>
 <?php
     error_reporting (E_ALL ^ E_NOTICE);
