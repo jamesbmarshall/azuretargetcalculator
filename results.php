@@ -1,4 +1,7 @@
 <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+});
     document.addEventListener('DOMContentLoaded', function() {
         $('#cover').fadeOut(1000);
     }, false);
