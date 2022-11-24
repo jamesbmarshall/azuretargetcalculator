@@ -250,7 +250,7 @@ if ($targetMonthlyRevenue != null){
     calcGrowthACRTotal();
     calcMarketingMetrics(ceil(calcTotaliser($ACATotal)));
 ?>
-<script src="scripts/d3.js"></script>
+<script src="scripts/d3-funnel.min.js"></script>
 <script src="scripts/d3-funnel.js"></script>  
 <?php include 'nav.php';?>
 
