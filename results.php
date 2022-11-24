@@ -1,10 +1,3 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script>
-    $(window).on('load', function(){
-    console.log('DOM fully loaded and parsed');
-    $('#cover').fadeOut(1000);
-});
-</script>
 <?php
     error_reporting (E_ALL ^ E_NOTICE);
     $numberOfMonths = $_GET["months"];
@@ -204,7 +197,7 @@
 
 
 <body>
-<div id="cover"></div>     
+    
 <div class="header"><h1>Azure Target Calculator</h1></div>
 <?php
 if ($targetMonthlyRevenue != null){
