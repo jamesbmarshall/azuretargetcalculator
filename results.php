@@ -243,7 +243,13 @@
     $(window).on('load', function(){
     $('#cover').fadeOut(1000);
 })
+
 </script>
+
+<body>
+        
+<div class="header"><h1>Azure Target Calculator</h1></div>
+
 <div id="cover"></div>
 
 <script src="scripts/d3.js"></script>
