@@ -25,18 +25,19 @@
             3. What is the target monthly recurring ACR you're expecting at the end of the plan period in dollars? <input type="number" id="mrrtarget" name="mrrtarget" placeholder="1000000"><br>
             <hr>
             4. What percentage of new ACR do you expect to come from customer adds? <input type="number" step="any" id="newbus" name="newbus" placeholder="0-100" required><br>
-            <input type="submit">
+            
             </form>
+            <button id="runcalc">Submit</button>
             </span>
             <br>
             <br>
         </div>
         <script>
-        $( "#inputform" ).submit(function( event ) {
-            $('#cover').fadeIn(100);
-            /* event.preventDefault(); */
-        });
-    </script>
+            $('#runcalc').on('click', function()) {
+                $('#cover').fadeIn(100);
+                setTimeout(function()) {$('#inputform').submit();, 3000};
+            };
+        </script>
         <div class="footer">
             <?php include 'footer.php';?>
         </div>
