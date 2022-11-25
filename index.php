@@ -1,7 +1,7 @@
 
 <?php include 'header.php';?>
 <script>
-    $(window).on('load', function(){
+    $(document).on('ready', function(){
     console.log('DOM fully loaded and parsed');
     $('#cover').hide();
 });
@@ -13,6 +13,7 @@
 <div id="cover">
     <div class="centered-element">
         <img src="images/spinner.gif">
+        <H3>Calculating your plan...</H3>
     </div>
 </div>
 <div class="header"><h1>Azure Target Calculator</h1></div>
