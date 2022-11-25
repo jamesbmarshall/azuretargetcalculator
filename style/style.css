@@ -136,6 +136,6 @@ input[type=number] {
   margin: 0;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  align-content: center;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
