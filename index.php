@@ -1,7 +1,12 @@
 
 <?php include 'header.php';?>
-
 <body>
+<div id="cover">
+    <div class="centered-element">
+        <img src="images/spinner.gif">
+        <H3>Calculating your plan...</H3>
+    </div>
+</div>
 <div class="header"><h1>Azure Target Calculator</h1></div>
 <?php include 'nav.php';?>
         
@@ -11,7 +16,7 @@
             Complete the form below and you will be presented with a breakdown by month of everything you need!<br><br></p>
 
             <span id="form" style="display: table; width: 40%; margin: 0 auto">
-            <form action="results.php" method="get"> 
+            <form action="results.php" method="get" id="inputform"> 
             1. For how many months is your plan designed? (e.g., 1 year = 12 months, etc.) <input type="number" id="months" name="months" placeholder="12" required><br>
             2. What is the minimum average spend per customer you are aiming for in dollars? <input type="number" id="acpc" name="acpc" placeholder="1500" required><br>
             <hr>
@@ -26,7 +31,12 @@
             <br>
             <br>
         </div>
-
+        <script>
+        $( "#inputform" ).submit(function( event ) {
+            $('#cover').fadeIn(100);
+            /* event.preventDefault(); */
+        });
+    </script>
         <div class="footer">
             <?php include 'footer.php';?>
         </div>

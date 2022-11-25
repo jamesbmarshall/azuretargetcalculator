@@ -126,8 +126,17 @@ input[type=number] {
 
   /* PAGE LOADING */
   #cover {
-    background: #B0C4DE;
+    background: #ffffff;
     position: fixed;
     height: 100%;
     width: 100%;
+    display: none;
+}
+
+.centered-element {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
