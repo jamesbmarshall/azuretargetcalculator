@@ -17,14 +17,14 @@
 
             <span id="form" style="display: table; width: 40%; margin: 0 auto">
             <form action="results.php" method="get" id="inputform"> 
-            1. For how many months is your plan designed? (e.g., 1 year = 12 months, etc.) <input type="number" id="months" name="months" placeholder="12" required><br>
-            2. What is the minimum average spend per customer you are aiming for in dollars? <input type="number" id="acpc" name="acpc" placeholder="1500" required><br>
+            1. For how many months is your plan designed? (e.g., 1 year = 12 months, etc.) <input type="number" id="months" name="months" placeholder="Example: 12" required><br>
+            2. What is the minimum average spend per customer you are aiming for in dollars? <input type="number" id="acpc" name="acpc" placeholder="Example: 1500" required><br>
             <hr>
-            3. What is the total new ACR you need during the period of your plan? (New ACR = Total target ACR - Baseline) <input type="number" id="newacr" name="newacr" placeholder="2000000"><br>
+            3. What is the total new ACR you need during the period of your plan? (New ACR = Total target ACR - Baseline) <input type="number" id="newacr" name="newacr" placeholder="Example: 2000000"><br>
             <h4>OR</h4>
-            3. What is the target monthly recurring ACR you're expecting at the end of the plan period in dollars? <input type="number" id="mrrtarget" name="mrrtarget" placeholder="1000000"><br>
+            3. What is the target monthly recurring ACR you're expecting at the end of the plan period in dollars? <input type="number" id="mrrtarget" name="mrrtarget" placeholder="Example: 1000000"><br>
             <hr>
-            4. What percentage of new ACR do you expect to come from customer adds? <input type="number" step="any" id="newbus" name="newbus" placeholder="0-100" required><br>
+            4. What percentage of new ACR do you expect to come from customer adds? <input type="number" step="any" id="newbus" name="newbus" placeholder="Example: 0-100" required><br>
             
             </form>
             <button type="button" id="runcalc" onclick="loadingscreen()">Submit</button>
