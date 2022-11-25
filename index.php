@@ -3,7 +3,7 @@
 
 <body>
     <script>
-        $( "#target" ).submit(function( event ) {
+        $( "#inputform" ).submit(function( event ) {
             alert( "Handler for .submit() called." );
             event.preventDefault();
         });
@@ -17,7 +17,7 @@
             Complete the form below and you will be presented with a breakdown by month of everything you need!<br><br></p>
 
             <span id="form" style="display: table; width: 40%; margin: 0 auto">
-            <form action="results.php" method="get"> 
+            <form action="results.php" method="get" id="inputform"> 
             1. For how many months is your plan designed? (e.g., 1 year = 12 months, etc.) <input type="number" id="months" name="months" placeholder="12" required><br>
             2. What is the minimum average spend per customer you are aiming for in dollars? <input type="number" id="acpc" name="acpc" placeholder="1500" required><br>
             <hr>
