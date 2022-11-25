@@ -1,13 +1,5 @@
 
 <?php include 'header.php';?>
-<script>
-    $(window).on('load', function(){
-    $('#cover').hide();
-});
-</script>
-<script>
-   
-</script>
 <body>
 <div id="cover">
     <div class="centered-element">
