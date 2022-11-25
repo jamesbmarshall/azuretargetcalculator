@@ -2,6 +2,12 @@
 <?php include 'header.php';?>
 
 <body>
+    <script>
+        $( "#target" ).submit(function( event ) {
+            alert( "Handler for .submit() called." );
+            event.preventDefault();
+        });
+    </script>
 <div class="header"><h1>Azure Target Calculator</h1></div>
 <?php include 'nav.php';?>
         
