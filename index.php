@@ -37,7 +37,7 @@
                 $('#inputform').submit();
             }
 
-            $('#runcalc').on('click', function()) {
+            $('#runcalc').on('click', function()){
                 $('#cover').fadeIn(100);
                 setTimeout(submitform, 3000);
             };
