@@ -1,8 +1,7 @@
 
 <?php include 'header.php';?>
 <script>
-    $(document).on('ready', function(){
-    console.log('DOM fully loaded and parsed');
+    $(window).on('load', function(){
     $('#cover').hide();
 });
 </script>
