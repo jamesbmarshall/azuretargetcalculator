@@ -2,7 +2,7 @@
 <?php include 'header.php';?>
 
 <body>
-    
+<div id="cover"></div>
 <div class="header"><h1>Azure Target Calculator</h1></div>
 <?php include 'nav.php';?>
         
@@ -29,7 +29,7 @@
         </div>
         <script>
         $( "#inputform" ).submit(function( event ) {
-            alert( "Handler for .submit() called." );
+            $('#cover').fadeIn(100);
             event.preventDefault();
         });
     </script>
