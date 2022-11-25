@@ -111,7 +111,7 @@ input[type=number] {
     box-sizing: border-box;
   }
 
-  input[type=button], input[type=submit], input[type=reset] {
+button input[type=button], input[type=submit], input[type=reset] {
     background-color: #0078d4;
     border: none;
     color: white;
