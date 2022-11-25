@@ -10,7 +10,11 @@
    
 </script>
 <body>
-<div id="cover"></div>
+<div id="cover">
+    <div class="centered-element">
+        <img src="images/spinner.gif">
+    </div>
+</div>
 <div class="header"><h1>Azure Target Calculator</h1></div>
 <?php include 'nav.php';?>
         
