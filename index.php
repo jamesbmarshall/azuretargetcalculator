@@ -27,7 +27,7 @@
             4. What percentage of new ACR do you expect to come from customer adds? <input type="number" step="any" id="newbus" name="newbus" placeholder="0-100" required><br>
             
             </form>
-            <button id="runcalc">Submit</button>
+            <button type="button" id="runcalc">Submit</button>
             </span>
             <br>
             <br>
