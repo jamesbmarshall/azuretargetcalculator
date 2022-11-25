@@ -1,6 +1,8 @@
 
 <?php include 'header.php';?>
-
+<script>
+    $('#cover').hide();
+</script>
 <body>
 <div id="cover"></div>
 <div class="header"><h1>Azure Target Calculator</h1></div>
