@@ -33,9 +33,13 @@
             <br>
         </div>
         <script>
+            function submitform(){
+                $('#inputform').submit();
+            }
+
             $('#runcalc').on('click', function()) {
                 $('#cover').fadeIn(100);
-                setTimeout(function()) {$('#inputform').submit();, 3000};
+                setTimeout(submitform, 3000);
             };
         </script>
         <div class="footer">
