@@ -27,7 +27,7 @@
             4. What percentage of new ACR do you expect to come from customer adds? <input type="number" step="any" id="newbus" name="newbus" placeholder="0-100" required><br>
             
             </form>
-            <button type="button" id="runcalc">Submit</button>
+            <button type="button" id="runcalc" onclick="loadingscreen()">Submit</button>
             </span>
             <br>
             <br>
@@ -37,7 +37,7 @@
                 $('#inputform').submit();
             }
 
-            $('#runcalc').on('click', function()){
+            function loadingscreen(){
                 $('#cover').fadeIn(100);
                 setTimeout(submitform, 3000);
             };
