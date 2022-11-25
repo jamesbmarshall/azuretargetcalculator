@@ -38,7 +38,7 @@
         <script>
         $( "#inputform" ).submit(function( event ) {
             $('#cover').fadeIn(100);
-            event.preventDefault();
+            /* event.preventDefault(); */
         });
     </script>
         <div class="footer">
