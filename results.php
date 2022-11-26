@@ -219,7 +219,7 @@ if ($targetMonthlyRevenue != null){
 
     # echo "Target Total: " . $targetACRTotal . " ACR Total: " . $total . "<br>";
 
-    while ($total <= $targetACRTotal) {
+    while ($total < $targetACRTotal) {
         global $targetMonthlyRevenue;
         global $total;
 
