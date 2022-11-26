@@ -249,6 +249,7 @@ if ($targetMonthlyRevenue != null){
     calcGrowthACRMoM();
     calcGrowthACRTotal();
     calcMarketingMetrics(calcTotaliser($ACAMoM));
+    $totalCustomers = number_format(round($ACATotal[$key],0,PHP_ROUND_HALF_UP));
 
 ?>
 <script src="scripts/d3-funnel.min.js"></script>
