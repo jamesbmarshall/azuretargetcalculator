@@ -248,7 +248,7 @@ if ($targetMonthlyRevenue != null){
     calcNewBusRunningTotal();
     calcGrowthACRMoM();
     calcGrowthACRTotal();
-    calcMarketingMetrics(ceil(calcTotaliser($ACATotal)));
+    calcMarketingMetrics(ceil(calcTotaliser($ACAMoM)));
 ?>
 <script src="scripts/d3-funnel.min.js"></script>
 <script src="scripts/d3-funnel.js"></script>  
