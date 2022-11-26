@@ -183,7 +183,7 @@
             #echo number_format($i) . " ";
         }
 
-        return $i;
+        return round($i, 0, PHP_ROUND_HALF_UP);
     }
     
     function calcMarketingMetrics($customers) {
@@ -259,7 +259,7 @@ if ($targetMonthlyRevenue != null){
         <div class="column">
             <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
             <h3>Summary</h3>
-            <p>Total number of new customers required: <span class="keypoint"><?php echo $totalCustomers; ?></span> consuming at least <span class="keypoint"><?php echo "$" . number_format($minAzureSpend) ?></span> per month.</p>
+            <p>Total number of new customers required: <span class="keypoint"><?php echo number_format(calcTotaliser($ACAMoM)) ?></span> consuming at least <span class="keypoint"><?php echo "$" . number_format($minAzureSpend) ?></span> per month.</p>
             <p>Total ACR generated: <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?></span></p>
             <p>Annualised ACR at end of period: <span class="keypoint">$<?php echo number_format(($ACRTotal[$numberOfMonths - 1] * 12)) ?></span> ($<?php echo number_format(($ACRTotal[$numberOfMonths - 1])) . " * 12" ?>)</p>
             <h3>Details</h3>
