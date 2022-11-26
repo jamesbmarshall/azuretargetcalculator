@@ -257,11 +257,11 @@ if ($targetMonthlyRevenue != null){
         <div class="column">
             <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
             <h3>Summary</h3>
-            <p>Total number of new customers required: <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACAMoM))) ?></span> consuming at least <span class="keypoint"><?php echo "$" . number_format($minAzureSpend) ?></span> per month.</p>
+            <p>Total number of new customers required: <span class="keypoint"><?php echo number_format(round(calcTotaliser($ACAMoM),0,PHP_ROUND_HALF_UP)) ?></span> consuming at least <span class="keypoint"><?php echo "$" . number_format($minAzureSpend) ?></span> per month.</p>
             <p>Total ACR generated: <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?></span></p>
             <p>Annualised ACR at end of period: <span class="keypoint">$<?php echo number_format(($ACRTotal[$numberOfMonths - 1] * 12)) ?></span> ($<?php echo number_format(($ACRTotal[$numberOfMonths - 1])) . " * 12" ?>)</p>
             <h3>Details</h3>
-            <p>During this <?php echo $numberOfMonths ?> month period, you will need to add approximately <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACAMoM))) ?> customers</span>,
+            <p>During this <?php echo $numberOfMonths ?> month period, you will need to add approximately <span class="keypoint"><?php echo number_format(round(calcTotaliser($ACAMoM),0,PHP_ROUND_HALF_UP)) ?> customers</span>,
              consuming <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?> of Azure services</span> to achieve the new business 
              contribution of <?php echo $newBusinessPercentage * 100; ?>% to your overall plan target.
              You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($GrowthACRTotal))) ?></span> 
@@ -288,7 +288,7 @@ if ($targetMonthlyRevenue != null){
                     <td class="total">Total:</td>
                     <td class="total">$<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?></td>
                     <td class="blank"></td>
-                    <td class="total"><?php echo number_format(ceil(calcTotaliser($ACAMoM))) ?></td>
+                    <td class="total"><?php echo number_format(ceil(round(calcTotaliser($ACAMoM),0,PHP_ROUND_HALF_UP)) ?></td>
                     <td class="blank"></td>
                     <td class="blank"></td>
                     <td class="total">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?></td>
