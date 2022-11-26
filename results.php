@@ -22,6 +22,11 @@
     $SQLs = 0;
     $Wins = 0;
 
+    function round_up ( $value, $precision ) { 
+        $pow = pow ( 10, $precision ); 
+        return ( ceil ( $pow * $value ) + ceil ( $pow * $value - ceil ( $pow * $value ) ) ) / $pow; 
+    }
+
     function calcMultiplier($months) {
         $i = ($months ** 2 + $months)/2;
         return $i;
@@ -31,7 +36,7 @@
         global $ACRMoM;
         $x = 0;
         $multiplier = calcMultiplier($months);
-        for ($x = 0; $x < $months; $x++) {$ACRMoM[$x] = $targetMRR/$multiplier * ($x+1);};        
+        for ($x = 0; $x < $months; $x++) {$ACRMoM[$x] = round_up($targetMRR/$multiplier * ($x+1));};        
     }
 
     function calcACRRunningTotal() {
