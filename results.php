@@ -283,7 +283,7 @@ if ($targetMonthlyRevenue != null){
                     <th>Growth ACR</th>
 
                 </tr>
-                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(ceil($ACRTotal[$key])) .  "</td><td>$" . number_format(ceil($value)) . "</td><td>" . number_format(ceil($ACATotal[$key])) . "</td><td>" . number_format(ceil($ACAMoM[$key])) . "</td><td>$" . number_format(ceil($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(ceil($GrowthACRMoM[$key])) . "</td><td>$" . number_format(ceil($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
+                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(ceil($ACRTotal[$key])) .  "</td><td>$" . number_format(ceil($value)) . "</td><td>" . number_format(round($ACATotal[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format(round($ACAMoM[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(ceil($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(ceil($GrowthACRMoM[$key])) . "</td><td>$" . number_format(ceil($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
                 <tr>
                     <td class="total">Total:</td>
                     <td class="total">$<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?></td>
