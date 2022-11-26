@@ -248,7 +248,7 @@ if ($targetMonthlyRevenue != null){
     calcNewBusRunningTotal();
     calcGrowthACRMoM();
     calcGrowthACRTotal();
-    calcMarketingMetrics(ceil(calcTotaliser($ACAMoM)));
+    calcMarketingMetrics(calcTotaliser($ACAMoM));
     $totalCustomers = number_format(round($ACATotal[$key],0,PHP_ROUND_HALF_UP)); 
 
 ?>
@@ -260,13 +260,13 @@ if ($targetMonthlyRevenue != null){
             <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
             <h3>Summary</h3>
             <p>Total number of new customers required: <span class="keypoint"><?php echo number_format(calcTotaliser($ACAMoM)) ?></span> consuming at least <span class="keypoint"><?php echo "$" . number_format($minAzureSpend) ?></span> per month.</p>
-            <p>Total ACR generated: <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?></span></p>
+            <p>Total ACR generated: <span class="keypoint">$<?php echo number_format(calcTotaliser($ACRTotal)) ?></span></p>
             <p>Annualised ACR at end of period: <span class="keypoint">$<?php echo number_format(($ACRTotal[$numberOfMonths - 1] * 12)) ?></span> ($<?php echo number_format(($ACRTotal[$numberOfMonths - 1])) . " * 12" ?>)</p>
             <h3>Details</h3>
-            <p>During this <?php echo $numberOfMonths ?> month period, you will need to add approximately <span class="keypoint"><?php echo number_format(ceil(calcTotaliser($ACAMoM))) ?> customers</span>,
-             consuming <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?> of Azure services</span> to achieve the new business 
+            <p>During this <?php echo $numberOfMonths ?> month period, you will need to add approximately <span class="keypoint"><?php echo number_format(calcTotaliser($ACAMoM)) ?> customers</span>,
+             consuming <span class="keypoint">$<?php echo number_format(calcTotaliser($NewBusTotal)) ?> of Azure services</span> to achieve the new business 
              contribution of <?php echo $newBusinessPercentage * 100; ?>% to your overall plan target.
-             You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(ceil(calcTotaliser($GrowthACRTotal))) ?></span> 
+             You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(calcTotaliser($GrowthACRTotal)) ?></span> 
              to cover the remaining <?php echo 100 - ($newBusinessPercentage * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.
             </p>
             <br>
@@ -285,17 +285,17 @@ if ($targetMonthlyRevenue != null){
                     <th>Growth ACR</th>
 
                 </tr>
-                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(ceil($ACRTotal[$key])) .  "</td><td>$" . number_format(ceil($value)) . "</td><td>" . number_format(round($ACATotal[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format(round($ACAMoM[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(ceil($NewBusACR[$key])) . "</td><td>$" . number_format(floor($NewBusTotal[$key])) . "</td><td>$" . number_format(ceil($GrowthACRMoM[$key])) . "</td><td>$" . number_format(ceil($GrowthACRTotal[$key])) . "</td></tr>";}; ?>
+                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(round($ACRTotal[$key],0,PHP_ROUND_HALF_UP)) .  "</td><td>$" . number_format(round($value,0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format(round($ACATotal[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format(round($ACAMoM[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($NewBusACR[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($NewBusTotal[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($GrowthACRMoM[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($GrowthACRTotal[$key],0,PHP_ROUND_HALF_UP)) . "</td></tr>";}; ?>
                 <tr>
                     <td class="total">Total:</td>
-                    <td class="total">$<?php echo number_format(ceil(calcTotaliser($ACRTotal))) ?></td>
+                    <td class="total">$<?php echo number_format(calcTotaliser($ACRTotal)) ?></td>
                     <td class="blank"></td>
-                    <td class="total"><?php echo number_format(ceil(calcTotaliser($ACAMoM))) ?></td>
+                    <td class="total"><?php echo number_format(calcTotaliser($ACAMoM)) ?></td>
                     <td class="blank"></td>
                     <td class="blank"></td>
-                    <td class="total">$<?php echo number_format(ceil(calcTotaliser($NewBusTotal))) ?></td>
+                    <td class="total">$<?php echo number_format(calcTotaliser($NewBusTotal)) ?></td>
                     <td class="blank"></td>
-                    <td class="total">$<?php echo number_format(ceil(calcTotaliser($GrowthACRTotal))) ?></td>
+                    <td class="total">$<?php echo number_format(calcTotaliser($GrowthACRTotal)) ?></td>
                 </tr>
                 </table>
             </span>
