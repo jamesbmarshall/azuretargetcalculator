@@ -183,7 +183,7 @@
             #echo number_format($i) . " ";
         }
 
-        return round($i, 0, PHP_ROUND_HALF_UP);
+        return round($i, 2, PHP_ROUND_HALF_UP);
     }
     
     function calcMarketingMetrics($customers) {
