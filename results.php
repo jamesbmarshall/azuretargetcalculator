@@ -2,9 +2,18 @@
     error_reporting (E_ALL ^ E_NOTICE);
     $numberOfMonths = $_GET["months"];
     $minAzureSpend = $_GET["acpc"];
-    $targetMonthlyRevenue = isset($_GET["mrrtarget"]) ? $_GET['mrrtarget'] : null;
-    $targetACRTotal = isset($_GET["newacr"]) ? $_GET['newacr'] : null;
-        
+    $revenueType = $_GET["RevenueType"];
+
+    if ($revenueType == "mrr"){
+        $targetMonthlyRevenue = $_GET["revenue"];
+        $targetACRTotal = "false";
+    } 
+    
+    if ($revenueType == "total") {
+        $targetMonthlyRevenue = "false";
+        $targetACRTotal = $_GET["revenue"];
+    }
+
     $newBusinessPercentage = $_GET["newbus"] / 100;
 
     $ACRMoM = array();
@@ -203,13 +212,13 @@
 
 <body>
     
-<div class="header"><h1>Azure Target Calculator</h1></div>
+<div class="header"><h1>Cloud Target Calculator <?php echo $revenueType ?></h1></div>
 <?php
-if ($targetMonthlyRevenue != null){
+if ($targetMonthlyRevenue != "false"){
     calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
     calcACRRunningTotal();
     
-} elseif ($targetACRTotal != null){
+} elseif ($targetACRTotal != "false"){
     global $numberOfMonths;
     global $targetMonthlyRevenue;
     global $ACRTotal;

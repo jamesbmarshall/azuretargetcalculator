@@ -2,7 +2,7 @@
 
 <body>
         
-<div class="header"><h1>Azure Target Calculator</h1></div>
+<div class="header"><h1>Cloud Target Calculator</h1></div>
 <?php include 'nav.php';?>
         
     <div class="column">
