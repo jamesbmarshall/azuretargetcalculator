@@ -8,6 +8,7 @@
     </div>
 </div>
 <div class="header"><h1>Cloud Target Calculator</h1></div>
+
 <?php include 'nav.php';?>
         
         <div class="column">

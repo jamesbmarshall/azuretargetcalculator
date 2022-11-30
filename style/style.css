@@ -1,17 +1,18 @@
-.header {
-  opacity: 0.8;
+ .header {
   background-image:  linear-gradient(30deg, #003054 12%, transparent 12.5%, transparent 87%, #003054 87.5%, #003054), linear-gradient(150deg, #003054 12%, transparent 12.5%, transparent 87%, #003054 87.5%, #003054), linear-gradient(30deg, #003054 12%, transparent 12.5%, transparent 87%, #003054 87.5%, #003054), linear-gradient(150deg, #003054 12%, transparent 12.5%, transparent 87%, #003054 87.5%, #003054), linear-gradient(60deg, #00305477 25%, transparent 25.5%, transparent 75%, #00305477 75%, #00305477), linear-gradient(60deg, #00305477 25%, transparent 25.5%, transparent 75%, #00305477 75%, #00305477);
   background-size: 20px 35px;
   background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
-    background-color: #0078d4;
+    background-color: #0078d4; 
     text-align: center;
     padding: 5px;
   }
 
 .header h1 {
     color: #ffffff;
-    font-size: 2.5em;
+    font-size: 3em;
     text-shadow: 2px 2px #000000;
+    margin: 2px;
+    justify-content: space-around;
 }
 
   /* The navbar container */
@@ -222,4 +223,3 @@ button, input[type=button], input[type=submit], input[type=reset] {
   visibility: visible;
   opacity: 1;
 }
-
