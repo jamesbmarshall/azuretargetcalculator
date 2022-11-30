@@ -15,7 +15,7 @@
             <p>This tool will help guide you in understanding the estimated monthly recurring revenue and customer adds growth needed to hit or exceed your plan targets.<br><br>
             Complete the form below and you will be presented with a breakdown by month of everything you need!<br><br></p>
 
-            <span id="form" style="display: table; width: 40%; margin: 0 auto">
+            <span class="form">
             <form action="results.php" method="get" id="inputform" onsubmit="loadingscreen()"> 
             1. For how many months is your plan designed? (e.g., 1 year = 12 months, etc.) <input type="number" id="months" name="months" placeholder="Example: 12" required><br>
             2. What is the minimum average spend per customer you are aiming for in dollars? <input type="number" id="acpc" name="acpc" placeholder="Example: 1500" required><br>

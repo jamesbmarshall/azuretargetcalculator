@@ -45,13 +45,6 @@
     display: table;
     clear: both;
   }
-  
-  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
-  @media screen and (max-width: 600px) {
-    .column {
-      width: 100%;
-    }
-  }
 
 .footer {
     overflow: hidden;
@@ -105,6 +98,30 @@ td {
 }
 
 /* FORM STYLE BELOW */
+
+/* .form {
+  display: table; 
+  width: 40%; 
+  margin: 0 auto;
+} */
+
+@media only screen and (min-width: 401px) {
+  .form {
+    display: table; 
+    width: 40%; 
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .form {
+    background-color: #ffdd00;
+    display: table; 
+    width: 90%; 
+    margin: 0 auto;
+  }
+}
+
 input[type=number] {
     width: 100%;
     padding: 12px 20px;
