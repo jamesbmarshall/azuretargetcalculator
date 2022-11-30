@@ -212,7 +212,7 @@
 
 <body>
     
-<div class="header"><h1>Cloud Target Calculator <?php echo $revenueType ?></h1></div>
+<div class="header"><h1>Cloud Target Calculator</h1></div>
 <?php
 if ($targetMonthlyRevenue != "false"){
     calcMoMACRGrowth($numberOfMonths, $targetMonthlyRevenue);
