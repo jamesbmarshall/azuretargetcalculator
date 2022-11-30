@@ -1,3 +1,4 @@
+<?php $pageTitle = "Cloud Target Calculator | Results" ?>
 <?php
     error_reporting (E_ALL ^ E_NOTICE);
     $numberOfMonths = $_GET["months"];

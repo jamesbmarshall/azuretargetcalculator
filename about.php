@@ -1,3 +1,4 @@
+<?php $pageTitle = "Cloud Target Calculator | About" ?>
 <?php include 'header.php';?>
 <body>
 <div class="header"><h1>Cloud Target Calculator</h1></div>
