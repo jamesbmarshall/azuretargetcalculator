@@ -9,7 +9,7 @@
   gtag('config', 'G-51RZZ67MJC');
 </script>
 
-        <title>Azure Target Calculator</title>
+        <title><?php echo $pageTitle ?></title>
         <link rel="stylesheet" type="text/css" href="style/style.css"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
