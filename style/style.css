@@ -99,12 +99,6 @@ td {
 
 /* FORM STYLE BELOW */
 
-/* .form {
-  display: table; 
-  width: 40%; 
-  margin: 0 auto;
-} */
-
 @media only screen and (min-width: 401px) {
   .form {
     display: table; 
@@ -115,7 +109,6 @@ td {
 
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
   .form {
-    background-color: #ffdd00;
     display: table; 
     width: 90%; 
     margin: 0 auto;
