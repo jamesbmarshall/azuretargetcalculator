@@ -284,17 +284,17 @@ if ($targetMonthlyRevenue != "false"){
                 <table>
                 <tr>
                     <th>Month</th>
-                    <th>ACR</th>
-                    <th>ACR MoM$</th>
+                    <th><div class="tooltip">MRR<span class="tooltiptext">Monthly Recurring Revenue</span></div></th>
+                    <th><div class="tooltip">MRR MoM$<span class="tooltiptext">MRR month-over-month growth</span></div></th>
                     <th># Customers</th>
-                    <th>Monthly ACA</th>
-                    <th>New Business ACR MoM$</th>
-                    <th>New Business ACR</th>
-                    <th>Growth ACR MoM$</th>
-                    <th>Growth ACR</th>
+                    <th><div class="tooltip">CA MoM<span class="tooltiptext">Customer adds month-over-month</span></div></th>
+                    <th>New Business MRR MoM$</th>
+                    <th>New Business MRR</th>
+                    <th>Growth MRR MoM$</th>
+                    <th>Growth MRR</th>
 
                 </tr>
-                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(round($ACRTotal[$key],0,PHP_ROUND_HALF_UP)) .  "</td><td>$" . number_format(round($value,0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format(round($ACATotal[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format(round($ACAMoM[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($NewBusACR[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($NewBusTotal[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($GrowthACRMoM[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($GrowthACRTotal[$key],0,PHP_ROUND_HALF_UP)) . "</td></tr>";}; ?>
+                <?php foreach($ACRMoM as $key => $value) {echo "<tr><td>" . ($key + 1) . "</td><td>$" . number_format(round($ACRTotal[$key],0,PHP_ROUND_HALF_UP)) .  "</td><td>$" . number_format(round($value,0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format(round($ACATotal[$key],1,PHP_ROUND_HALF_UP), 1, '.', ',') . "</td><td>" . number_format(round($ACAMoM[$key],1,PHP_ROUND_HALF_UP), 1, '.', ',') . "</td><td>$" . number_format(round($NewBusACR[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($NewBusTotal[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($GrowthACRMoM[$key],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($GrowthACRTotal[$key],0,PHP_ROUND_HALF_UP)) . "</td></tr>";}; ?>
                 <tr>
                     <td class="total">Total:</td>
                     <td class="total">$<?php echo number_format(calcTotaliser($ACRTotal)) ?></td>
