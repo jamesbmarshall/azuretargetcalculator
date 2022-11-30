@@ -1,11 +1,18 @@
-.header {
-    background-color: #0078d4;
+ .header {
+  background-image:  linear-gradient(30deg, #003054 12%, transparent 12.5%, transparent 87%, #003054 87.5%, #003054), linear-gradient(150deg, #003054 12%, transparent 12.5%, transparent 87%, #003054 87.5%, #003054), linear-gradient(30deg, #003054 12%, transparent 12.5%, transparent 87%, #003054 87.5%, #003054), linear-gradient(150deg, #003054 12%, transparent 12.5%, transparent 87%, #003054 87.5%, #003054), linear-gradient(60deg, #00305477 25%, transparent 25.5%, transparent 75%, #00305477 75%, #00305477), linear-gradient(60deg, #00305477 25%, transparent 25.5%, transparent 75%, #00305477 75%, #00305477);
+  background-size: 20px 35px;
+  background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+    background-color: #0078d4; 
     text-align: center;
     padding: 5px;
   }
 
 .header h1 {
     color: #ffffff;
+    font-size: 3em;
+    text-shadow: 2px 2px #000000;
+    margin: 2px;
+    justify-content: space-around;
 }
 
   /* The navbar container */
@@ -44,13 +51,6 @@
     content: "";
     display: table;
     clear: both;
-  }
-  
-  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
-  @media screen and (max-width: 600px) {
-    .column {
-      width: 100%;
-    }
   }
 
 .footer {
@@ -105,6 +105,23 @@ td {
 }
 
 /* FORM STYLE BELOW */
+
+@media only screen and (min-width: 401px) {
+  .form {
+    display: table; 
+    width: 40%; 
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  .form {
+    display: table; 
+    width: 90%; 
+    margin: 0 auto;
+  }
+}
+
 input[type=number] {
     width: 100%;
     padding: 12px 20px;
@@ -158,4 +175,51 @@ button, input[type=button], input[type=submit], input[type=reset] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
