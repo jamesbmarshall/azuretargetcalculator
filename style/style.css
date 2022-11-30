@@ -67,7 +67,7 @@
 }
 
 body {
-    font-family: "Rubik", sans-serif;
+    font-family: "Arial", sans-serif;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     -ms-hyphens: auto;
@@ -122,6 +122,23 @@ button, input[type=button], input[type=submit], input[type=reset] {
     font-weight: bold;
     font-family: "Rubik", sans-serif;
     font-size: large;
+  }
+
+  input[type=number] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #000000;
+    outline: none;
+  }
+
+  input[type=number]:focus {
+    outline: 3px solid #ffdd00;
+  }
+
+  .spacer {
+    background-color: #0078d4;
   }
 
   /* PAGE LOADING */
