@@ -22,9 +22,9 @@
             2. What is the minimum average spend per customer you are aiming for in dollars? <input type="number" id="acpc" name="acpc" placeholder="Example: 1500" required><br>
             3. What is the revenue target for the period of your plan? <input type="number" id="revenue" name="revenue" placeholder="Example: 2000000"><br>
             <br>
-            Is that target:
+            Is that target:<br><br>
             <input type="radio" id="mrr" name="RevenueType" value="mrr" required>
-            <label for="mrr">Monthly Recurring Revenue</label>
+            <label for="mrr">Monthly Recurring Revenue</label><br>
             <input type="radio" id="total" name="RevenueType" value="total">
             <label for="total">Total Revenue</label><br>
             <br>
