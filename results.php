@@ -317,7 +317,7 @@ if ($targetMonthlyRevenue != "false"){
             3x sales qualified leads, each in turn requiring 5x marketing qualified leads. These are approximations, and your business will have different conversion
             rates which could be applied.</p>
 
-            <div id="funnel" style="width: 500px; margin: 0 auto"></div>
+            <div id="funnel" style="width: 500px; margin: 0 auto; overflow-x: auto;"></div>
 
 <script>
     const data = [
