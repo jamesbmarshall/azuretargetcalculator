@@ -46,7 +46,7 @@
         global $ACRMoM;
         $x = 0;
         $multiplier = calcMultiplier($months);
-        for ($x = 0; $x < $months; $x++) {$ACRMoM[$x] = round_up($targetMRR/$multiplier * ($x+1),2);};        
+        for ($x = 0; $x < $months; $x++) {$ACRMoM[$x] = round($targetMRR/$multiplier * ($x+1),0,PHP_ROUND_HALF_UP);};        
     }
 
     function calcACRRunningTotal() {
