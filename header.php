@@ -18,7 +18,7 @@
 
         <meta property="og:title" content="Cloud Target Calculator"/>
 
-        <meta property="og:description" content="A simple tool for estimating the recurring revenue and customer adds growth you need to hit your targets!"/>
+        <meta property="og:description" content="A simple tool for estimating the recurring revenue and customer adds growth you need to hit your targets."/>
 
         <meta property="og:image:width" content="1200"/>
 
