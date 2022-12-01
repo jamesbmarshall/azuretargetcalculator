@@ -270,11 +270,11 @@ if ($targetMonthlyRevenue != "false"){
             <h2>Here are the results for your <?php echo $numberOfMonths ?> month plan!</h2>
             <h3>Summary</h3>
             <p>Total number of new customers required: <span class="keypoint"><?php echo number_format(calcTotaliser($ACAMoM)) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($minAzureSpend) ?></span> per month.</p>
-            <p>Total ACR generated: <span class="keypoint">$<?php echo number_format(calcTotaliser($ACRTotal)) ?></span></p>
-            <p>Annualised ACR at end of period: <span class="keypoint">$<?php echo number_format(round(($ACRTotal[$numberOfMonths - 1] * 12),0,PHP_ROUND_HALF_UP)) ?></span> ($<?php echo number_format(($ACRTotal[$numberOfMonths - 1])) . " * 12" ?>)</p>
+            <p>Total revenue generated: <span class="keypoint">$<?php echo number_format(calcTotaliser($ACRTotal)) ?></span></p>
+            <p>Annualised recurring revenue at end of period: <span class="keypoint">$<?php echo number_format(round(($ACRTotal[$numberOfMonths - 1] * 12),0,PHP_ROUND_HALF_UP)) ?></span> ($<?php echo number_format(($ACRTotal[$numberOfMonths - 1])) . " * 12" ?>)</p>
             <h3>Details</h3>
             <p>During this <?php echo $numberOfMonths ?> month period, you will need to add approximately <span class="keypoint"><?php echo number_format(calcTotaliser($ACAMoM)) ?> customers</span>,
-             consuming <span class="keypoint">$<?php echo number_format(calcTotaliser($NewBusTotal)) ?> of Azure services</span> to achieve the new business 
+             consuming <span class="keypoint">$<?php echo number_format(calcTotaliser($NewBusTotal)) ?> of cloud services</span> to achieve the new business 
              contribution of <?php echo $newBusinessPercentage * 100; ?>% to your overall plan target.
              You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format(calcTotaliser($GrowthACRTotal)) ?></span> 
              to cover the remaining <?php echo 100 - ($newBusinessPercentage * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.

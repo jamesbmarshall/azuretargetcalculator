@@ -28,7 +28,7 @@
             <input type="radio" id="total" name="RevenueType" value="total">
             <label for="total">Total Revenue</label><br>
             <br>
-            4. What percentage of new ACR do you expect to come from customer adds? <input type="number" step="any" id="newbus" name="newbus" placeholder="Example: 0-100" min="0" max="100" required><br>
+            4. What percentage of recurring revenue do you expect to come from adding new customers? <input type="number" step="any" id="newbus" name="newbus" placeholder="Example: 0-100" min="0" max="100" required><br>
             <input type="submit" id="runcalc">
             </form>
             
