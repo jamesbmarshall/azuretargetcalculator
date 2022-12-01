@@ -42,8 +42,8 @@
     /* float: left; */
     width: 100%;
     box-sizing: border-box;
-    padding-left: 1%;
-    padding-right: 1%;
+    padding-left: 25;
+    padding-right: 25;
   }
   
   /* Clear floats after the columns */
@@ -190,14 +190,20 @@ button, input[type=button], input[type=submit], input[type=reset] {
   border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
 
+.tooltip_light {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
 /* Tooltip text */
-.tooltip .tooltiptext {
+.tooltip .tooltiptext, .tooltip_light .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  width: 200px;
   background-color: #555;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
+  padding: 15px;
   border-radius: 6px;
 
   /* Position the tooltip text */
@@ -213,7 +219,7 @@ button, input[type=button], input[type=submit], input[type=reset] {
 }
 
 /* Tooltip arrow */
-.tooltip .tooltiptext::after {
+.tooltip .tooltiptext::after, .tooltip_light .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -225,7 +231,7 @@ button, input[type=button], input[type=submit], input[type=reset] {
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+.tooltip:hover .tooltiptext, .tooltip_light:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }

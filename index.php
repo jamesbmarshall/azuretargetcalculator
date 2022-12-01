@@ -13,22 +13,25 @@
         
         <div class="column">
             <h2>Welcome,</h2>
-            <p>This tool will help guide you in understanding the estimated monthly recurring revenue and customer adds growth needed to hit or exceed your plan targets.<br><br>
+            <p>If you're invovled in a business where recurring revenue is important (such as Microsoft Azure), you might have wondered what the best way to plan monthly growth is. It's 
+                a little different to selling more traditional software, placing huge emphasis on compound growth of existing customers as well as continuiung to add new ones. 
+                This tool will help guide you in understanding the estimated monthly recurring revenue and customer adds growth needed to achieve the targets you set, or have
+                been set by your business.<br><br>
             Complete the form below and you will be presented with a breakdown by month of everything you need!<br><br></p>
 
             <span class="form">
             <form action="results.php" method="get" id="inputform" onsubmit="loadingscreen()"> 
-            1. For how many months is your plan designed? (e.g., 1 year = 12 months, etc.) <input type="number" id="months" name="months" placeholder="Example: 12" required><br>
-            2. What is the average spend per customer per month you are aiming for in dollars? <input type="number" id="acpc" name="acpc" placeholder="Example: 1500" required><br>
-            3. What is the revenue target for the duration of your plan? <input type="number" id="revenue" name="revenue" placeholder="Example: 2000000"><br>
+            1. How long is your <div class="tooltip_light">plan<span class="tooltiptext">Usually 12 months, but can be as little as 1 or as many as you like!</span></div>? (e.g., 12 months, etc.) <input type="number" id="months" name="months" placeholder="Example: 12" required><br>
+            2. What is the <div class="tooltip_light">target spend<span class="tooltiptext">This can be made up of many services, and is the amount you're aiming to bill each customer every month. (i.e., recurring revenue!)</span></div> per customer per month, in dollars? <input type="number" id="acpc" name="acpc" placeholder="Example: 1500" required><br>
+            3. What is the <div class="tooltip_light">revenue target<span class="tooltiptext">This should be either the total revenue you need to generate during the course of your plan, or the monthly recurring revenue target you're aiming for in the last month of the plan.</span></div> for the duration of your plan? <input type="number" id="revenue" name="revenue" placeholder="Example: 2000000"><br>
             <br>
-            Is that target:<br><br>
+            Is that revenue target:<br><br>
             <input type="radio" id="mrr" name="RevenueType" value="mrr" required>
-            <label for="mrr">Monthly Recurring Revenue</label><br>
+            <label for="mrr">The monthly recurring revenue target for the last month of the plan.</label><br>
             <input type="radio" id="total" name="RevenueType" value="total">
-            <label for="total">Total Revenue</label><br>
+            <label for="total">The total revenue generated over the course of the plan.</label><br>
             <br>
-            4. What percentage of recurring revenue do you expect to come from adding new customers? <input type="number" step="any" id="newbus" name="newbus" placeholder="Example: 0-100" min="0" max="100" required><br>
+            4. What percentage of recurring revenue do you expect to come from <div class="tooltip_light">adding new customers<span class="tooltiptext">The remaining percentage will be assumed to come from growing your existing customer base.</span></div>? <input type="number" step="any" id="newbus" name="newbus" placeholder="Example: 0-100" min="0" max="100" required><br>
             <input type="submit" id="runcalc">
             </form>
             
