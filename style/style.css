@@ -82,7 +82,7 @@ table, th, td {
 
 .tablediv {
   overflow-x: auto;
-  display: table; 
+  display: grid; 
   margin: 0 auto;
 }
 
