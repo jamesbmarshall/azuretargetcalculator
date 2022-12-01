@@ -281,7 +281,7 @@ if ($targetMonthlyRevenue != "false"){
             </p>
             <br>
 
-            <span style="display: table; margin: 0 auto">
+            <div class="tablediv">
                 <table>
                 <tr>
                     <th>Month</th>
@@ -308,7 +308,7 @@ if ($targetMonthlyRevenue != "false"){
                     <td class="total">$<?php echo number_format(calcTotaliser($GrowthACRTotal)) ?></td>
                 </tr>
                 </table>
-            </span>
+            </div>
             <br>
             <br>
             <h1>Marketing Insights</h1>

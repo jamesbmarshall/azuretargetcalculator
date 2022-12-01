@@ -80,6 +80,12 @@ table, th, td {
     border: 1px solid black;
 }
 
+.tablediv {
+  overflow-x: auto;
+  display: table; 
+  margin: 0 auto;
+}
+
 th {
   text-align: center;
   background-color: #333;
