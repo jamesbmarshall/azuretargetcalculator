@@ -281,7 +281,7 @@ if ($targetMonthlyRevenue != "false"){
             </p>
             <br>
 
-            <span style="display: table; margin: 0 auto">
+            <div class="tablediv">
                 <table>
                 <tr>
                     <th>Month</th>
@@ -308,7 +308,7 @@ if ($targetMonthlyRevenue != "false"){
                     <td class="total">$<?php echo number_format(calcTotaliser($GrowthACRTotal)) ?></td>
                 </tr>
                 </table>
-            </span>
+            </div>
             <br>
             <br>
             <h1>Marketing Insights</h1>
@@ -317,7 +317,7 @@ if ($targetMonthlyRevenue != "false"){
             3x sales qualified leads, each in turn requiring 5x marketing qualified leads. These are approximations, and your business will have different conversion
             rates which could be applied.</p>
 
-            <div id="funnel" style="width: 500px; margin: 0 auto"></div>
+            <div id="funnel" style="width: 500px; margin: 0 auto; overflow-x: auto;"></div>
 
 <script>
     const data = [

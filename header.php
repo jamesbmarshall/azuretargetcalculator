@@ -23,5 +23,6 @@
         <meta property="og:image:width" content="1200"/>
 
         <meta property="og:image:height" content="630"/>
+        <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi">
     </head>
    
