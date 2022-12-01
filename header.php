@@ -14,5 +14,14 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <meta property="og:image" content="/images/logo.png"/>
+
+        <meta property="og:title" content="Cloud Target Calculator"/>
+
+        <meta property="og:description" content="A simple tool for estimating the recurring revenue and customer adds growth you need to hit your targets."/>
+
+        <meta property="og:image:width" content="1200"/>
+
+        <meta property="og:image:height" content="630"/>
     </head>
    
