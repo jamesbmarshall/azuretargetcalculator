@@ -24,5 +24,8 @@
 
         <meta property="og:image:height" content="630"/>
         <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi">
+        <!-- Pixel Code for https://app.tinyanalytics.io/ -->
+<script defer src="https://app.tinyanalytics.io/pixel/sXdJy9ttIP4OpOi5"></script>
+<!-- END Pixel Code -->
     </head>
    
