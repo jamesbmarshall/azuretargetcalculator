@@ -31,12 +31,14 @@
             <input type="radio" id="total" name="RevenueType" value="total">
             <label for="total">The total revenue generated over the course of the plan.</label><br>
             <br>
-            4. What percentage of recurring revenue do you expect to come from <div class="tooltip_light">adding new customers<span class="tooltiptext">The remaining percentage will be assumed to come from growing your existing customer base.</span></div>? <input type="number" step="any" id="newbus" name="newbus" placeholder="Example: 0-100" min="0" max="100" required><br>
+            4. What percentage of recurring revenue do you expect to come from <div class="tooltip_light">adding new customers<span class="tooltiptext">The remaining percentage will be assumed to come from growing your existing customer base.</span></div>?<br>
+            <br>
+            <input type="range" min="0" max="100" value="0" id="newbus" name="newbus" oninput="rangeValue.innerText = this.value + '%'"><span id="rangeValue">0%</span><br>
+            <br>
             <input type="submit" id="runcalc">
             </form>
             
             </span>
-            <br>
             <br>
         </div>
         <script>

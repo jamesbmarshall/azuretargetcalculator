@@ -135,7 +135,18 @@ input[type=number] {
     box-sizing: border-box;
   }
 
-button, input[type=button], input[type=submit], input[type=reset] {
+  input[type=range] {
+    width: 90%;
+  
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+#rangevalue {
+  margin-left: 10px;
+}
+
+button, input[type=button], input[type=submit], input[type=reset]{
     background-color: #0078d4;
     box-shadow: 0 2px 0 #003761;
     border: none;
