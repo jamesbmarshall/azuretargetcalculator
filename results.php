@@ -156,7 +156,7 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
             <p>During this <?php echo $planLength ?> month period, you will need to add approximately <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][9]) ?> customers</span>,
              consuming approximately <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services per month</span> to achieve the new business 
              contribution of <?php echo $newBusinessShare * 100; ?>% to your overall plan target.
-             You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format($proactiveGrowthTotal) ?></span> 
+             You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> 
              to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.
             </p>
             <br>
