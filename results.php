@@ -6,8 +6,8 @@ $targetRevenue = $_GET["revenue"];                                  #The revenue
 $planLength = $_GET["months"];                                      #The number of months to calculate a plan for.
 $targetSpend = $_GET["acpc"];                                       #The approximate minimum spend per customer, per month.
 $newBusinessShare = $_GET["newbus"] / 100;                          #The percentage of the target achieved through net new business (i.e. customer adds).
-$baselineRecurring = $_GET["mrrbaseline"];                           #The monthly recurring revenue baseline from plan month -1.
-$typicalMoM = $_GET["momrate"] /100;                              #The month-over-month percentage growth in the existing baseline (the organic growth).
+$baselineRecurring = $_GET["mrrbaseline"];                          #The monthly recurring revenue baseline from plan month -1.
+$typicalMoM = $_GET["momrate"] /100;                                #The month-over-month percentage growth in the existing baseline (the organic growth).
 $newBusinessTarget = 0;                                             #The calculated new business target.
 $growthBusinessTarget = 0;
 $baselineGrowth = 0;                                                #The total of the recurring baseline + the growth in that baseline.
@@ -153,8 +153,8 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
             <p>Total revenue generated: <span class="keypoint">$<?php echo number_format($totalRevenueGenerated) ?></span></p>
             <p>Annualised recurring revenue at end of period: <span class="keypoint">$<?php echo number_format($annualisedRevenue) ?></span> ($<?php echo number_format($planArray[$planLength - 1][0][10]) . " * 12" ?>)</p>
             <h3>Details</h3>
-            <p>During this <?php echo $planLength ?> month period, you will need to add approximately <span class="keypoint">? customers</span>,
-             consuming <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services</span> to achieve the new business 
+            <p>During this <?php echo $planLength ?> month period, you will need to add approximately <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][9]) ?> customers</span>,
+             consuming approximately <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services per month</span> to achieve the new business 
              contribution of <?php echo $newBusinessShare * 100; ?>% to your overall plan target.
              You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format($proactiveGrowthTotal) ?></span> 
              to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.
@@ -171,13 +171,14 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
                     <th><div class="tooltip">Proactive Growth<span class="tooltiptext">The above-baseline growth proactively driven by your teams.</span></div></th>
                     <th><div class="tooltip">Customers MoM<span class="tooltiptext">The number of new customers you'll need to add in a given month.</span></div></th>
                     <th><div class="tooltip">Customers Total<span class="tooltiptext">The running total of customers transacting per month.</span></div></th>
+                    <th><div class="tooltip">Recurring Total<span class="tooltiptext">The running total of all constituent revenue per month.</span></div></th>
                 </tr>
 
 <?php 
 
 for ($x = 0; $x < $planLength; $x++)
     {
-        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>" . $planArray[$x][0][1] . "</td><td>" . $planArray[$x][0][3] . "</td><td>" . $planArray[$x][0][4] . "</td><td>" . $planArray[$x][0][6] . "</td><td>" . $planArray[$x][0][7] . "</td><td>" . $planArray[$x][0][8] . "</td><td>" . $planArray[$x][0][9] . "</td></tr>";
+        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][3],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][6],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][8]) . "</td><td>" . number_format($planArray[$x][0][9]) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
     };
 
 ?>
@@ -189,6 +190,7 @@ for ($x = 0; $x < $planLength; $x++)
                     <td class="total">$<?php echo number_format($newBusinessGrowthTotal) ?></td>
                     <td class="total">$<?php echo number_format($proactiveGrowthTotal) ?></td>
                     <td class="blank"></td>
+                    <td class="total"><?php echo number_format($planArray[$planLength - 1][0][9]) ?></td>
                     <td class="blank"></td>
                 </tr>
             </table>
