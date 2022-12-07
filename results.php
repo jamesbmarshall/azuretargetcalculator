@@ -173,7 +173,7 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
                     <th><div class="tooltip">New Business<span class="tooltiptext">Recurring revenue driven from new customer adds.</span></div></th>
                     <th><div class="tooltip">New Business Growth<span class="tooltiptext">The month-over-month growth of the new business. New customers grow, too!</span></div></th>
                     <th><div class="tooltip">Proactive Growth<span class="tooltiptext">The above-baseline growth proactively driven by your teams.</span></div></th>
-                    <th><div class="tooltip">Customers MoM<span class="tooltiptext">The number of new customers you'll need to add in a given month.</span></div></th>
+                    <th><div class="tooltip">Customer Adds<span class="tooltiptext">The number of new customers you'll need to add in a given month.</span></div></th>
                     <th><div class="tooltip">Customers Total<span class="tooltiptext">The running total of customers transacting per month.</span></div></th>
                     <th><div class="tooltip">Recurring Total<span class="tooltiptext">The running total of all constituent revenue per month.</span></div></th>
                 </tr>
@@ -200,7 +200,7 @@ for ($x = 0; $x < $planLength; $x++)
             </table>
             </div>
 
-                <div id='myDiv' style="width: 50%; margin: 0 auto;"><!-- Plotly chart will be drawn inside this DIV --></div>
+                <div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
 
                 <script>
                     var data = [
@@ -218,22 +218,16 @@ for ($x = 0; $x < $planLength; $x++)
                                 "total"
                             ],
                             x: [
-                                
-                                "Baseline",
-                                "New\n Business",
-                                "Baseline\n + \nNew Business Total",
-                                "Baseline\n 'Organic'\n Growth",
-                                "New\n Business\n Growth",
-                                "Proactive\n Growth",
-                                "Total"
-                            ],
+        ["Existing", "Acquisition", "Acquisition", "Growth", "Growth", "Growth", "Total"],
+        ["Baseline", "Adds", "Total", "Adds", "Organic", "Proactive", "Total" ]
+      ],
                             textposition: "outside",
                             text: [
                                 "<?php echo number_format($baselineTotal) ?>",
                                 "<?php echo number_format($newBusinessTotal) ?>",
                                 "<?php echo number_format($newBusinessTotal + $baselineTotal) ?>",
-                                "<?php echo number_format($baselineGrowthTotal) ?>",
                                 "<?php echo number_format($newBusinessGrowthTotal) ?>",
+                                "<?php echo number_format($baselineGrowthTotal) ?>",
                                 "<?php echo number_format($proactiveGrowthTotal) ?>",
                                 "<?php echo number_format($totalRevenueGenerated) ?>"
                             ],          
@@ -241,8 +235,8 @@ for ($x = 0; $x < $planLength; $x++)
                                 <?php echo $baselineTotal ?>,
                                 <?php echo $newBusinessTotal ?>,
                                 <?php echo $newBusinessTotal + $baselineTotal ?>,
-                                <?php echo $baselineGrowthTotal ?>,
                                 <?php echo $newBusinessGrowthTotal ?>,
+                                <?php echo $baselineGrowthTotal ?>,
                                 <?php echo $proactiveGrowthTotal ?>,
                                 <?php echo $totalRevenueGenerated ?>
                             ],
@@ -255,11 +249,13 @@ for ($x = 0; $x < $planLength; $x++)
                     ];
                 layout = {
                         title: {
-                            text: "Plan Waterfall"
+                            text: ""
                         },
                         xaxis: {
-                            type: "category"
-                        },
+      title: "",
+      tickfont: {size: 15},
+      ticks: "outside"
+    },
                         yaxis: {
                             type: "linear"
                         },
@@ -278,7 +274,7 @@ for ($x = 0; $x < $planLength; $x++)
             3x sales qualified leads, each in turn requiring 5x marketing qualified leads. These are approximations, and your business will have different conversion
             rates which could be applied.</p>
 
-            <div id="funnel" style="width: 500px; margin: 0 auto; overflow-x: auto;"></div>
+            <div id="funnel"></div>
 
 <script>
     const datafunnel = [

@@ -83,13 +83,6 @@ table, th, td {
     margin: auto;
 }
 
-.tablediv {
-  overflow-x: auto;
-  display: table; 
-  margin: 0 auto;
-  width: 70%;
-}
-
 th {
   text-align: center;
   background-color: #333;
@@ -122,6 +115,18 @@ td {
     width: 40%; 
     margin: 0 auto;
   }
+  #myDiv {
+    width: 70%; margin: 0 auto;
+  }
+  #funnel {
+    width: 30%; margin: 0 auto; overflow-x: auto;
+  }
+  .tablediv {
+    overflow-x: auto;
+    display: table; 
+    margin: 0 auto;
+    width: 70%;
+  }
 }
 
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
@@ -130,7 +135,21 @@ td {
     width: 90%; 
     margin: 0 auto;
   }
+  #myDiv {
+    width: 95%; margin: 0 auto;
+  }
+  #funnel {
+    width: 95%; margin: 0 auto; overflow-x: auto;
+  }
+  .tablediv {
+    overflow-x: scroll;
+    display: table; 
+    margin: 0 auto;
+    width: 95%;
+  }
 }
+
+
 
 input[type=number] {
     width: 100%;
