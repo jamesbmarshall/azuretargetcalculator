@@ -235,9 +235,8 @@ for ($x = 0; $x < $planLength; $x++)
                             ],          
                             y: [
                                 <?php echo $baselineTotal ?>,
-                                <?php echo $baselineGrowthTotal ?>,
-                                <?php echo $baselineTotal + $baselineGrowthTotal ?>,
                                 <?php echo $newBusinessTotal ?>,
+                                <?php echo $baselineGrowthTotal ?>,
                                 <?php echo $newBusinessGrowthTotal ?>,
                                 <?php echo $proactiveGrowthTotal ?>,
                                 <?php echo $totalRevenueGenerated ?>
