@@ -147,7 +147,7 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
 <?php include 'nav.php';?>
 
 <div class="column">
-        <span>🥳 </span><h2>Here are the results for your <?php echo $planLength ?> month plan!</h2>
+        <h2><span>🥳 </span>Here are the results for your <?php echo $planLength ?> month plan!</h2>
             <h3>Summary</h3>
             <p>Total number of new customers required: <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][9]) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($targetSpend) ?></span> per month.</p>
             <p>Total revenue generated: <span class="keypoint">$<?php echo number_format($totalRevenueGenerated) ?></span></p>
