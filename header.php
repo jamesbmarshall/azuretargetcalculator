@@ -26,7 +26,7 @@
         <meta property="og:description" content="A simple tool for estimating the recurring revenue and customer adds growth you need to hit your targets."/>
         <meta property="og:image:width" content="1200"/>
         <meta property="og:image:height" content="630"/>
-        <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, target-densitydpi=device-dpi">
         <meta charset="UTF-8">
         
         
