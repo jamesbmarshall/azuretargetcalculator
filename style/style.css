@@ -142,11 +142,10 @@ td {
     width: 95%; margin: 0 auto; overflow-x: auto;
   }
   .tablediv {
-    display: block;
+    display: table;
       max-width: -moz-fit-content;
       max-width: fit-content;
       margin: 0 auto;
-      overflow-x: scroll;
       overflow: visible;
       white-space: nowrap;
   }
