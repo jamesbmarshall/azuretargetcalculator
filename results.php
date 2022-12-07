@@ -149,9 +149,9 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
 <div class="column">
         <h2><span>🥳 </span>Here are the results for your <?php echo $planLength ?> month plan!</h2>
             <h3>Summary</h3>
-            <p>Total number of new customers required: <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][9]) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($targetSpend) ?></span> per month.</p>
-            <p>Total revenue generated: <span class="keypoint">$<?php echo number_format($totalRevenueGenerated) ?></span></p>
-            <p>Annualised recurring revenue at end of period: <span class="keypoint">$<?php echo number_format($annualisedRevenue) ?></span> ($<?php echo number_format($planArray[$planLength - 1][0][10]) . " * 12" ?>)</p>
+            <p><span>🌱 </span>Total number of new customers required: <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][9]) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($targetSpend) ?></span> per month.</p>
+            <p><span>💵 </span>Total revenue generated: <span class="keypoint">$<?php echo number_format($totalRevenueGenerated) ?></span></p>
+            <p><span>🔁 </span>Annualised recurring revenue at end of period: <span class="keypoint">$<?php echo number_format($annualisedRevenue) ?></span> ($<?php echo number_format($planArray[$planLength - 1][0][10]) . " * 12" ?>)</p>
             <h3>Details</h3>
             <p>During this <?php echo $planLength ?> month period, you will need to add <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][9]) ?> customers</span>,
              consuming approximately <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services per month</span> to achieve the new business 
