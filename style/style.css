@@ -142,10 +142,13 @@ td {
     width: 95%; margin: 0 auto; overflow-x: auto;
   }
   .tablediv {
-    overflow-x: scroll;
-    display: table; 
-    margin: 0 auto;
-    width: 95%;
+    display: block;
+      max-width: -moz-fit-content;
+      max-width: fit-content;
+      margin: 0 auto;
+      overflow-x: auto;
+      overflow: visible;
+      white-space: nowrap;
   }
 }
 
@@ -252,11 +255,11 @@ button, input[type=button], input[type=submit], input[type=reset]{
 }
 
 /* Tooltip arrow */
-.tooltip .tooltiptext::after, .tooltip_light .tooltiptext::after {
+.tooltip .tooltiptext::before, .tooltip_light .tooltiptext::before {
   content: "";
   position: absolute;
   top: 100%;
-  left: 50%;
+  left: 20%;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
