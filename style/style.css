@@ -76,14 +76,11 @@ body {
     margin: 0px;
   }
 
+.tab {margin-left: 20px; }
+
 table, th, td {
     border: 1px solid black;
-}
-
-.tablediv {
-  overflow-x: auto;
-  display: grid; 
-  margin: 0 auto;
+    margin: auto;
 }
 
 th {
@@ -118,6 +115,18 @@ td {
     width: 40%; 
     margin: 0 auto;
   }
+  #myDiv {
+    width: 70%; margin: 0 auto;
+  }
+  #funnel {
+    width: 30%; margin: 0 auto; overflow-x: auto;
+  }
+  .tablediv {
+    overflow-x: auto;
+    display: table; 
+    margin: 0 auto;
+    width: 70%;
+  }
 }
 
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
@@ -126,7 +135,23 @@ td {
     width: 90%; 
     margin: 0 auto;
   }
+  #myDiv {
+    width: 95%; margin: 0 auto;
+  }
+  #funnel {
+    width: 95%; margin: 0 auto; overflow-x: auto;
+  }
+  .tablediv {
+    display: table;
+      max-width: -moz-fit-content;
+      max-width: fit-content;
+      margin: 0 auto;
+      overflow: visible;
+      white-space: nowrap;
+  }
 }
+
+
 
 input[type=number] {
     width: 100%;
@@ -229,11 +254,11 @@ button, input[type=button], input[type=submit], input[type=reset]{
 }
 
 /* Tooltip arrow */
-.tooltip .tooltiptext::after, .tooltip_light .tooltiptext::after {
+.tooltip .tooltiptext::before, .tooltip_light .tooltiptext::before {
   content: "";
   position: absolute;
   top: 100%;
-  left: 50%;
+  left: 20%;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
