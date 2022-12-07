@@ -211,7 +211,6 @@ for ($x = 0; $x < $planLength; $x++)
                             measure: [
                                 "relative",
                                 "relative",
-                                "total",
                                 "relative",
                                 "relative",
                                 "relative",
@@ -219,9 +218,8 @@ for ($x = 0; $x < $planLength; $x++)
                             ],
                             x: [
                                 "Baseline",
-                                "Baseline Growth",
-                                "Baseline Total",
                                 "New Business",
+                                "Baseline 'Organic' Growth",
                                 "New Business Growth",
                                 "Proactive Growth",
                                 "Total"
@@ -229,9 +227,8 @@ for ($x = 0; $x < $planLength; $x++)
                             textposition: "outside",
                             text: [
                                 "<?php echo number_format($baselineTotal) ?>",
-                                "<?php echo number_format($baselineGrowthTotal) ?>",
-                                "<?php echo number_format($baselineTotal + $baselineGrowthTotal) ?>",
                                 "<?php echo number_format($newBusinessTotal) ?>",
+                                "<?php echo number_format($baselineGrowthTotal) ?>",
                                 "<?php echo number_format($newBusinessGrowthTotal) ?>",
                                 "<?php echo number_format($proactiveGrowthTotal) ?>",
                                 "<?php echo number_format($totalRevenueGenerated) ?>"
