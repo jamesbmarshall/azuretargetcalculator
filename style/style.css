@@ -76,6 +76,8 @@ body {
     margin: 0px;
   }
 
+.tab {margin-left: 40px; }
+
 table, th, td {
     border: 1px solid black;
     margin: auto;
