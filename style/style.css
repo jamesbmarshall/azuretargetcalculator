@@ -122,7 +122,7 @@ td {
     width: 30%; margin: 0 auto; overflow-x: auto;
   }
   .tablediv {
-    overflow-x: auto;
+    overflow-x: scroll;
     display: table; 
     margin: 0 auto;
     width: 70%;
