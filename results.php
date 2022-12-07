@@ -219,7 +219,7 @@ for ($x = 0; $x < $planLength; $x++)
                             ],
                             x: [
                                 ["Existing", "Acquisition", "Acquisition", "Growth", "Growth", "Growth", "Acquisition + Growth"],
-                                ["Baseline", "New Business", "Baseline + New Business Total", "Baseline 'Organic' Growth", "New Business Growth", "Proactive Growth", "Total" ], 
+                                ["Baseline", "New Business", "Baseline + New Business Total", "Baseline 'Organic' Growth", "New Business Growth", "Proactive Growth", "Total" ] 
                             ],
                             textposition: "outside",
                             text: [
