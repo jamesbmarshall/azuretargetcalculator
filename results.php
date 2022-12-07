@@ -209,7 +209,6 @@ for ($x = 0; $x < $planLength; $x++)
                             type: "waterfall",
                             orientation: "v",
                             x: [
-                                ["Existing", "Acquisition", "Acquisition", "Growth", "Growth", "Growth", "Acquisition Growth"],
                                 ["Baseline", "New Business", "Baseline + New Business Total", "Baseline 'Organic' Growth", "New Business Growth", "Proactive Growth", "Total" ] 
                             ],
                             measure: [
