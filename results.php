@@ -208,9 +208,6 @@ for ($x = 0; $x < $planLength; $x++)
                             name: "Revenue",
                             type: "waterfall",
                             orientation: "v",
-                            x: [
-                                ["Baseline", "New Business", "Baseline + New Business Total", "Baseline 'Organic' Growth", "New Business Growth", "Proactive Growth", "Total" ] 
-                            ],
                             measure: [
                                 "relative",
                                 "relative",
@@ -220,7 +217,16 @@ for ($x = 0; $x < $planLength; $x++)
                                 "relative",
                                 "total"
                             ],
-                            
+                            x: [
+                                
+                                "Baseline",
+                                "New Business",
+                                "Baseline + New Business Total",
+                                "Baseline 'Organic' Growth",
+                                "New Business Growth",
+                                "Proactive Growth",
+                                "Total"
+                            ],
                             textposition: "outside",
                             text: [
                                 "<?php echo number_format($baselineTotal) ?>",
