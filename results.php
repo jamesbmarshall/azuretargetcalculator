@@ -157,7 +157,11 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
              consuming approximately <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services per month</span> to achieve the new business 
              contribution of <?php echo $newBusinessShare * 100; ?>% to your overall plan target.
              You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> 
-             to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target. A monthly breakdown of customer adds and revenue growth is given below.
+             to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target. Some of this growth will be 'organic'. In other words, your customers will naturally consume a little more over time all by themselves (that's the baseline growth column). However, you'll need to
+             put specific focus on creating new opportunity within your existing customers to really achieve the growth you'll need. This might be by selling additional services, modernising existing ones, or by consolidating existing services hosted elsewhere onto one platform.
+             <br>
+             <br>
+             A monthly breakdown of customer adds and revenue growth is given below.
             </p>
             <br>
             <div class="tablediv">
