@@ -220,11 +220,11 @@ for ($x = 0; $x < $planLength; $x++)
                             x: [
                                 
                                 "Baseline",
-                                "New Business",
-                                "Baseline + New Business Total",
-                                "Baseline 'Organic' Growth",
-                                "New Business Growth",
-                                "Proactive Growth",
+                                "New\n Business",
+                                "Baseline\n + \nNew Business Total",
+                                "Baseline\n 'Organic'\n Growth",
+                                "New\n Business\n Growth",
+                                "Proactive\n Growth",
                                 "Total"
                             ],
                             textposition: "outside",
