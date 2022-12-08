@@ -6,6 +6,14 @@
 
         
     <div class="column">
+        <h1>A</h1>
+
+        <h2>Annualised Revenue</h2>
+
+            <p>Two terms you might come across are monthly recurring revenue and annualise recurring revenue, sometimes shortened to MRR and ARR respectively. MRR is the revenue that happens repeatedly every month, and ARR is the 12-month view of that recurring
+            revenue. For example, if you add a new customer who's consuming $1,000 of services half way through a year, you'd get to bill them six times. This means their MRR is $1,000, and their total revenue for that first year is $6,000 (6 months * $1,000). 
+            Assuming you keep the customer, going into the next year you'll get to bill them 12 times instead of 6, so the ARR is 12x the MRR, or 12 * $1,000 = $12,000.</p>
+            
         <h1>B</h1>
         
         <h2>Baseline</h2>
@@ -24,7 +32,7 @@
             you'd need in order to achieve your targets.</p>
 
             <p>The other main method of generating revenue is by growing the spend of your existing customers by selling them more services. Deciding the minimum amount you want a customer to spend per month will help you understand how much of your target
-            should come from adding more new customers versus growing existing ones. There'll be many factors in this decision, including your capacity to add and manage more customers and your customer lifecycle management to be able to grow existing customers.
+            should come from adding more new customers versus growing existing ones. There'll be many factors in this decision, including your capacity to add and manage more customers and your customer lifecycle management process to be able to grow existing customers.
 
         <h1>O</h1>
 
