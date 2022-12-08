@@ -14,6 +14,18 @@
             because you probably aren't starting from $0 and it's important to factor in your existing baseline when trying to calculate your targets. A $10,000 per month baseline equates to $120,000 of total revenue for the next year 
             (12 months * $10,000 of recurring revenue) - if your target is $240,000, then you've already got half of that 'in the bank'!</p>
 
+        <h1>C</h1>
+
+        <h2>Customer Adds</h2>
+
+            <p>Adding customers is one method of generating more revenue. A customer 'add' is simply establishing a new relationship with a customer where they consume services that you bill them for each month. These services might include several
+            things, such as the cloud costs (for example the Microsoft Azure services), your support and management costs, margin, etc. These costs might be bespoke per customer, or more 'off the shelf' as a standard managed service, IP you deliver in a SaaS
+            model, etc. However you think about it, a customer is worth an amount of money to your business each month, and you should have a goal in mind for the minimum amount a customer should consume per month in order to calculate how many customers
+            you'd need in order to achieve your targets.</p>
+
+            <p>The other main method of generating revenue is by growing the spend of your existing customers by selling them more services. Deciding the minimum amount you want a customer to spend per month will help you understand how much of your target
+            should come from adding more new customers versus growing existing ones. There'll be many factors in this decision, including your capacity to add and manage more customers and your customer lifecycle management to be able to grow existing customers.
+
         <h1>O</h1>
 
         <h2>Organic Growth</h2>
