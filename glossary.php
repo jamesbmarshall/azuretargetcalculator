@@ -11,7 +11,7 @@
 
         <h2>Annualised Revenue</h2>
 
-            <p class="tab">Two terms you might come across are monthly recurring revenue and annualise recurring revenue, sometimes shortened to MRR and ARR respectively. MRR is the revenue that happens repeatedly every month, and ARR is the 12-month view of that recurring
+            <p class="tab">Two terms you might come across are monthly recurring revenue and annualised recurring revenue, sometimes shortened to MRR and ARR respectively. MRR is the revenue that happens repeatedly every month, and ARR is the 12-month view of that recurring
             revenue. For example, if you add a new customer who's consuming $1,000 of services half way through a year, you'd get to bill them six times. This means their MRR is $1,000, and their total revenue for that first year is $6,000 (6 months * $1,000). 
             Assuming you keep the customer, going into the next year you'll get to bill them 12 times instead of 6, so the ARR is 12x the MRR, or 12 * $1,000 = $12,000.</p>
 
