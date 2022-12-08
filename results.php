@@ -104,15 +104,15 @@ for($x = 0;$x < $planLength; $x++){
     $planArray[$x][0][7] = round(($x + 1) * $growthBusinessSumOfDigits,2,PHP_ROUND_HALF_UP);
 
     #Calculate the number of customers required per month
-    $planArray[$x][0][8] = round($planArray[$x][0][4] / $targetSpend,1,PHP_ROUND_HALF_UP);
+    $planArray[$x][0][8] = round($planArray[$x][0][4] / $targetSpend,2,PHP_ROUND_HALF_UP);
 
-    #Calculate new customers running total.
+    #Calculate new customers per month total.
     if ($x == 0) {
         #First month..
         $planArray[$x][0][9] = $planArray[$x][0][8];
     } else {
         #All other months.
-        $planArray[$x][0][9] = $planArray[$x][0][8] + $planArray[$x - 1][0][9];
+        $planArray[$x][0][9] = $planArray[$x][0][8] - $planArray[$x - 1][0][8];
     }
 
 }
@@ -149,11 +149,11 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
 <div class="column">
         <h2><span>🥳 </span>Here are the results for your <?php echo $planLength ?> month plan!</h2>
             <h3>Summary</h3>
-            <p class="tab"><span>🌱 </span>Total number of new customers required: <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][9]) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($targetSpend) ?></span> per month.</p>
+            <p class="tab"><span>🌱 </span>Total number of new customers required: <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][8]) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($targetSpend) ?></span> per month.</p>
             <p class="tab"><span>💵 </span>Total revenue generated: <span class="keypoint">$<?php echo number_format($totalRevenueGenerated) ?></span></p>
             <p class="tab"><span>🔁 </span>Annualised recurring revenue at end of period: <span class="keypoint">$<?php echo number_format($annualisedRevenue) ?></span> ($<?php echo number_format($planArray[$planLength - 1][0][10]) . " * 12" ?>)</p>
             <h3>Details</h3>
-            <p class="tab">During this <?php echo $planLength ?> month period, you will need to add <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][9]) ?> customers</span>,
+            <p class="tab">During this <?php echo $planLength ?> month period, you will need to add <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][8]) ?> customers</span>,
              consuming approximately <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services per month</span> to achieve the new business 
              contribution of <?php echo $newBusinessShare * 100; ?>% to your overall plan target.
              You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> 
@@ -182,7 +182,7 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
 
 for ($x = 0; $x < $planLength; $x++)
     {
-        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][3],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][6],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][8]) . "</td><td>" . number_format($planArray[$x][0][9]) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
+        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][3],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][6],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][9],1) . "</td><td>" . number_format($planArray[$x][0][8],1) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
     };
 
 ?>
@@ -194,7 +194,7 @@ for ($x = 0; $x < $planLength; $x++)
                     <td class="total">$<?php echo number_format($newBusinessGrowthTotal) ?></td>
                     <td class="total">$<?php echo number_format($proactiveGrowthTotal) ?></td>
                     <td class="blank"></td>
-                    <td class="total"><?php echo number_format($planArray[$planLength - 1][0][9]) ?></td>
+                    <td class="total"><?php echo number_format($planArray[$planLength - 1][0][8],1) ?></td>
                     <td class="blank"></td>
                 </tr>
             </table>
@@ -268,7 +268,7 @@ for ($x = 0; $x < $planLength; $x++)
 <br>
             <br>
             <h1>Marketing Insights</h1>
-            <?php calcMarketingMetrics($planArray[$planLength - 1][0][9]) ?>
+            <?php calcMarketingMetrics($planArray[$planLength - 1][0][8]) ?>
             <p>Connecting sales outputs with marketing inputs is critical for a well defined plan. Therefore, based on the need to add <?php echo number_format($Wins); ?> customers, the 
             funnel chart below shows the approximate number of MQLs and SQLs required to support the pipeline estimated for the plan. This is based on 1 win requiring 
             3x sales qualified leads, each in turn requiring 5x marketing qualified leads. These are approximations, and your business will have different conversion
