@@ -10,8 +10,8 @@
         
         <h2>Baseline</h2>
         
-            <p>Your baseline is the existing recurring revenue that you're building your future plans upon. For example, if you finish the last month of your last fiscal period on $10,000 of recurring revenue, then that's your <i>baseline</i>. This is
-            important because you probably aren't starting from $0 and it's important to factor in your existing baseline when trying to calculate your targets. A $10,000 per month baseline equates to $120,000 of total revenue for the next year 
+            <p>Your baseline is the existing recurring revenue that you're building your future plans upon. For example, if you finish the last month of your last fiscal period on $10,000 of recurring revenue, then that's your <i>baseline</i>. This matters
+            because you probably aren't starting from $0 and it's important to factor in your existing baseline when trying to calculate your targets. A $10,000 per month baseline equates to $120,000 of total revenue for the next year 
             (12 months * $10,000 of recurring revenue) - if your target is $240,000, then you've already got half of that 'in the bank'!</p>
 
         <h1>O</h1>
