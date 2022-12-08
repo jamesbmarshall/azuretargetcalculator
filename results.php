@@ -104,15 +104,15 @@ for($x = 0;$x < $planLength; $x++){
     $planArray[$x][0][7] = round(($x + 1) * $growthBusinessSumOfDigits,2,PHP_ROUND_HALF_UP);
 
     #Calculate the number of customers required per month
-    $planArray[$x][0][8] = round($planArray[$x][0][4] / $targetSpend,1,PHP_ROUND_HALF_UP);
+    $planArray[$x][0][8] = round($planArray[$x][0][4] / $targetSpend,2,PHP_ROUND_HALF_UP);
 
-    #Calculate new customers running total.
+    #Calculate new customers per month total.
     if ($x == 0) {
         #First month..
         $planArray[$x][0][9] = $planArray[$x][0][8];
     } else {
         #All other months.
-        $planArray[$x][0][9] = $planArray[$x][0][8] + $planArray[$x - 1][0][9];
+        $planArray[$x][0][9] = $planArray[$x][0][8] - $planArray[$x - 1][0][8];
     }
 
 }
@@ -182,7 +182,7 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
 
 for ($x = 0; $x < $planLength; $x++)
     {
-        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][3],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][6],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][8]) . "</td><td>" . number_format($planArray[$x][0][9]) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
+        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][3],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][6],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][9],1) . "</td><td>" . number_format($planArray[$x][0][8],1) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
     };
 
 ?>
@@ -194,7 +194,7 @@ for ($x = 0; $x < $planLength; $x++)
                     <td class="total">$<?php echo number_format($newBusinessGrowthTotal) ?></td>
                     <td class="total">$<?php echo number_format($proactiveGrowthTotal) ?></td>
                     <td class="blank"></td>
-                    <td class="total"><?php echo number_format($planArray[$planLength - 1][0][9]) ?></td>
+                    <td class="total"><?php echo number_format($planArray[$planLength - 1][0][8],1) ?></td>
                     <td class="blank"></td>
                 </tr>
             </table>
