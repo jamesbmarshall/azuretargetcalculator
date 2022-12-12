@@ -6,7 +6,7 @@
 
         
     <div class="column">
-    <p>The Cloud Target Calculator is a partner-focused coaching tool developed by James Marshall, SMB Sales Lead for Azure at Mirosoft UK. It's aim
+    <p>The Cloud Target Calculator is a partner-focused coaching tool developed by <a href="https://jamesbmarshall.com">James Marshall</a>, SMB Sales Lead for Azure at Mirosoft UK. It's aim
         is to make simpler the process of estimating the levels of revenue and customer adds growth required in order to achieve the targets set
         in any given period.</p>
 

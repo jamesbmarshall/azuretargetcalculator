@@ -24,7 +24,7 @@
     <p>In short, imagine you have 12 months, and you add one customer per month who buys $10-worth of services from you. You get to bill that customer
         every month they remain your customer. In month 1 you have 1 customer, in month 2 you have 2, and so on until the end of the year when you have
         12 customers. In this example you would also have $780 of services purchased. Assuming you keep all of those customers, in the second year you would
-        have $1,440 of recurring revenue as your basline because you get to bill all 12 customers 12 times.
+        have $1,440 of recurring revenue as your baseline because you get to bill all 12 customers 12 times.
     </p>
     <p>The calculator on this site assumes no customer loss, and no organic growth just to keep things simple. But hopefully you'll appreciate both the importance
         of regular customer adds, excellent customer retention, and proactively-driven growth from existing customers.</p>
