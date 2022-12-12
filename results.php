@@ -132,6 +132,15 @@ for($x = 0;$x < $planLength; $x++){
     $proactiveGrowthTotal = $proactiveGrowthTotal + $planArray[$x][0][7];
 
     $planArray[$x][0][10] = $planArray[$x][0][1] + $planArray[$x][0][3] + $planArray[$x][0][4] + $planArray[$x][0][6] + $planArray[$x][0][7];
+
+    #Calculate revenue total.
+    if ($x == 0) {
+        #First month..
+        $planArray[$x][0][11] = $planArray[$x][0][10];
+    } else {
+        #All other months.
+        $planArray[$x][0][11] = $planArray[$x][0][10] + $planArray[$x - 1][0][11];
+    }
 }
 
 $totalRevenueGenerated = $baselineTotal + $baselineGrowthTotal + $newBusinessTotal + $newBusinessGrowthTotal + $proactiveGrowthTotal;
@@ -175,14 +184,15 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
                     <th><div class="tooltip">Proactive Growth<span class="tooltiptext">The above-baseline growth proactively driven by your teams.</span></div></th>
                     <th><div class="tooltip">Customer Adds<span class="tooltiptext">The number of new customers you'll need to add in a given month.</span></div></th>
                     <th><div class="tooltip">Customers Total<span class="tooltiptext">The running total of customers transacting per month.</span></div></th>
-                    <th><div class="tooltip">Recurring Total<span class="tooltiptext">The running total of all constituent revenue per month.</span></div></th>
+                    <th><div class="tooltip">Monthly Total<span class="tooltiptext">The running total of all constituent revenue per month.</span></div></th>
+                    <th><div class="tooltip">Running Total<span class="tooltiptext">The running total of all constituent revenue.</span></div></th>
                 </tr>
 
 <?php 
 
 for ($x = 0; $x < $planLength; $x++)
     {
-        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][3],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][6],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][9],1) . "</td><td>" . number_format($planArray[$x][0][8],1) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
+        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][3],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][6],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][9],1) . "</td><td>" . number_format($planArray[$x][0][8],1) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][11],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
     };
 
 ?>
@@ -195,6 +205,7 @@ for ($x = 0; $x < $planLength; $x++)
                     <td class="total">$<?php echo number_format($proactiveGrowthTotal) ?></td>
                     <td class="blank"></td>
                     <td class="total"><?php echo number_format($planArray[$planLength - 1][0][8],1) ?></td>
+                    <td class="blank"></td>
                     <td class="blank"></td>
                 </tr>
             </table>
@@ -215,11 +226,12 @@ for ($x = 0; $x < $planLength; $x++)
                                 "relative",
                                 "relative",
                                 "relative",
+                                "total",
                                 "total"
                             ],
                             x: [
-        ["Existing", "Acquisition", "Acquisition", "Growth", "Growth", "Growth", "Total"],
-        ["Baseline", "Adds", "Total", "Adds", "Organic", "Proactive", "Total" ]
+        ["Existing", "Acquisition", "Acquisition", "Growth", "Growth", "Growth", "Growth", "Target" ],
+        ["Baseline", "Adds", "Total", "1. Adds", "2. Organic", "3. Proactive", "4. Total", "Target" ]
       ],
                             textposition: "outside",
                             text: [
@@ -229,6 +241,7 @@ for ($x = 0; $x < $planLength; $x++)
                                 "<?php echo number_format($newBusinessGrowthTotal) ?>",
                                 "<?php echo number_format($baselineGrowthTotal) ?>",
                                 "<?php echo number_format($proactiveGrowthTotal) ?>",
+                                "<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?>",
                                 "<?php echo number_format($totalRevenueGenerated) ?>"
                             ],          
                             y: [
@@ -238,6 +251,7 @@ for ($x = 0; $x < $planLength; $x++)
                                 <?php echo $newBusinessGrowthTotal ?>,
                                 <?php echo $baselineGrowthTotal ?>,
                                 <?php echo $proactiveGrowthTotal ?>,
+                                <?php echo $proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal ?>,
                                 <?php echo $totalRevenueGenerated ?>
                             ],
                             connector: {
