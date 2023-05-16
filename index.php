@@ -23,14 +23,14 @@
             <form action="results.php" method="get" id="inputform" onsubmit="loadingscreen()"> 
             1. How long is your <div class="tooltip_light">plan<span class="tooltiptext">Usually 12 months, but can be as little as 1 or as many as you like!</span></div>? (e.g., 12 months, etc.) <input type="number" id="months" name="months" placeholder="Example: 12" required><br>
             2. What is your <div class="tooltip_light">target spend<span class="tooltiptext">This can be made up of many services, and is the amount you're aiming to bill each customer every month. (i.e., recurring revenue!)</span></div> per customer per month, in dollars? <input type="number" id="acpc" name="acpc" placeholder="Example: 1500" required><br>
-            3. What is your total <div class="tooltip_light">revenue target<span class="tooltiptext">This should be the total revenue you need to generate during the course of your plan.</span></div> for the duration of your plan? <input type="number" id="revenue" name="revenue" placeholder="Example: 2000000"><br>
+            3. What is the total <div class="tooltip_light">revenue target<span class="tooltiptext">This should be the total revenue you need to generate over the duration of your plan.</span></div> for the duration of your plan? <input type="number" id="revenue" name="revenue" placeholder="Example: 2000000"><br>
             <br>
             4. What percentage of recurring revenue do you expect to come from <div class="tooltip_light">adding new customers<span class="tooltiptext">The remaining percentage will be assumed to come from growing your existing customer base.</span></div>?<br>
             <br>
             <span id="rangeValue">0%</span> <input type="range" min="0" max="100" value="0" id="newbus" name="newbus" oninput="rangeValue.innerText = this.value + '%'"><br>
             <br>
-            5. What is the <div class="tooltip_light">monthly recurring revenue baseline<span class="tooltiptext">This is the monthly recurring revenue from the month immediately before this plan begins.</span></div> for the duration of your plan?<input type="number" id="mrrbaseline" name="mrrbaseline" placeholder="Example: 50000" required><br>
-            6. What is your <div class="tooltip_light">month-over-month growth rate<span class="tooltiptext">This is your estimated organic growth rate in percentage terms.</span></div>?<input type="number" min="0" max="100" id="momrate" name="momrate" placeholder="1" required><br>
+            5. What is your <div class="tooltip_light">monthly recurring revenue baseline<span class="tooltiptext">This is the monthly recurring revenue from the month immediately before this plan begins. If you are unsure, set to 0.</span></div>?<input type="number" id="mrrbaseline" name="mrrbaseline" placeholder="Example: 50000" required><br>
+            6. What is your <div class="tooltip_light">month-over-month growth rate<span class="tooltiptext">This is your estimated organic growth rate in percentage terms. If you are unsure, set to 0.</span></div>?<input type="number" min="0" max="100" id="momrate" name="momrate" placeholder="1" required><br>
             <input type="submit" id="runcalc">
             </form>
             
