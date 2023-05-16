@@ -41,19 +41,26 @@ $planArray = array();                                               #Array to ho
 
 
 for ($x = 0; $x < $planLength; $x++){
-    $planArray[$x] = [$x + 1, $baselineRecurring]; // Assign month number and baseline in one step
+    #Set the baseline for the plan length. This is simply the same amount per month for the number of months given in $planLength.
+    $planArray[$x][0][0] = $x + 1;
+    $planArray[$x][0][1] = $baselineRecurring;
 
-    // Calculate the gross MoM growth on the baseline and add it to the array.
-    $prevMoMGrowth = $x > 0 ? $planArray[$x-1][2] : $baselineRecurring;
-    $planArray[$x][2] = round(($prevMoMGrowth * $typicalMoM) + $prevMoMGrowth, 2, PHP_ROUND_HALF_UP);
+    #Calculate the gross MoM growth on the baseline and add it to the array.
+    
+    if ($x == 0) {
+        #First month is baseline (baseline * MoM) + baseline.
+        $planArray[$x][0][2] = ($baselineRecurring * $typicalMoM) + $baselineRecurring;
+    } else {
+        #All other months are (previous month * MoM) + previous month.
+        $planArray[$x][0][2] = round(($planArray[$x-1][0][2] * $typicalMoM) + $planArray[$x-1][0][2],2,PHP_ROUND_HALF_UP);    
+    }
+    
+    #Calculate the net MoM growth on the baseline and add it to the array.
+    $planArray[$x][0][3] = $planArray[$x][0][2] - $planArray[$x][0][1];
 
-    // Calculate the net MoM growth on the baseline and add it to the array.
-    $planArray[$x][3] = $planArray[$x][2] - $planArray[$x][1];
-
-    // Calculate the new business target
-    $baselineGrowth += $planArray[$x][2];
-}
-
+    #Calculate the new business target
+    $baselineGrowth = $baselineGrowth + $planArray[$x][0][2];
+};
 
 $newBusinessTarget = ($targetRevenue - $baselineGrowth) * $newBusinessShare;
 $newBusinessSumOfDigits = round($newBusinessTarget / $sumOfDigits,2,PHP_ROUND_HALF_UP);
