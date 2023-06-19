@@ -58,7 +58,7 @@
 
             // Check that the first number, divided by 12, is not less than the second number
             if ((firstNumber / 12) < secondNumber) {
-                document.getElementById("error-message").innerHTML = "Your existing basline is higher than your plan revenue target!";
+                document.getElementById("error-message").innerHTML = "ERROR: Your existing basline is higher than your plan revenue target!";
                 return;
             }
 
