@@ -33,7 +33,7 @@
             6. What is your <div class="tooltip_light">month-over-month growth rate<span class="tooltiptext">This is your estimated organic growth rate in percentage terms. If you are unsure, set to 0.</span></div>?<input type="number" min="0" max="100" id="momrate" name="momrate" placeholder="1" required><br>
             <input type="submit" id="runcalc">
             </form>
-            
+            <p id="error-message" style="color: red;"></p>
             </span>
             <br>
         </div>
