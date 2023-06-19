@@ -37,39 +37,38 @@
             </span>
             <br>
         </div>
+
         <script>
+            document.getElementById("inputform").addEventListener("submit", function(event){
+            // Prevent the form from submitting
+            event.preventDefault();
+
+            // Clear any previous error messages
+            document.getElementById("error-message").innerHTML = "";
+
+            // Get the input values
+            var firstNumber = document.getElementById("revenue").value;
+            var secondNumber = document.getElementById("mrrbaseline").value;
+
+            // Check that the inputs are not empty
+            if (!firstNumber || !secondNumber) {
+                document.getElementById("error-message").innerHTML = "Both numbers are required.";
+                return;
+            }
+
+            // Check that the first number, divided by 12, is not less than the second number
+            if ((firstNumber / 12) < secondNumber) {
+                document.getElementById("error-message").innerHTML = "Your existing basline is higher than your plan revenue target!";
+                return;
+            }
+
+            // If validation passed, submit the form
+            this.submit();
             function loadingscreen() {
                 $('#cover').fadeIn(100);
             }
+            });
         </script>
-        <script>
-document.getElementById("inputform").addEventListener("submit", function(event){
-  // Prevent the form from submitting
-  event.preventDefault();
-
-  // Clear any previous error messages
-  document.getElementById("error-message").innerHTML = "";
-
-  // Get the input values
-  var firstNumber = document.getElementById("revenue").value;
-  var secondNumber = document.getElementById("mrrbaseline").value;
-
-  // Check that the inputs are not empty
-  if (!firstNumber || !secondNumber) {
-    document.getElementById("error-message").innerHTML = "Both numbers are required.";
-    return;
-  }
-
-  // Check that the first number, divided by 12, is not less than the second number
-  if ((firstNumber / 12) < secondNumber) {
-    document.getElementById("error-message").innerHTML = "Your existing basline is higher than your plan revenue target!";
-    return;
-  }
-
-  // If validation passed, submit the form
-  this.submit();
-});
-</script>
         <div class="footer">
             <?php include 'footer.php';?>
         </div>
