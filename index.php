@@ -63,10 +63,11 @@
             }
 
             // If validation passed, submit the form
-            this.submit();
             function loadingscreen() {
                 $('#cover').fadeIn(100);
             }
+            this.submit();
+            
             });
         </script>
         <div class="footer">
