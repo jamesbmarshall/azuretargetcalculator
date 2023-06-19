@@ -1,85 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-<canvas id="myChart"></canvas>
+
+<div id="myDiv"></div>
 
 <script>
-// Our data for the waterfall chart
-var data = [120, 569, 231, -342, -233];
-
-// Our labels for the data
-var labels = ['Start', 'Product Revenue', 'Service Revenue', 'Fixed Costs', 'Variable Costs'];
-
-// Initialize empty arrays for waterfall chart
-var transparent = [];
-var positive = [];
-var negative = [];
-
-// Calculate transparent, positive, and negative values
-var sum = 0;
-for (var i = 0; i < data.length; i++) {
-  if (data[i] < 0) {
-    transparent.push(sum);
-    positive.push(0);
-    negative.push(data[i]);
-  } else {
-    transparent.push(sum);
-    positive.push(data[i]);
-    negative.push(0);
-  }
-  sum += data[i];
-}
-
-new Chart(document.getElementById("myChart"), {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          backgroundColor: "rgba(0, 0, 0, 0)", // transparent color
-          data: transparent
-        },
-        {
-          backgroundColor: "rgba(0, 255, 0, 0.7)", // green color
-          data: positive
-        },
-        {
-          backgroundColor: "rgba(255, 0, 0, 0.7)", // red color
-          data: negative
+var data = [{
+    type: "waterfall",
+    x: ["Start", "Product Revenue", "Service Revenue", "Fixed Costs", "Variable Costs", "Final"],
+    textposition: "outside",
+    text: [120, "+569", "+231", "-342", "-233", "Final"],
+    y: [120, 569, 231, -342, -233, 0],
+    connector: {
+        line: {
+            color: "rgb(63, 63, 63)"
         }
-      ]
     },
-    options: {
-      scales: {
-        x: {
-          stacked: true,
-        },
-        y: {
-          stacked: true
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              var label = context.chart.data.labels[context.dataIndex] || '';
-              if (label) {
-                  label += ': ';
-              }
-              label += Math.abs(context.raw);
-              return label;
-            }
-          }
-        }
-      }
+}];
+
+var layout = {
+    title: "Waterfall Chart",
+    xaxis: {
+        type: "category"
+    },
+    yaxis: {
+        type: "linear"
     }
-});
+};
+
+Plotly.newPlot('myDiv', data, layout);
 </script>
 
 </body>
