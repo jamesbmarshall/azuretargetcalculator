@@ -62,6 +62,7 @@ for ($x = 0; $x < $planLength; $x++){
     $baselineGrowth = $baselineGrowth + $planArray[$x][0][2];
 };
 
+
 $newBusinessTarget = ($targetRevenue - $baselineGrowth) * $newBusinessShare;
 $newBusinessSumOfDigits = round($newBusinessTarget / $sumOfDigits,2,PHP_ROUND_HALF_UP);
 
@@ -149,12 +150,12 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
 
 
 <?php include 'header.php';?>
-    
-<div class="header"><h1>Cloud Target Calculator</h1></div>
 
-<?php include 'nav.php';?>
-
-<div class="column">
+<body>
+    <div class="container">
+        <div class="row blue"><h1>Cloud Target Calculator</h1></div>
+        <?php include 'nav.php';?>
+        <div class="row white">
         <h2><span>🥳 </span>Here are the results for your <?php echo $planLength ?> month plan!</h2>
             <h3>Summary</h3>
             <p class="tab"><span>🌱 </span>Total number of new customers required: <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][8]) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($targetSpend) ?></span> per month.</p>
@@ -339,11 +340,8 @@ for ($x = 0; $x < $planLength; $x++)
             </span>
             <br>
         </div>
-         
-</div>
-<div class="footer">
-            <?php include 'footer.php';?>
-        </div>
-    
+
+        <div class="row footer"><?php include 'footer.php';?></div>
+    </div>
 </body>
 </html>

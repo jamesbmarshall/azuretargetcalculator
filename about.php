@@ -1,12 +1,11 @@
 <?php $pageTitle = "Cloud Target Calculator | About" ?>
 <?php include 'header.php';?>
 <body>
-<div class="header"><h1>Cloud Target Calculator</h1></div>
-<?php include 'nav.php';?>
-
-        
-    <div class="column">
-    <p>The Cloud Target Calculator is a partner-focused coaching tool developed by <a href="https://jamesbmarshall.com">James Marshall</a>, SMB Sales Lead for Azure at Mirosoft UK. It's aim
+    <div class="container">
+        <div class="row blue"><h1>Cloud Target Calculator</h1></div>
+        <?php include 'nav.php';?>
+        <div class="row white">
+  <p>The Cloud Target Calculator is a partner-focused coaching tool developed by <a href="https://jamesbmarshall.com">James Marshall</a>, SMB Sales Lead for Azure at Mirosoft UK. It's aim
         is to make simpler the process of estimating the levels of revenue and customer adds growth required in order to achieve the targets set
         in any given period.</p>
 
@@ -22,10 +21,7 @@ or <a href="https://mstdn.social/@jamesbmarshall">toot</a> at me with your thoug
         <br>
             <br>
         </div>
-
-        <div class="footer">
-            <?php include 'footer.php';?>
-        </div>
+        <div class="row footer"><?php include 'footer.php';?></div>
+    </div>
 </body>
 </html>
-

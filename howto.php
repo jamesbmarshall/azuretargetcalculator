@@ -1,13 +1,11 @@
 <?php $pageTitle = "Cloud Target Calculator | How To" ?>
 <?php include 'header.php';?>
-
 <body>
-        
-<div class="header"><h1>Cloud Target Calculator</h1></div>
-<?php include 'nav.php';?>
-        
-    <div class="column">
-    <p>There are many different approaches to breaking down a target. In the Azure world, monthly recurring revenue is an important measure.
+    <div class="container">
+        <div class="row blue"><h1>Cloud Target Calculator</h1></div>
+        <?php include 'nav.php';?>
+        <div class="row white">
+ <p>There are many different approaches to breaking down a target. In the Azure world, monthly recurring revenue is an important measure.
         Each month that you add a customer, or increase your consumption amount, carries forward for each remaining month of your plan period (e.g., a fiscal year).
         That's why, in the monthly recurring revenue world, the first day of the year is the most important. Because any customer you add in that first month 
         you get to bill 12 times, in the second month 11 times, third 10 times, and so on. If you add a customer in the last month of your plan period, you 
@@ -33,9 +31,7 @@
             <br>
         </div>
 
-        <div class="footer">
-            <?php include 'footer.php';?>
-        </div>
+        <div class="row footer"><?php include 'footer.php';?></div>
+    </div>
 </body>
 </html>
-
