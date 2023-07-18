@@ -7,12 +7,12 @@
         <H3>Calculating your plan...</H3>
     </div>
 </div>
-<div class="header"><h1>Cloud Target Calculator</h1></div>
-
-<?php include 'nav.php';?>
-        
-        <div class="column">
-            <h2>Welcome,</h2>
+<body>
+    <div class="container">
+        <div class="row blue"><h1>Cloud Target Calculator</h1></div>
+        <?php include 'nav.php';?>
+        <div class="row white">
+        <h2>Welcome,</h2>
             <p>If you're involved in a business where recurring revenue is important (such as Microsoft Azure), you might have wondered what the best way to plan monthly growth is. It's 
                 a little different to selling more traditional software, placing huge emphasis on compound growth of existing customers as well as continuiung to add new ones. 
                 This tool will help guide you in understanding the estimated monthly recurring revenue and customer adds growth needed to achieve the targets you set, or have
@@ -42,8 +42,7 @@
                 $('#cover').fadeIn(100);
             }
         </script>
-        <div class="footer">
-            <?php include 'footer.php';?>
-        </div>
+        <div class="row footer"><?php include 'footer.php';?></div>
+    </div>
 </body>
 </html>

@@ -1,13 +1,11 @@
 <?php $pageTitle = "Cloud Target Calculator | Glossary" ?>
 <?php include 'header.php';?>
 <body>
-<div class="header"><h1>Cloud Target Calculator</h1></div>
-<?php include 'nav.php';?>
-
-        
-    <div class="column">
-
-        <h1>A</h1>
+    <div class="container">
+        <div class="row blue"><h1>Cloud Target Calculator</h1></div>
+        <?php include 'nav.php';?>
+        <div class="row white">
+<h1>A</h1>
 
         <h2>Annualised Revenue</h2>
 
@@ -63,11 +61,11 @@
 
         <br>
             <br>
-        </div>
 
-        <div class="footer">
-            <?php include 'footer.php';?>
-        </div>
+
+
+</div>
+        <div class="row footer"><?php include 'footer.php';?></div>
+    </div>
 </body>
 </html>
-
