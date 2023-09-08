@@ -343,5 +343,7 @@ for ($x = 0; $x < $planLength; $x++)
 
         <div class="row footer"><?php include 'footer.php';?></div>
     </div>
+    <br />
+    <br />
 </body>
 </html>
