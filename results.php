@@ -170,9 +170,10 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
             <p class="tab">During this <?php echo $planLength ?> month period, you must add <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][8]) ?> customers</span>,
              consuming approximately <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services per month</span> to achieve the new business 
              contribution of <?php echo $newBusinessShare * 100; ?>% to your incremental growth target (i.e. the amount left after factoring in your baseline recurring revenue).
-             You must <span class="keypoint">grow your existing base of customers by a total of $<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target. This includes any organic growth you expect from your customers.             <br>
+             You must <span class="keypoint">grow your existing base of customers by a total of $<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your incremental growth target. This includes any organic growth you expect from your customers.
              <br>
-             A monthly breakdown of customer adds and revenue growth is given below.
+             <br>
+             Here's a monthly breakdown of customer adds and revenue growth:
             </p>
             <br>
             <div class="tablediv">
