@@ -287,7 +287,7 @@ for ($x = 0; $x < $planLength; $x++)
             <?php calcMarketingMetrics($planArray[$planLength - 1][0][8]) ?>
             <p>Connecting sales outputs with marketing inputs is critical for a well defined plan. Therefore, based on the need to add <?php echo number_format($Wins); ?> customers, the 
             funnel chart below shows the approximate number of MQLs and SQLs required to support the pipeline estimated for the plan. This is based on 1 win requiring 
-            3x sales qualified leads, each in turn requiring 5x marketing qualified leads. These are approximations, and your business will have different conversion
+            <?php echo number_format($SQLconversion); ?>x sales qualified leads, each in turn requiring <?php echo number_format($MQLconversion); ?>x marketing qualified leads. These are approximations, and your business will have different conversion
             rates which could be applied.</p>
 
             <div id="funnel"></div>
