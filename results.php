@@ -25,6 +25,8 @@ function calcMarketingMetrics($customers) {
     global $SQLs;
     global $MQLs;
     global $Wins;
+    global $MQLconversion;
+    global $SQLconversion;
 
     $Wins = round($customers,0,PHP_ROUND_HALF_UP);
     $SQLs = $Wins * $SQLconversion;
