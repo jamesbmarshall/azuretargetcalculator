@@ -38,13 +38,13 @@
             <!-- Optional Questions: Initially hidden -->
             <div id="advancedOptions" style="display: none;">
                 <label for="optionalQuestion1">Optional Question 1:</label>
-                <input type="text" id="optionalQuestion1" name="optionalQuestion1">
+                <input type="number" id="optionalQuestion1" name="optionalQuestion1">
                 
                 <label for="optionalQuestion2">Optional Question 2:</label>
-                <input type="text" id="optionalQuestion2" name="optionalQuestion2">
+                <input type="number" id="optionalQuestion2" name="optionalQuestion2">
                 
                 <label for="optionalQuestion3">Optional Question 3:</label>
-                <input type="text" id="optionalQuestion3" name="optionalQuestion3">
+                <input type="number" id="optionalQuestion3" name="optionalQuestion3">
             </div>
             
             <input type="submit" id="runcalc">
