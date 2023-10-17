@@ -244,7 +244,7 @@ for ($x = 0; $x < $planLength; $x++)
                                 "<?php echo number_format($newBusinessGrowthTotal) ?>",
                                 "<?php echo number_format($baselineGrowthTotal) ?>",
                                 "<?php echo number_format($proactiveGrowthTotal) ?>",
-                                "<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?>hello",
+                                "<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal + $newBusinessTotal + $baselineTotal) ?>",
                                 "<?php echo number_format($totalRevenueGenerated) ?>"
                             ],          
                             y: [
@@ -254,7 +254,7 @@ for ($x = 0; $x < $planLength; $x++)
                                 <?php echo $newBusinessGrowthTotal ?>,
                                 <?php echo $baselineGrowthTotal ?>,
                                 <?php echo $proactiveGrowthTotal ?>,
-                                <?php echo $proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal ?>,
+                                <?php echo $proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal + $newBusinessTotal + $baselineTotal ?>,
                                 <?php echo $totalRevenueGenerated ?>
                             ],
                             connector: {
