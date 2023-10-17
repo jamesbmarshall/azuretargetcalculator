@@ -169,9 +169,7 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
             <p class="tab">During this <?php echo $planLength ?> month period, you will need to add <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][8]) ?> customers</span>,
              consuming approximately <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services per month</span> to achieve the new business 
              contribution of <?php echo $newBusinessShare * 100; ?>% to your overall plan target.
-             You should also aim to grow your existing base of customers by <span class="keypoint">$<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> 
-             to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target. Some of this growth will be 'organic'. In other words, your customers will naturally consume a little more over time all by themselves (that's the baseline growth column). However, you'll need to
-             put specific focus on creating new opportunity within your existing customers to really achieve the growth you'll need. This might be by selling additional services, modernising existing ones, or by consolidating existing services hosted elsewhere onto one platform.
+             You wil need to <span class="keypoint">grow your existing base of customers by $<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target.
              <br>
              <br>
              A monthly breakdown of customer adds and revenue growth is given below.
@@ -289,8 +287,7 @@ for ($x = 0; $x < $planLength; $x++)
             <?php calcMarketingMetrics($planArray[$planLength - 1][0][8]) ?>
             <p>Connecting sales outputs with marketing inputs is critical for a well defined plan. Therefore, based on the need to add <?php echo number_format($Wins); ?> customers, the 
             funnel chart below shows the approximate number of MQLs and SQLs required to support the pipeline estimated for the plan. This is based on 1 win requiring 
-            <?php echo number_format($SQLconversion); ?>x sales qualified leads, each in turn requiring <?php echo number_format($MQLconversion); ?>x marketing qualified leads. These are approximations, and your business will have different conversion
-            rates which could be applied.</p>
+            <?php echo number_format($SQLconversion); ?>x sales qualified leads, each in turn requiring <?php echo number_format($MQLconversion); ?>x marketing qualified leads.</p>
 
             <div id="funnel"></div>
 
