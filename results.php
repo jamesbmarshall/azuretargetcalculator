@@ -163,6 +163,7 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
         <h2><span>🥳 </span>Here are the results for your <?php echo $planLength ?> month plan!</h2>
             <h3>Summary</h3>
             <p class="tab"><span>🌱 </span>Total number of new customers required: <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][8]) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($targetSpend) ?></span> per month.</p>
+            <p class="tab"><span>📈 </span>Amount of growth from existing customers required: <span class="keypoint"><?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span></p>
             <p class="tab"><span>💵 </span>Total revenue generated: <span class="keypoint">$<?php echo number_format($totalRevenueGenerated) ?></span></p>
             <p class="tab"><span>🔁 </span>Annualised recurring revenue at end of plan: <span class="keypoint">$<?php echo number_format($annualisedRevenue) ?></span> ($<?php echo number_format($planArray[$planLength - 1][0][10]) . " * 12" ?>)</p>
             <h3>Details</h3>
