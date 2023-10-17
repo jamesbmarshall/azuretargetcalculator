@@ -244,7 +244,7 @@ for ($x = 0; $x < $planLength; $x++)
                                 "<?php echo number_format($newBusinessGrowthTotal) ?>",
                                 "<?php echo number_format($baselineGrowthTotal) ?>",
                                 "<?php echo number_format($proactiveGrowthTotal) ?>",
-                                "<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?>",
+                                "<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?>hello",
                                 "<?php echo number_format($totalRevenueGenerated) ?>"
                             ],          
                             y: [
