@@ -31,6 +31,22 @@
             <br>
             5. What is your <div class="tooltip_light">monthly recurring revenue baseline<span class="tooltiptext">This is the monthly recurring revenue from the month immediately before this plan begins. If you are unsure, set to 0.</span></div>?<input type="number" id="mrrbaseline" name="mrrbaseline" placeholder="Example: 50000" required><br>
             6. What is your organic <div class="tooltip_light">month-over-month growth rate<span class="tooltiptext">This is your estimated organic growth rate in percentage terms. If you are unsure, set to 0.</span></div>?<input type="number" min="0" max="100" id="momrate" name="momrate" placeholder="Example: 1" required><br>
+            
+            <!-- Advanced Options Toggle -->
+            <button type="button" id="advancedOptionsToggle">Advanced Options</button>
+
+            <!-- Optional Questions: Initially hidden -->
+            <div id="advancedOptions" style="display: none;">
+                <label for="optionalQuestion1">Optional Question 1:</label>
+                <input type="text" id="optionalQuestion1" name="optionalQuestion1">
+                
+                <label for="optionalQuestion2">Optional Question 2:</label>
+                <input type="text" id="optionalQuestion2" name="optionalQuestion2">
+                
+                <label for="optionalQuestion3">Optional Question 3:</label>
+                <input type="text" id="optionalQuestion3" name="optionalQuestion3">
+            </div>
+            
             <input type="submit" id="runcalc">
             </form>
             <p id="error-message" style="color: red;"></p>
@@ -68,6 +84,20 @@
             }
             this.submit();
             
+            });
+        </script>
+        <!-- Advanced Options Toggle Script -->
+        <script>
+            $(document).ready(function() {
+                $('#advancedOptionsToggle').click(function() {
+                    var options = $('#advancedOptions');
+                    
+                    if (options.css('max-height') === '0px') {
+                        options.css('max-height', '500px');
+                    } else {
+                        options.css('max-height', '0px');
+                    }
+                });
             });
         </script>
         <div class="row footer"><?php include 'footer.php';?></div>
