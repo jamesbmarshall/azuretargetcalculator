@@ -270,3 +270,9 @@ button, input[type=button], input[type=submit], input[type=reset]{
   visibility: visible;
   opacity: 1;
 }
+
+#advancedOptions {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-out;
+}

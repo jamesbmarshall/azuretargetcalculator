@@ -25,12 +25,27 @@
             2. What is your <div class="tooltip_light">target spend<span class="tooltiptext">This can be made up of many services, and is the amount you're aiming to bill each customer every month. (i.e., recurring revenue!)</span></div> per customer per month, in dollars? <input type="number" id="acpc" name="acpc" placeholder="Example: 1500" required><br>
             3. What is the total <div class="tooltip_light">revenue target<span class="tooltiptext">This should be the total revenue you need to generate over the duration of your plan.</span></div> for the duration of your plan? <input type="number" id="revenue" name="revenue" placeholder="Example: 2000000"><br>
             <br>
-            4. What percentage of recurring revenue do you expect to come from <div class="tooltip_light">adding new customers<span class="tooltiptext">The remaining percentage will be assumed to come from growing your existing customer base.</span></div>?<br>
+            4. What percentage of incremental growth revenue do you expect to come from <div class="tooltip_light">adding new customers<span class="tooltiptext">The remaining percentage will be assumed to come from growing your existing customer base.</span></div>?<br>
             <br>
             <span id="rangeValue">0%</span> <input type="range" min="0" max="100" value="0" id="newbus" name="newbus" oninput="rangeValue.innerText = this.value + '%'"><br>
             <br>
             5. What is your <div class="tooltip_light">monthly recurring revenue baseline<span class="tooltiptext">This is the monthly recurring revenue from the month immediately before this plan begins. If you are unsure, set to 0.</span></div>?<input type="number" id="mrrbaseline" name="mrrbaseline" placeholder="Example: 50000" required><br>
             6. What is your organic <div class="tooltip_light">month-over-month growth rate<span class="tooltiptext">This is your estimated organic growth rate in percentage terms. If you are unsure, set to 0.</span></div>?<input type="number" min="0" max="100" id="momrate" name="momrate" placeholder="Example: 1" required><br>
+            
+            <!-- Advanced Options Toggle -->
+            <button type="button" id="advancedOptionsToggle">Advanced Options</button>
+            
+            <!-- Optional Questions: Initially hidden -->
+            <div id="advancedOptions" style="max-height: 0px">
+            <p><i>These questions are optional. If you have numbers for your business, you can adjust the defaults to more closely match your own conversion rates and get a more accurate funnel recommendation.</i></p>
+
+                <label for="MQLs">7. Approximately how many Marketing Qualified Leads (MQLs) do you process per Sales Qualified Lead (SQL)?</label>
+                <input type="number" id="MQLs" name="MQLs" value="5">
+                
+                <label for="SQLs">8. Approximately how many SQLs do you process per won opportunity?</label>
+                <input type="number" id="SQLs" name="SQLs" value="3">
+            </div>
+            
             <input type="submit" id="runcalc">
             </form>
             <p id="error-message" style="color: red;"></p>
@@ -68,6 +83,20 @@
             }
             this.submit();
             
+            });
+        </script>
+        <!-- Advanced Options Toggle Script -->
+        <script>
+            $(document).ready(function() {
+                $('#advancedOptionsToggle').click(function() {
+                    var options = $('#advancedOptions');
+                    
+                    if (options.css('max-height') === '0px') {
+                        options.css('max-height', '500px');
+                    } else {
+                        options.css('max-height', '0px');
+                    }
+                });
             });
         </script>
         <div class="row footer"><?php include 'footer.php';?></div>
