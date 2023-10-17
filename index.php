@@ -36,7 +36,7 @@
             <button type="button" id="advancedOptionsToggle">Advanced Options</button>
 
             <!-- Optional Questions: Initially hidden -->
-            <div id="advancedOptions" style="display: none;">
+            <div id="advancedOptions" style="max-height: 0px">
                 <label for="optionalQuestion1">Optional Question 1:</label>
                 <input type="number" id="optionalQuestion1" name="optionalQuestion1">
                 
