@@ -40,10 +40,10 @@
             <p><i>These questions are optional. If you have numbers for your business, you can adjust the defaults to more closely match your own conversion rates and get a more accurate funnel recommendation.</i></p>
 
                 <label for="optionalQuestion1">7. Approximately how many Marketing Qualified Leads (MQLs) do you process per Sales Qualified Lead (SQL)?</label>
-                <input type="number" id="optionalQuestion1" name="optionalQuestion1" value="5">
+                <input type="number" id="MQLs" name="MQLs" value="5">
                 
                 <label for="optionalQuestion2">8. Approximately how many SQLs do you process per won opportunity?</label>
-                <input type="number" id="optionalQuestion2" name="optionalQuestion2" value="3">
+                <input type="number" id="SQLs" name="SQLs" value="3">
             </div>
             
             <input type="submit" id="runcalc">

@@ -8,6 +8,8 @@ $targetSpend = $_GET["acpc"];                                       #The approxi
 $newBusinessShare = $_GET["newbus"] / 100;                          #The percentage of the target achieved through net new business (i.e. customer adds).
 $baselineRecurring = $_GET["mrrbaseline"];                          #The monthly recurring revenue baseline from plan month -1.
 $typicalMoM = $_GET["momrate"] /100;                                #The month-over-month percentage growth in the existing baseline (the organic growth).
+$MQLconversion = $_GET["MQLs"];                                     #The number of MQLs per SQL.
+$SQLconversion = $_GET["SQLs"];                                     #The number of SQLs per win.
 $newBusinessTarget = 0;                                             #The calculated new business target.
 $growthBusinessTarget = 0;
 $baselineGrowth = 0;                                                #The total of the recurring baseline + the growth in that baseline.
@@ -25,8 +27,8 @@ function calcMarketingMetrics($customers) {
     global $Wins;
 
     $Wins = round($customers,0,PHP_ROUND_HALF_UP);
-    $SQLs = $Wins * 3;
-    $MQLs = $SQLs * 5;
+    $SQLs = $Wins * $SQLconversion;
+    $MQLs = $SQLs * $MQLconversion;
 }
 
 #Calculate the Rule of 78 factor, based on Faulhaber's formula. 
