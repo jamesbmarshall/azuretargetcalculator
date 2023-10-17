@@ -163,15 +163,14 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
         <h2><span>🥳 </span>Here are the results for your <?php echo $planLength ?> month plan!</h2>
             <h3>Summary</h3>
             <p class="tab"><span>🌱 </span>Total number of new customers required: <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][8]) ?></span> consuming approximately <span class="keypoint"><?php echo "$" . number_format($targetSpend) ?></span> per month.</p>
-            <p class="tab"><span>📈 </span>Amount of growth from existing customers required: <span class="keypoint"><?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span></p>
+            <p class="tab"><span>📈 </span>Amount of proactively driven growth from existing customers required: <span class="keypoint">$<?php echo number_format($proactiveGrowthTotal) ?></span></p>
             <p class="tab"><span>💵 </span>Total revenue generated: <span class="keypoint">$<?php echo number_format($totalRevenueGenerated) ?></span></p>
             <p class="tab"><span>🔁 </span>Annualised recurring revenue at end of plan: <span class="keypoint">$<?php echo number_format($annualisedRevenue) ?></span> ($<?php echo number_format($planArray[$planLength - 1][0][10]) . " * 12" ?>)</p>
             <h3>Details</h3>
             <p class="tab">During this <?php echo $planLength ?> month period, you will need to add <span class="keypoint"><?php echo number_format($planArray[$planLength - 1][0][8]) ?> customers</span>,
              consuming approximately <span class="keypoint">$<?php echo number_format($targetSpend) ?> of cloud services per month</span> to achieve the new business 
              contribution of <?php echo $newBusinessShare * 100; ?>% to your overall plan target.
-             You wil need to <span class="keypoint">grow your existing base of customers by $<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target.
-             <br>
+             You wil need to <span class="keypoint">grow your existing base of customers by a total of $<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal) ?></span> to cover the remaining <?php echo 100 - ($newBusinessShare * 100); ?>% of your plan target. This includes any organic growth you expect from your customers.             <br>
              <br>
              A monthly breakdown of customer adds and revenue growth is given below.
             </p>
