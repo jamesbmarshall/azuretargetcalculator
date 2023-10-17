@@ -37,14 +37,11 @@
 
             <!-- Optional Questions: Initially hidden -->
             <div id="advancedOptions" style="max-height: 0px">
-                <label for="optionalQuestion1">Optional Question 1:</label>
-                <input type="number" id="optionalQuestion1" name="optionalQuestion1">
+                <label for="optionalQuestion1">Approximately how many Marketing Qualified Leads (MQLs) do you process per Sales Qualified Lead (SQL)?</label>
+                <input type="number" id="optionalQuestion1" name="optionalQuestion1" value="5">
                 
-                <label for="optionalQuestion2">Optional Question 2:</label>
-                <input type="number" id="optionalQuestion2" name="optionalQuestion2">
-                
-                <label for="optionalQuestion3">Optional Question 3:</label>
-                <input type="number" id="optionalQuestion3" name="optionalQuestion3">
+                <label for="optionalQuestion2">Approximately how many SQLs do you process per won opportunity?</label>
+                <input type="number" id="optionalQuestion2" name="optionalQuestion2" value="3">
             </div>
             
             <input type="submit" id="runcalc">
