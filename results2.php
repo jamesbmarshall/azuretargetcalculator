@@ -45,7 +45,7 @@ $sumOfDigits = calcMultiplier($planLength);                         #The number 
 $newBusinessTarget = ($targetRevenue - ($baselineRecurring * $planLength)) * $newBusinessShare;
 $newBusinessSumOfDigits = round($newBusinessTarget / $sumOfDigits,2,PHP_ROUND_HALF_UP);
 $newBusGrowthRunning = 0;
-$growthBusinessTarget = $targetRevenue - $newBusinessTarget;
+$growthBusinessTarget = $targetRevenue - $newBusinessTarget - ($baselineRecurring * $planLength);
 $growthBusinessSumOfDigits = $growthBusinessTarget / $sumOfDigits;
 $baselineTotal = 0;
 $baselineGrowthTotal = 0;
@@ -73,7 +73,7 @@ for ($x = 0; $x < $planLength; $x++){
     $planArray[$x][0][0] = $x + 1;
     $planArray[$x][0][1] = $baselineRecurring;
 
-    #Calculate new business growth.
+    #Calculate new business target.
     $planArray[$x][0][4] = ($x + 1) * $newBusinessSumOfDigits;
     
     #Calculate new business running total.
