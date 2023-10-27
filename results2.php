@@ -42,7 +42,7 @@ function calcMultiplier($months) {
 }
 
 $sumOfDigits = calcMultiplier($planLength);                         #The number of divisions according to the Rule of 78s method. 78 for 12 months, 300 for 24, etc.
-$newBusinessTarget = ($targetRevenue - ($baselineGrowth * $planLength)) * $newBusinessShare;
+$newBusinessTarget = ($targetRevenue - ($baselineRecurring * $planLength)) * $newBusinessShare;
 $newBusinessSumOfDigits = round($newBusinessTarget / $sumOfDigits,2,PHP_ROUND_HALF_UP);
 $newBusGrowthRunning = 0;
 $growthBusinessTarget = $targetRevenue - $newBusinessTarget;
@@ -86,7 +86,7 @@ for ($x = 0; $x < $planLength; $x++){
     }
 
     $planArray[$x][0][7] = round(($x + 1) * $growthBusinessSumOfDigits,2,PHP_ROUND_HALF_UP);
-    
+
     #Calculate the number of customers required per month
     $planArray[$x][0][8] = round($planArray[$x][0][4] / $targetSpend,2,PHP_ROUND_HALF_UP);
 
