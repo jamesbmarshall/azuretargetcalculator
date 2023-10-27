@@ -47,6 +47,11 @@ $newBusinessSumOfDigits = round($newBusinessTarget / $sumOfDigits,2,PHP_ROUND_HA
 $newBusGrowthRunning = 0;
 $growthBusinessTarget = $targetRevenue - $newBusinessTarget;
 $growthBusinessSumOfDigits = $growthBusinessTarget / $sumOfDigits;
+$baselineTotal = 0;
+$baselineGrowthTotal = 0;
+$newBusinessTotal = 0;
+$newBusinessGrowthTotal = 0;
+$proactiveGrowthTotal =0;
 
 #Over the next few lines we're going to populate an array with all the calculated values for the plan.
 #Array index 0 = month.
@@ -80,6 +85,8 @@ for ($x = 0; $x < $planLength; $x++){
         $planArray[$x][0][5] = $planArray[$x][0][4] + $planArray[$x - 1][0][5];
     }
 
+    $planArray[$x][0][7] = round(($x + 1) * $growthBusinessSumOfDigits,2,PHP_ROUND_HALF_UP);
+    
     #Calculate the number of customers required per month
     $planArray[$x][0][8] = round($planArray[$x][0][4] / $targetSpend,2,PHP_ROUND_HALF_UP);
 
@@ -92,16 +99,6 @@ for ($x = 0; $x < $planLength; $x++){
         $planArray[$x][0][9] = $planArray[$x][0][8] - $planArray[$x - 1][0][8];
     }
 
-}
-
-$baselineTotal = 0;
-$baselineGrowthTotal = 0;
-$newBusinessTotal = 0;
-$newBusinessGrowthTotal = 0;
-$proactiveGrowthTotal =0;
-
-#Calculate all the relevant totals.
-for($x = 0;$x < $planLength; $x++){
     $baselineTotal = $baselineTotal + $planArray[$x][0][1];
     
     $newBusinessTotal = $newBusinessTotal + $planArray[$x][0][4];
