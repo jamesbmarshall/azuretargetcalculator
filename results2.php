@@ -155,9 +155,9 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
                     <th><div class="tooltip">New Business<span class="tooltiptext">Recurring revenue driven from new customer adds.</span></div></th>
                     
                     <th><div class="tooltip">Proactive Growth<span class="tooltiptext">The above-baseline growth proactively driven by your teams.</span></div></th>
-                    <th><div class="tooltip customer">Customer Adds<span class="tooltiptext">The number of new customers you'll need to add in a given month.</span></div></th>
-                    <th><div class="tooltip customer">Customers Total<span class="tooltiptext">The running total of customers transacting per month.</span></div></th>
-                    <th><div class="tooltip">Monthly Total<span class="tooltiptext">The running total of all constituent revenue per month.</span></div></th>
+                    <th><div class="tooltip">Customer Adds<span class="tooltiptext">The number of new customers you'll need to add in a given month.</span></div></th>
+                    <th class="customer"><div class="tooltip">Customers Total<span class="tooltiptext">The running total of customers transacting per month.</span></div></th>
+                    <th class="customer"><div class="tooltip">Monthly Total<span class="tooltiptext">The running total of all constituent revenue per month.</span></div></th>
                     <th><div class="tooltip">Running Total<span class="tooltiptext">The running total of all constituent revenue.</span></div></th>
                 </tr>
 
