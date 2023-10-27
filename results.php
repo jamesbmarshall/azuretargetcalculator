@@ -7,7 +7,7 @@ $planLength = $_GET["months"];                                      #The number 
 $targetSpend = $_GET["acpc"];                                       #The approximate minimum spend per customer, per month.
 $newBusinessShare = $_GET["newbus"] / 100;                          #The percentage of the target achieved through net new business (i.e. customer adds).
 $baselineRecurring = $_GET["mrrbaseline"];                          #The monthly recurring revenue baseline from plan month -1.
-$typicalMoM = $_GET["momrate"] /100;                                #The month-over-month percentage growth in the existing baseline (the organic growth).
+$typicalMoM = 0;                                #The month-over-month percentage growth in the existing baseline (the organic growth).
 $MQLconversion = $_GET["MQLs"];                                     #The number of MQLs per SQL.
 $SQLconversion = $_GET["SQLs"];                                     #The number of SQLs per win.
 $newBusinessTarget = 0;                                             #The calculated new business target.
@@ -15,12 +15,14 @@ $growthBusinessTarget = 0;
 $baselineGrowth = 0;                                                #The total of the recurring baseline + the growth in that baseline.
 $newBusinessSumOfDigits = 0;                                        #The new business target / the rule of 78s method.
 $growthBusinessSumOfDigits = 0;
+$planArray = array();                                               #Array to hold all the plan values.
 
 /*MARKETING METRIC CALCS */
 $MQLs = 0;
 $SQLs = 0;
 $Wins = 0;
 
+#Calculate the marketing funnel metrics based on any values supplied on the form.
 function calcMarketingMetrics($customers) {
     global $SQLs;
     global $MQLs;
@@ -40,8 +42,28 @@ function calcMultiplier($months) {
 }
 
 $sumOfDigits = calcMultiplier($planLength);                         #The number of divisions according to the Rule of 78s method. 78 for 12 months, 300 for 24, etc.
+$newBusinessTarget = ($targetRevenue - ($baselineRecurring * $planLength)) * $newBusinessShare;
+$newBusinessSumOfDigits = round($newBusinessTarget / $sumOfDigits,2,PHP_ROUND_HALF_UP);
+$newBusGrowthRunning = 0;
+$growthBusinessTarget = $targetRevenue - $newBusinessTarget - ($baselineRecurring * $planLength);
+$growthBusinessSumOfDigits = $growthBusinessTarget / $sumOfDigits;
+$baselineTotal = 0;
+$newBusinessTotal = 0;
+$proactiveGrowthTotal =0;
 
-$planArray = array();                                               #Array to hold all the plan values.
+#Over the next few lines we're going to populate an array with all the calculated values for the plan.
+#Array index 0 = month.
+#Array index 1 = baseline recurring revenue.
+#Array index 2 = baseline recurring revenue + the growth in that baseline.
+#Array index 3 = growth in the baseline.
+#Array index 4 = new business target.
+#Array index 5 = running total of new business.
+#Array index 6 = growth in the new business.
+#Array index 7 = growth in the existing base.
+#Array index 8 = number of customers required per month.
+#Array index 9 = running total of customers.
+#Array index 10 = total revenue per month.
+#Array index 11 = running total of revenue.
 
 
 for ($x = 0; $x < $planLength; $x++){
@@ -49,30 +71,7 @@ for ($x = 0; $x < $planLength; $x++){
     $planArray[$x][0][0] = $x + 1;
     $planArray[$x][0][1] = $baselineRecurring;
 
-    #Calculate the gross MoM growth on the baseline and add it to the array.
-    
-    if ($x == 0) {
-        #First month is baseline (baseline * MoM) + baseline.
-        $planArray[$x][0][2] = ($baselineRecurring * $typicalMoM) + $baselineRecurring;
-    } else {
-        #All other months are (previous month * MoM) + previous month.
-        $planArray[$x][0][2] = round(($planArray[$x-1][0][2] * $typicalMoM) + $planArray[$x-1][0][2],2,PHP_ROUND_HALF_UP);    
-    }
-    
-    #Calculate the net MoM growth on the baseline and add it to the array.
-    $planArray[$x][0][3] = $planArray[$x][0][2] - $planArray[$x][0][1];
-
-    #Calculate the new business target
-    $baselineGrowth = $baselineGrowth + $planArray[$x][0][2];
-};
-
-
-$newBusinessTarget = ($targetRevenue - $baselineGrowth) * $newBusinessShare;
-$newBusinessSumOfDigits = round($newBusinessTarget / $sumOfDigits,2,PHP_ROUND_HALF_UP);
-
-
-for ($x = 0; $x < $planLength; $x++){
-    #Calculate new business growth.
+    #Calculate new business target.
     $planArray[$x][0][4] = ($x + 1) * $newBusinessSumOfDigits;
     
     #Calculate new business running total.
@@ -83,27 +82,6 @@ for ($x = 0; $x < $planLength; $x++){
         #All other months.
         $planArray[$x][0][5] = $planArray[$x][0][4] + $planArray[$x - 1][0][5];
     }
-
-    #Calculate new business growth.
-    if ($x == 0) {
-        #First month..
-        $planArray[$x][0][6] = 0;
-    } else {
-        #All other months.
-        $planArray[$x][0][6] = round(($planArray[$x][0][5] - $planArray[$x][0][4]) * $typicalMoM,2,PHP_ROUND_HALF_UP);
-    }
-};
-$newBusGrowthRunning = 0;
-
-for($x = 0;$x < $planLength; $x++){
-    $newBusGrowthRunning = $newBusGrowthRunning + $planArray[$x][0][6];
-}
-
-#Calculate remaining proactive growth target.
-$growthBusinessTarget = $targetRevenue - $baselineGrowth - $newBusinessTarget - $newBusGrowthRunning;
-$growthBusinessSumOfDigits = $growthBusinessTarget / $sumOfDigits;
-
-for($x = 0;$x < $planLength; $x++){
 
     $planArray[$x][0][7] = round(($x + 1) * $growthBusinessSumOfDigits,2,PHP_ROUND_HALF_UP);
 
@@ -119,23 +97,13 @@ for($x = 0;$x < $planLength; $x++){
         $planArray[$x][0][9] = $planArray[$x][0][8] - $planArray[$x - 1][0][8];
     }
 
-}
-
-$baselineTotal = 0;
-$baselineGrowthTotal = 0;
-$newBusinessTotal = 0;
-$newBusinessGrowthTotal = 0;
-$proactiveGrowthTotal =0;
-
-#Calculate all the relevant totals.
-for($x = 0;$x < $planLength; $x++){
     $baselineTotal = $baselineTotal + $planArray[$x][0][1];
-    $baselineGrowthTotal = $baselineGrowthTotal + $planArray[$x][0][3];
+    
     $newBusinessTotal = $newBusinessTotal + $planArray[$x][0][4];
-    $newBusinessGrowthTotal = $newBusinessGrowthTotal + $planArray[$x][0][6];
+    
     $proactiveGrowthTotal = $proactiveGrowthTotal + $planArray[$x][0][7];
 
-    $planArray[$x][0][10] = $planArray[$x][0][1] + $planArray[$x][0][3] + $planArray[$x][0][4] + $planArray[$x][0][6] + $planArray[$x][0][7];
+    $planArray[$x][0][10] = $planArray[$x][0][1] + $planArray[$x][0][4] + $planArray[$x][0][7];
 
     #Calculate revenue total.
     if ($x == 0) {
@@ -147,7 +115,7 @@ for($x = 0;$x < $planLength; $x++){
     }
 }
 
-$totalRevenueGenerated = $baselineTotal + $baselineGrowthTotal + $newBusinessTotal + $newBusinessGrowthTotal + $proactiveGrowthTotal;
+$totalRevenueGenerated = $baselineTotal + $newBusinessTotal + $proactiveGrowthTotal;
 $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
 ?>
 
@@ -181,12 +149,12 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
                 <tr>
                     <th>Month</th>
                     <th><div class="tooltip">Baseline<span class="tooltiptext">Baseline recurring revenue (e.g., from previous fiscal year).</span></div></th>
-                    <th><div class="tooltip">Baseline Growth<span class="tooltiptext">The month-over-month 'organic' growth applied to the baseline.</span></div></th>
+                    
                     <th><div class="tooltip">New Business<span class="tooltiptext">Recurring revenue driven from new customer adds.</span></div></th>
-                    <th><div class="tooltip">New Business Growth<span class="tooltiptext">The month-over-month growth of the new business. New customers grow, too!</span></div></th>
-                    <th><div class="tooltip">Proactive Growth<span class="tooltiptext">The above-baseline growth proactively driven by your teams.</span></div></th>
-                    <th><div class="tooltip">Customer Adds<span class="tooltiptext">The number of new customers you'll need to add in a given month.</span></div></th>
-                    <th><div class="tooltip">Customers Total<span class="tooltiptext">The running total of customers transacting per month.</span></div></th>
+                    
+                    <th><div class="tooltip">Growth<span class="tooltiptext">The above-baseline growth proactively driven by your teams.</span></div></th>
+                    <th class="customer"><div class="tooltip">Customer Adds<span class="tooltiptext">The number of new customers you'll need to add in a given month.</span></div></th>
+                    <th class="customer"><div class="tooltip">Customers Total<span class="tooltiptext">The running total of customers transacting per month.</span></div></th>
                     <th><div class="tooltip">Monthly Total<span class="tooltiptext">The running total of all constituent revenue per month.</span></div></th>
                     <th><div class="tooltip">Running Total<span class="tooltiptext">The running total of all constituent revenue.</span></div></th>
                 </tr>
@@ -195,16 +163,16 @@ $annualisedRevenue = ($planArray[$planLength - 1][0][10] * 12);
 
 for ($x = 0; $x < $planLength; $x++)
     {
-        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][3],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][6],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][9],1) . "</td><td>" . number_format($planArray[$x][0][8],1) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][11],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
+        echo "<tr><td>" . $planArray[$x][0][0] . "</td><td>$" . number_format($planArray[$x][0][1]) . "</td><td>$" . number_format(round($planArray[$x][0][4],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][7],0,PHP_ROUND_HALF_UP)) . "</td><td>" . number_format($planArray[$x][0][9],1) . "</td><td>" . number_format($planArray[$x][0][8],1) . "</td><td>$" . number_format(round($planArray[$x][0][10],0,PHP_ROUND_HALF_UP)) . "</td><td>$" . number_format(round($planArray[$x][0][11],0,PHP_ROUND_HALF_UP)) . "</td></tr>";
     };
 
 ?>
                 <tr>
                     <td class="total">Total:</td>
                     <td class="total">$<?php echo number_format($baselineTotal) ?></td>
-                    <td class="total">$<?php echo number_format($baselineGrowthTotal) ?></td>
+                    
                     <td class="total">$<?php echo number_format($newBusinessTotal) ?></td>
-                    <td class="total">$<?php echo number_format($newBusinessGrowthTotal) ?></td>
+                    
                     <td class="total">$<?php echo number_format($proactiveGrowthTotal) ?></td>
                     <td class="blank"></td>
                     <td class="total"><?php echo number_format($planArray[$planLength - 1][0][8],1) ?></td>
@@ -225,36 +193,24 @@ for ($x = 0; $x < $planLength; $x++)
                             measure: [
                                 "relative",
                                 "relative",
-                                "total",
                                 "relative",
-                                "relative",
-                                "relative",
-                                "total",
                                 "total"
                             ],
                             x: [
-        ["Existing", "Acquisition", "Acquisition", "Growth", "Growth", "Growth", "Growth", "Target" ],
-        ["Baseline", "Adds", "Running Total", "1. Adds Growth", "2. Organic Growth", "3. Proactive Growth", "4. Running Total", "Target" ]
+        ["Existing", "New Business", "New Business", "Target" ],
+        ["Baseline", "Adds", "Growth", "Total" ]
       ],
                             textposition: "outside",
                             text: [
                                 "<?php echo number_format($baselineTotal) ?>",
                                 "<?php echo number_format($newBusinessTotal) ?>",
-                                "<?php echo number_format($newBusinessTotal + $baselineTotal) ?>",
-                                "<?php echo number_format($newBusinessGrowthTotal) ?>",
-                                "<?php echo number_format($baselineGrowthTotal) ?>",
                                 "<?php echo number_format($proactiveGrowthTotal) ?>",
-                                "<?php echo number_format($proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal + $newBusinessTotal + $baselineTotal) ?>",
                                 "<?php echo number_format($totalRevenueGenerated) ?>"
                             ],          
                             y: [
                                 <?php echo $baselineTotal ?>,
                                 <?php echo $newBusinessTotal ?>,
-                                <?php echo $newBusinessTotal + $baselineTotal ?>,
-                                <?php echo $newBusinessGrowthTotal ?>,
-                                <?php echo $baselineGrowthTotal ?>,
                                 <?php echo $proactiveGrowthTotal ?>,
-                                <?php echo $proactiveGrowthTotal + $baselineGrowthTotal + $newBusinessGrowthTotal + $newBusinessTotal + $baselineTotal ?>,
                                 <?php echo $totalRevenueGenerated ?>
                             ],
                             connector: {

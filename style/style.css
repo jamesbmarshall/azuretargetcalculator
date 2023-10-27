@@ -90,6 +90,10 @@ th {
   padding: 10px;
 }
 
+.customer {
+  background-color: #555;
+}
+
 td {
   text-align: right;
 }
