@@ -201,8 +201,8 @@ for ($x = 0; $x < $planLength; $x++)
                                 "total"
                             ],
                             x: [
-        ["Existing", "Acquisition", "Growth", "Target" ],
-        ["Baseline", "Adds", "Growth", "Target" ]
+        ["Existing", "New Business", "New Business", "Target" ],
+        ["Baseline", "Adds", "Growth", "Total" ]
       ],
                             textposition: "outside",
                             text: [
