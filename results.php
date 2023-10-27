@@ -193,11 +193,7 @@ for ($x = 0; $x < $planLength; $x++)
                             measure: [
                                 "relative",
                                 "relative",
-                                "total",
                                 "relative",
-                                "relative",
-                                "relative",
-                                "total",
                                 "total"
                             ],
                             x: [
