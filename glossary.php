@@ -33,15 +33,6 @@
             <p class="tab">The other main method of generating revenue is by growing the spend of your existing customers by selling them more services. Deciding the minimum amount you want a customer to spend per month will help you understand how much of your target
             should come from adding more new customers versus growing existing ones. There'll be many factors in this decision, including your capacity to add and manage more customers and your customer lifecycle management process to be able to grow existing customers.
 
-        <h1>O</h1>
-
-        <h2>Organic Growth</h2>
-
-            <p class="tab">One of the potential benefits of cloud services like Microsoft Azure is that end-customers can start to consume more services without the need to 'sell' anything new. This might be through simple scenarios like backing up more data, storing and
-            accessing more data, hosting more virtual desktops, etc. or it might be that a new department migrates into the cloud, uses a new application, and so on. This self-driven increase in consumption is referred to as <i>organic growth</i>, which is to say
-            that it happened without you needing to specifically do anything. It's not guaranteed, and some customers may not grow at all without help and support from you. However, over time you'll get an understanding of how much of your monthly growth
-            happens without you driving it. Therefore, a proportion of your monthly growth should be attributed to organic growth, the rest being what you add either through on-boarding new customers or proactively growing existing ones.</p>
-
         <h1>R</h1>
 
         <h2>Recurring Revenue</h2>
