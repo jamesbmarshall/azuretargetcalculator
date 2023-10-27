@@ -201,24 +201,20 @@ for ($x = 0; $x < $planLength; $x++)
                                 "total"
                             ],
                             x: [
-        ["Existing", "Acquisition", "Acquisition", "Growth", "Growth", "Target" ],
-        ["Baseline", "Adds", "Running Total", "Growth", "Running Total", "Target" ]
+        ["Existing", "Acquisition", "Growth", "Target" ],
+        ["Baseline", "Adds", "Growth", "Target" ]
       ],
                             textposition: "outside",
                             text: [
                                 "<?php echo number_format($baselineTotal) ?>",
                                 "<?php echo number_format($newBusinessTotal) ?>",
-                                "<?php echo number_format($newBusinessTotal + $baselineTotal) ?>",
                                 "<?php echo number_format($proactiveGrowthTotal) ?>",
-                                "<?php echo number_format($proactiveGrowthTotal + $newBusinessTotal + $baselineTotal) ?>",
                                 "<?php echo number_format($totalRevenueGenerated) ?>"
                             ],          
                             y: [
                                 <?php echo $baselineTotal ?>,
                                 <?php echo $newBusinessTotal ?>,
-                                <?php echo $newBusinessTotal + $baselineTotal ?>,
                                 <?php echo $proactiveGrowthTotal ?>,
-                                <?php echo $proactiveGrowthTotal + $newBusinessTotal + $baselineTotal ?>,
                                 <?php echo $totalRevenueGenerated ?>
                             ],
                             connector: {
