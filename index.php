@@ -30,7 +30,6 @@
             <span id="rangeValue">0%</span> <input type="range" min="0" max="100" value="0" id="newbus" name="newbus" oninput="rangeValue.innerText = this.value + '%'"><br>
             <br>
             5. What is your <div class="tooltip_light">monthly recurring revenue baseline<span class="tooltiptext">This is the monthly recurring revenue from the month immediately before this plan begins. If you are unsure, set to 0.</span></div>?<input type="number" id="mrrbaseline" name="mrrbaseline" placeholder="Example: 50000" required><br>
-            6. What is your organic <div class="tooltip_light">month-over-month growth rate<span class="tooltiptext">This is your estimated organic growth rate in percentage terms. If you are unsure, set to 0.</span></div>?<input type="number" min="0" max="100" id="momrate" name="momrate" placeholder="Example: 1" required><br>
             
             <!-- Advanced Options Toggle -->
             <button type="button" id="advancedOptionsToggle">Advanced Options</button>
@@ -39,10 +38,10 @@
             <div id="advancedOptions" style="max-height: 0px">
             <p><i>These questions are optional. If you have numbers for your business, you can adjust the defaults to more closely match your own conversion rates and get a more accurate funnel recommendation.</i></p>
 
-                <label for="MQLs">7. Approximately how many Marketing Qualified Leads (MQLs) do you process per Sales Qualified Lead (SQL)?</label>
+                <label for="MQLs">6. Approximately how many Marketing Qualified Leads (MQLs) do you process per Sales Qualified Lead (SQL)?</label>
                 <input type="number" id="MQLs" name="MQLs" value="5">
                 
-                <label for="SQLs">8. Approximately how many SQLs do you process per won opportunity?</label>
+                <label for="SQLs">7. Approximately how many SQLs do you process per won opportunity?</label>
                 <input type="number" id="SQLs" name="SQLs" value="3">
             </div>
             

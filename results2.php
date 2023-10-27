@@ -48,9 +48,7 @@ $newBusGrowthRunning = 0;
 $growthBusinessTarget = $targetRevenue - $newBusinessTarget - ($baselineRecurring * $planLength);
 $growthBusinessSumOfDigits = $growthBusinessTarget / $sumOfDigits;
 $baselineTotal = 0;
-$baselineGrowthTotal = 0;
 $newBusinessTotal = 0;
-$newBusinessGrowthTotal = 0;
 $proactiveGrowthTotal =0;
 
 #Over the next few lines we're going to populate an array with all the calculated values for the plan.
