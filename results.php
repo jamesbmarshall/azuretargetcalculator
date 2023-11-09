@@ -223,14 +223,15 @@ for ($x = 0; $x < $planLength; $x++)
                 layout = {
                         title: {
                             text: ""
-                        },
+                            },
                         xaxis: {
-      title: "",
-      tickfont: {size: 15},
-      ticks: "outside"
-    },
+                            title: "",
+                            tickfont: {size: 15},
+                            ticks: "outside"
+                            },
                         yaxis: {
-                            type: "linear"
+                            type: "linear",
+                            range: [0,<?php echo $targetRevenue * 1.1 ?>]
                         },
                         autosize: true,
                         showlegend: true
