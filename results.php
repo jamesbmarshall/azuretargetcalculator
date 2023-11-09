@@ -230,10 +230,10 @@ for ($x = 0; $x < $planLength; $x++)
                             ticks: "outside"
                             },
                         yaxis: {
-                            type: "linear"
+                            type: "linear",
                             range: [0,<?php echo $targetRevenue * 1.1 ?>]
                         },
-                        autosize: false,
+                        autosize: true,
                         showlegend: true
                     };
                 Plotly.newPlot('myDiv', data, layout);
