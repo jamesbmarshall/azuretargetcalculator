@@ -233,7 +233,7 @@ for ($x = 0; $x < $planLength; $x++)
                             type: "linear"
                             range: [0,<?php echo $targetRevenue * 1.1 ?>]
                         },
-                        autosize: true,
+                        autosize: false,
                         showlegend: true
                     };
                 Plotly.newPlot('myDiv', data, layout);
