@@ -254,7 +254,6 @@
         if (params.has('pctAcq')) document.getElementById('pctAcq').value = params.get('pctAcq');
         if (params.has('mqlPerSql')) document.getElementById('mqlPerSql').value = params.get('mqlPerSql');
         if (params.has('sqlPerWin')) document.getElementById('sqlPerWin').value = params.get('sqlPerWin');
-        if (params.has('salesCycle')) document.getElementById('salesCycle').value = params.get('salesCycle');
 
         // If advanced params are present, show advanced section.
         if (params.has('mqlPerSql') || params.has('sqlPerWin') || params.has('salesCycle')) {
@@ -283,7 +282,6 @@
       // Advanced Options.
       const mqlPerSql = parseFloat(document.getElementById('mqlPerSql').value);
       const sqlPerWin = parseFloat(document.getElementById('sqlPerWin').value);
-      const salesCycle = parseFloat(document.getElementById('salesCycle').value);
 
       // 1) Compute baseline total (growth + churn).
       let baselineTotal = 0;
