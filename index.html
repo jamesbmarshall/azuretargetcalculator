@@ -158,10 +158,6 @@
           SQLs per Win:
           <input type="number" id="sqlPerWin" value="3" min="0">
         </label>
-        <label>
-          Sales Cycle Length (months):
-          <input type="number" id="salesCycle" value="2" min="1">
-        </label>
       </div>
       <button type="submit">Calculate</button>
     </form>
@@ -184,6 +180,7 @@
   <!-- Marketing Funnel Bubble -->
   <div class="bubble" id="funnelContainer">
     <h2>Marketing Funnel</h2>
+    <p>This is the breakdown of marketing qualified leads, to sales qualified leads, to wins based on a default of 5:3:1, or your own conversion if you'd changed any advanced options.</p>
     <div class="chart-responsive">
       <div id="funnelChart" style="height: 400px; margin-top: 30px;"></div>
     </div>
@@ -239,7 +236,6 @@
       // Advanced options:
       params.set('mqlPerSql', document.getElementById('mqlPerSql').value);
       params.set('sqlPerWin', document.getElementById('sqlPerWin').value);
-      params.set('salesCycle', document.getElementById('salesCycle').value);
 
       history.pushState(null, '', '?' + params.toString());
     }
