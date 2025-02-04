@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Target Calculator v2</title>
+  <style>
+    /* Page background: gradient */
+    body {
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      margin: 0;
+      padding: 20px;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #333;
+    }
+    /* Bubble styling for containers */
+    .bubble {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+      padding: 20px;
+    }
+    /* Form styling */
+    form label {
+      display: block;
+      margin: 10px 0;
+    }
+    form input {
+      width: 100%;
+      max-width: 300px;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    form button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      background-color: #74ebd5;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    form button:hover {
+      background-color: #5cc0aa;
+    }
+    /* Advanced Options */
+    #advancedToggle {
+      background-color: #acb6e5;
+      margin-top: 10px;
+    }
+    #advancedOptions {
+      display: none;
+      margin-top: 10px;
+    }
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+    /* Responsive containers for table and charts */
+    .table-responsive, .chart-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    /* Mobile responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .bubble {
+        padding: 15px;
+      }
+      form input {
+        width: 100%;
+      }
+      table, th, td {
+        font-size: 14px;
+      }
+    }
+  </style>
+  <!-- Include Plotly from CDN for the waterfall and funnel charts -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <!-- Form Bubble -->
+  <div class="bubble" id="formContainer">
+    <h1>Cloud Target Calculator v2</h1>
+    <p>Fill in the form below to get insights into the number of customers or amount of consumption growth you'll need to plan for in order to hit your overall targets. You can also use the advanced options to adjust your lead conversion rates if you know them.</p>
+    <form id="calcForm">
+      <label>
+        Months in Scope:
+        <input type="number" id="months" value="12" min="1" required>
+      </label>
+      <label>
+        Target Spend per Customer, per Month:
+        <input type="number" id="targetSpend" value="1000" min="1" required>
+      </label>
+      <label>
+        Ramp-up Period in Months:
+        <input type="number" id="ramp" value="3" min="1" required>
+      </label>
+      <label>
+        Organic Growth Rate [as %]:
+        <input type="number" id="growth" value="1" min="0" required>
+      </label>
+      <label>
+        Revenue Churn Rate [as %]:
+        <input type="number" id="churn" value="1" min="0" required>
+      </label>
+      <label>
+        Overall Revenue Target:
+        <input type="number" id="targetRevenue" value="78000" min="1" required>
+      </label>
+      <label>
+        Baseline Recurring Revenue per Month:
+        <input type="number" id="baseline" value="1000" min="0" required>
+      </label>
+      <label>
+        % of Additional Revenue from New Customers (Acquisition):
+        <input type="number" id="pctAcq" value="50" min="0" max="100" required>
+      </label>
+      <button type="button" id="advancedToggle">Advanced Options</button>
+      <div id="advancedOptions">
+        <label>
+          MQLs per SQL:
+          <input type="number" id="mqlPerSql" value="5" min="0">
+        </label>
+        <label>
+          SQLs per Win:
+          <input type="number" id="sqlPerWin" value="3" min="0">
+        </label>
+      </div>
+      <button type="submit">Calculate</button>
+    </form>
+  </div>
+
+  <!-- Results Bubble -->
+  <div class="bubble" id="resultsContainer">
+    <div class="table-responsive" id="results"></div>
+    <div class="chart-responsive">
+      <div id="waterfallChart" style="height: 400px; margin-top: 30px;"></div>
+    </div>
+  </div>
+
+  <!-- Marketing Funnel Bubble -->
+  <div class="bubble" id="funnelContainer">
+    <h2>Marketing Funnel</h2>
+    <div class="chart-responsive">
+      <div id="funnelChart" style="height: 400px; margin-top: 30px;"></div>
+    </div>
+  </div>
+
+  <script>
+    // Helper function to format numbers with comma separators and 2 decimal places.
+    function formatNum(num) {
+      return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    
+    // Toggle Advanced Options.
+    document.getElementById('advancedToggle').addEventListener('click', function() {
+      const adv = document.getElementById('advancedOptions');
+      if (adv.style.display === 'none' || adv.style.display === '') {
+        adv.style.display = 'block';
+        this.textContent = 'Hide Advanced Options';
+      } else {
+        adv.style.display = 'none';
+        this.textContent = 'Advanced Options';
+      }
+    });
+    
+    // Update URL query parameters with the current form values.
+    function updateUrlParams() {
+      const params = new URLSearchParams();
+      params.set('months', document.getElementById('months').value);
+      params.set('targetSpend', document.getElementById('targetSpend').value);
+      params.set('ramp', document.getElementById('ramp').value);
+      params.set('growth', document.getElementById('growth').value);
+      params.set('churn', document.getElementById('churn').value);
+      params.set('targetRevenue', document.getElementById('targetRevenue').value);
+      params.set('baseline', document.getElementById('baseline').value);
+      params.set('pctAcq', document.getElementById('pctAcq').value);
+      // Advanced options.
+      params.set('mqlPerSql', document.getElementById('mqlPerSql').value);
+      params.set('sqlPerWin', document.getElementById('sqlPerWin').value);
+      history.pushState(null, '', '?' + params.toString());
+    }
+    
+    // On page load, check for URL parameters and pre-populate the form.
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.toString()) {
+        if (params.has('months')) document.getElementById('months').value = params.get('months');
+        if (params.has('targetSpend')) document.getElementById('targetSpend').value = params.get('targetSpend');
+        if (params.has('ramp')) document.getElementById('ramp').value = params.get('ramp');
+        if (params.has('growth')) document.getElementById('growth').value = params.get('growth');
+        if (params.has('churn')) document.getElementById('churn').value = params.get('churn');
+        if (params.has('targetRevenue')) document.getElementById('targetRevenue').value = params.get('targetRevenue');
+        if (params.has('baseline')) document.getElementById('baseline').value = params.get('baseline');
+        if (params.has('pctAcq')) document.getElementById('pctAcq').value = params.get('pctAcq');
+        if (params.has('mqlPerSql')) document.getElementById('mqlPerSql').value = params.get('mqlPerSql');
+        if (params.has('sqlPerWin')) document.getElementById('sqlPerWin').value = params.get('sqlPerWin');
+        if (params.has('mqlPerSql') || params.has('sqlPerWin')) {
+          document.getElementById('advancedOptions').style.display = 'block';
+          document.getElementById('advancedToggle').textContent = 'Hide Advanced Options';
+        }
+        // Auto-trigger calculation if parameters are present.
+        document.getElementById('calcForm').dispatchEvent(new Event('submit'));
+      }
+    });
+    
+    // Main calculation and rendering.
+    document.getElementById('calcForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      // Read input values.
+      const n = parseInt(document.getElementById('months').value, 10);
+      const s = parseFloat(document.getElementById('targetSpend').value);
+      const r = parseInt(document.getElementById('ramp').value, 10);
+      const g = parseFloat(document.getElementById('growth').value) / 100;
+      const c = parseFloat(document.getElementById('churn').value) / 100;
+      const T = parseFloat(document.getElementById('targetRevenue').value);
+      const B = parseFloat(document.getElementById('baseline').value);
+      const P = parseFloat(document.getElementById('pctAcq').value) / 100;
+      
+      // Advanced options.
+      const mqlPerSql = parseFloat(document.getElementById('mqlPerSql').value);
+      const sqlPerWin = parseFloat(document.getElementById('sqlPerWin').value);
+      
+      // -------------------------------------------------------------------
+      // Compute compounded baseline revenue (with growth & churn) over n months.
+      let baselineTotal = 0;
+      let cumulativeBaselineNoGrowth = 0;
+      for (let month = 1; month <= n; month++) {
+        const baselineMonthRevenue = B * Math.pow(1 + g, month - 1) * Math.pow(1 - c, month - 1);
+        baselineTotal += baselineMonthRevenue;
+        cumulativeBaselineNoGrowth += B * Math.pow(1 - c, month - 1);
+      }
+      // -------------------------------------------------------------------
+      
+      // The new revenue gap that new customers must cover.
+      const newRevenueTarget = (T - baselineTotal) * P;
+      
+      // ------------------------------
+      // Define revenue functions for new customers.
+      const effectiveRevenue = (i) => {
+        let base;
+        if (i <= r) {
+          base = s * (i / r);
+        } else {
+          base = s * Math.pow(1 + g, i - r);
+        }
+        return base * Math.pow(1 - c, i - 1);
+      };
+      const effectiveNoGrowth = (i) => {
+        let base;
+        if (i <= r) {
+          base = s * (i / r);
+        } else {
+          base = s;
+        }
+        return base * Math.pow(1 - c, i - 1);
+      };
+      
+      let multiplier = 0;
+      for (let i = 1; i <= n; i++) {
+        multiplier += (n - i + 1) * effectiveRevenue(i);
+      }
+      
+      const customersPerMonth = newRevenueTarget / multiplier;
+      
+      // ------------------------------
+      // Set up accumulators.
+      let cumulativeNewCustRevenue = 0;
+      let cumulativeNewCustNoGrowth = 0;
+      let cumulativeNewCustIncrementalGrowth = 0;
+      let cumulativeNewCustChurnImpact = 0;
+      
+      let cumulativeBaselineIncrementalGrowth = 0;
+      let cumulativeBaselineChurnImpact = 0;
+      
+      let cumulativeTotalRevenue = 0;
+      
+      let runningTotalNewCustomers = 0;
+      let tableRows = '';
+      
+      for (let month = 1; month <= n; month++) {
+        const newCustomers = customersPerMonth;
+        runningTotalNewCustomers += newCustomers;
+        
+        let newCustMonthRevenue = 0;
+        let newCustMonthNoGrowth = 0;
+        let newCustMonthIncrementalGrowth = 0;
+        let newCustMonthChurnImpact = 0;
+        
+        for (let age = 1; age <= month; age++) {
+          let baseRevenue;
+          if (age <= r) {
+            baseRevenue = s * (age / r);
+          } else {
+            baseRevenue = s * Math.pow(1 + g, age - r);
+          }
+          const effRev = baseRevenue * Math.pow(1 - c, age - 1);
+          
+          let noGrowth;
+          if (age <= r) {
+            noGrowth = s * (age / r);
+          } else {
+            noGrowth = s;
+          }
+          const effNoGrowth = noGrowth * Math.pow(1 - c, age - 1);
+          
+          const incRevenue = effRev - effNoGrowth;
+          const churnLoss = baseRevenue - effRev;
+          
+          newCustMonthRevenue += newCustomers * effRev;
+          newCustMonthNoGrowth += newCustomers * effNoGrowth;
+          newCustMonthIncrementalGrowth += newCustomers * incRevenue;
+          newCustMonthChurnImpact += newCustomers * churnLoss;
+        }
+        
+        const baselineMonthRevenue = B * Math.pow(1 + g, month - 1) * Math.pow(1 - c, month - 1);
+        const baselineMonthNoGrowth = B * Math.pow(1 - c, month - 1);
+        const baselineMonthIncrementalGrowth = baselineMonthRevenue - baselineMonthNoGrowth;
+        const baselineMonthChurnImpact = (B * Math.pow(1 + g, month - 1)) - baselineMonthRevenue;
+        
+        cumulativeNewCustRevenue += newCustMonthRevenue;
+        cumulativeNewCustNoGrowth += newCustMonthNoGrowth;
+        cumulativeNewCustIncrementalGrowth += newCustMonthIncrementalGrowth;
+        cumulativeNewCustChurnImpact += newCustMonthChurnImpact;
+        
+        cumulativeBaselineIncrementalGrowth += baselineMonthIncrementalGrowth;
+        cumulativeBaselineChurnImpact += baselineMonthChurnImpact;
+        
+        cumulativeTotalRevenue += (newCustMonthRevenue + baselineMonthRevenue);
+        
+        tableRows += `
+          <tr>
+            <td>${month}</td>
+            <td>${formatNum(newCustomers)}</td>
+            <td>${formatNum(runningTotalNewCustomers)}</td>
+            <td>$${formatNum(newCustMonthRevenue)}</td>
+            <td>$${formatNum(baselineMonthRevenue)}</td>
+            <td>$${formatNum(newCustMonthRevenue + baselineMonthRevenue)}</td>
+            <td>$${formatNum(newCustMonthIncrementalGrowth)}</td>
+            <td>$${formatNum(baselineMonthIncrementalGrowth)}</td>
+            <td>$${formatNum(newCustMonthIncrementalGrowth + baselineMonthIncrementalGrowth)}</td>
+            <td>-$${formatNum(newCustMonthChurnImpact)}</td>
+            <td>-$${formatNum(baselineMonthChurnImpact)}</td>
+            <td>-$${formatNum(newCustMonthChurnImpact + baselineMonthChurnImpact)}</td>
+            <td>$${formatNum(cumulativeTotalRevenue)}</td>
+          </tr>
+        `;
+      }
+      
+      const resultsHTML = `
+        <h2>Results</h2>
+        <p>
+          Baseline Revenue (compounded with growth & churn over ${n} months): 
+          $${formatNum(baselineTotal)}
+        </p>
+        <p>
+          Additional Revenue Required from New Customers: 
+          $${formatNum(newRevenueTarget)}
+        </p>
+        <p>
+          Additional Revenue Required from Growing Existing Customers: 
+          $${formatNum(T - newRevenueTarget - baselineTotal)}
+        </p>
+        <p>Calculated New Customers per Month: ${formatNum(customersPerMonth)}</p>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>New Cust. Added</th>
+                <th>Running Total New Cust.</th>
+                <th>New Cust. Revenue</th>
+                <th>Baseline Revenue</th>
+                <th>Total Monthly Revenue</th>
+                <th>New Cust. Growth</th>
+                <th>Baseline Growth</th>
+                <th>Total Growth</th>
+                <th>New Cust. Churn</th>
+                <th>Baseline Churn</th>
+                <th>Total Churn</th>
+                <th>Cumulative Total Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRows}
+            </tbody>
+          </table>
+        </div>
+      `;
+      document.getElementById('results').innerHTML = resultsHTML;
+      
+      // Update URL with current form values.
+      updateUrlParams();
+      
+      // -------------------------------------------------------------------
+      // Build the Plotly Waterfall Chart.
+      const step1 = cumulativeBaselineNoGrowth + cumulativeBaselineChurnImpact;
+      const step2 = cumulativeBaselineIncrementalGrowth;
+      const step3 = -cumulativeBaselineChurnImpact;
+      const step4 = cumulativeNewCustNoGrowth + cumulativeNewCustChurnImpact;
+      const step5 = cumulativeNewCustIncrementalGrowth;
+      const step6 = -cumulativeNewCustChurnImpact;
+      const step7 = T - newRevenueTarget - baselineTotal;
+      const finalTotal = step1 + step2 + step3 + step4 + step5 + step6 + step7;
+      
+      const waterfallData = [{
+        type: 'waterfall',
+        measure: ['absolute', 'relative', 'relative', 'relative', 'relative', 'relative', 'relative', 'total'],
+        x: ['Baseline (Flat)', 'Baseline Growth', 'Baseline Churn', 'New Cust. (Flat)', 'New Cust. Growth', 'New Cust. Churn', 'Proactive Growth', 'Final Total'],
+        y: [step1, step2, step3, step4, step5, step6, step7, finalTotal],
+        text: [
+          '$' + formatNum(step1),
+          '$' + formatNum(step2),
+          '$' + formatNum(Math.abs(step3)),
+          '$' + formatNum(step4),
+          '$' + formatNum(step5),
+          '$' + formatNum(Math.abs(step6)),
+          '$' + formatNum(step7),
+          '$' + formatNum(finalTotal)
+        ],
+        textposition: 'outside',
+        cliponaxis: false,
+        connector: {
+          line: { color: 'rgb(63, 63, 63)' }
+        }
+      }];
+      
+      const layout = {
+        title: 'Revenue Waterfall Chart',
+        waterfallgap: 0.3,
+        yaxis: { title: 'Revenue' },
+        autosize: true
+      };
+      
+      Plotly.newPlot('waterfallChart', waterfallData, layout);
+      
+      // -------------------------------------------------------------------
+      // Build the Marketing Funnel Chart.
+      // Wins (new customers required) = runningTotalNewCustomers.
+      // SQLs = Wins * (SQLs per Win), and MQLs = SQLs * (MQLs per SQL).
+      const wins = runningTotalNewCustomers;
+      const sqls = wins * sqlPerWin;
+      const mqls = sqls * mqlPerSql;
+      
+      const funnelData = [{
+        type: 'funnel',
+        y: ['MQLs', 'SQLs', 'Wins'],
+        x: [mqls, sqls, wins],
+        textinfo: "value+percent initial"
+      }];
+      
+      const funnelLayout = {
+        title: 'Marketing Funnel',
+        margin: { l: 150 },
+        autosize: true
+      };
+      
+      Plotly.newPlot('funnelChart', funnelData, funnelLayout);
+    });
+  </script>
+</body>
+</html>
