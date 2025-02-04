@@ -375,7 +375,12 @@
           Additional Revenue Required from Growing Existing Customers: 
           $${formatNum(T - newRevenueTarget - baselineTotal)}
         </p>
-        <p>Calculated New Customers per Month: ${formatNum(customersPerMonth)}</p>
+        <p>Calculated New Customers per Month: 
+          ${formatNum(customersPerMonth)}
+          </p>
+        <p>Total New Customers over $${n} Months: 
+          $${customersPerMonth * n}
+          </p>
         <div class="table-responsive">
           <table>
             <thead>
