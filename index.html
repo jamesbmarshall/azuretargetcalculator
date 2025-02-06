@@ -135,10 +135,43 @@
       cursor: pointer;
       text-align: center;
       padding: 10px;
-      /*background-color: #2c3e50; */
+      /* Optional: you can uncomment the background-color below if you want a colored handle */
+      /* background-color: #2c3e50; */
       color: #2c3e50;
       border-radius: 0 0 10px 10px;
       margin-top: -20px; /* overlap a bit the bottom of the bubble */
+    }
+    /* Balance Summary styling */
+    #balanceSummary {
+      margin-bottom: 20px;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+    #balanceSummary p {
+      margin: 5px 0;
+    }
+    #balanceSummary hr {
+      border: 0;
+      border-top: 1px solid #ccc;
+      margin: 10px 0;
+    }
+    .accounting-table {
+      width: 30%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+    }
+    .accounting-table td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .accounting-table td.number {
+      text-align: right;
+    }
+    .accounting-table .total-row td {
+      font-weight: bold;
+    }
+    .accounting-table .total-row td.number {
+      border-top: 2px solid #000;
     }
   </style>
 
@@ -266,7 +299,7 @@
     function formatNum(num) {
       return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
-    // Helper function to format currency; negatives shown as ($X.XX)
+    // Helper function to format currency; negatives are shown as ($X.XX)
     function formatCurrency(num) {
       if (num < 0) {
         return "($" + formatNum(Math.abs(num)) + ")";
@@ -412,15 +445,17 @@
         let base = (i <= r) ? s * (i / r) : s * Math.pow(1 + g, i - r);
         return base * Math.pow(1 - c, i - 1);
       };
-      const effectiveNoGrowth = (i) => {
-        let base = (i <= r) ? s * (i / r) : s;
-        return base * Math.pow(1 - c, i - 1);
-      };
 
+      // Updated multiplier calculation incorporating seasonality:
       let multiplier = 0;
-      for (let i = 1; i <= n; i++) {
-        multiplier += (n - i + 1) * effectiveRevenue(i);
+      for (let m = 1; m <= n; m++) {
+        for (let age = 1; age <= n - m + 1; age++) {
+          let revenueMonthIndex = (startMonth + m + age - 2) % 12;
+          let monthFactor = seasonalEnabled ? (daysInMonth[revenueMonthIndex] / baselineDays) : 1;
+          multiplier += effectiveRevenue(age) * monthFactor;
+        }
       }
+      
       const customersPerMonth = newRevenueTarget / multiplier;
 
       // Table accumulators.
@@ -505,7 +540,11 @@
         `;
       }
 
-      // Build the monthly breakdown table HTML.
+      // Build the results HTML with an added balance summary.
+      // We group the revenue into two items:
+      //   Existing Business Revenue = T - newRevenueTarget
+      //   New Customer Revenue = newRevenueTarget
+      // Their sum equals the total revenue target T.
       const resultsHTML = `
         <h2>Results</h2>
         <p>
@@ -513,6 +552,26 @@
           To achieve the desired in-year revenue, an additional $${formatNum(newRevenueTarget)} must come from new customers, and $${formatNum(T - newRevenueTarget - baselineTotal)} from growing existing customers.
           This plan requires attracting ${formatNum(customersPerMonth)} new customers per month, or a total of ${formatNum(customersPerMonth * n)} over the period.
         </p>
+        <div id="balanceSummary">
+          <table class="accounting-table">
+            <tr>
+              <td>Baseline</td>
+              <td class="number">$${formatNum(baselineTotal)}</td>
+            </tr>
+            <tr>
+              <td>New Customer Revenue</td>
+              <td class="number">$${formatNum(newRevenueTarget)}</td>
+            </tr>
+            <tr>
+              <td>Proactive Growth Revenue</td>
+              <td class="number">$${formatNum(T - newRevenueTarget - baselineTotal)}</td>
+            </tr>
+            <tr class="total-row">
+              <td>Total</td>
+              <td class="number">$${formatNum(baselineTotal + newRevenueTarget + (T - newRevenueTarget - baselineTotal))}</td>
+            </tr>
+          </table>
+        </div>
         <h3>Baseline + Customer Adds Breakdown</h3>
         <div class="table-responsive">
           <table class="table-business">
