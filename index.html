@@ -412,9 +412,7 @@
         <p>Additional Revenue Required from New Customers: $${formatNum(newRevenueTarget)}</p>
         <p>Additional Revenue Required from Growing Existing Customers: $${formatNum(T - newRevenueTarget - baselineTotal)}</p>
         <p>Calculated New Customers per Month: ${formatNum(customersPerMonth)}</p>
-        <p>Total New Customers over ${n} Months: 
-          ${formatNum(customersPerMonth * n)}
-          </p>
+        <p>Total New Customers over ${n} Months: ${formatNum(customersPerMonth * n)}</p>
         <h2>Baseline + Customer Adds Monthly Breakdown</h2>
         <p>This table shows, month by month, the number of new customers required given the plan parameters set above. Achieving this velocity will help you deliver ${P * 100}% of your target, with the rest coming from proactively growing your existing customers.</p>
         <div class="table-responsive">
@@ -443,15 +441,58 @@
         </div>
       `;
 
-      // Insert the table HTML into #resultsTable.
+      // Insert the results table HTML into #resultsTable.
       document.getElementById('resultsTable').innerHTML = resultsHTML;
+      
+      // --------------------------------------------------------------------
+      // Build the Proactive Growth Target Breakdown Table.
+      // The proactive growth target is the additional revenue required from growing existing customers.
+      // It is allocated progressively across the months of the plan.
+      const proactiveGrowthTarget = T - newRevenueTarget - baselineTotal;
+      // Calculate the number of divisions in the period.
+      const divisions = (n * n + n) / 2;
+      // The base value per division.
+      const dividedGrowthTarget = proactiveGrowthTarget / divisions;
+      let proactiveTableRows = '';
+      let cumulativeProactive = 0;
+      for (let month = 1; month <= n; month++) {
+          const monthlyTarget = month * dividedGrowthTarget;
+          cumulativeProactive += monthlyTarget;
+          proactiveTableRows += `
+            <tr>
+              <td>${month}</td>
+              <td>$${formatNum(monthlyTarget)}</td>
+              <td>$${formatNum(cumulativeProactive)}</td>
+            </tr>
+          `;
+      }
+      const proactiveTableHTML = `
+        <h2>Proactive Growth Target Breakdown</h2>
+        <p>This table breaks down the proactive growth target across the months of the plan. The proactive target (i.e. revenue required from growing existing customers) is allocated progressively, where the monthly target is calculated by dividing the total proactive growth target by ((months² + months) / 2) and then multiplying by the month number.</p>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Monthly Proactive Growth Target</th>
+                <th>Cumulative Proactive Growth Target</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${proactiveTableRows}
+            </tbody>
+          </table>
+        </div>
+      `;
+      
+      // Append the proactive growth table underneath the existing breakdown table.
+      document.getElementById('resultsTable').innerHTML += proactiveTableHTML;
 
       // Update the URL with current parameters.
       updateUrlParams();
 
       //--------------------------------------------------------------------
       // Build the Plotly Waterfall Chart.
-
       const step1 = cumulativeBaselineNoGrowth + cumulativeBaselineChurnImpact;
       const step2 = cumulativeBaselineIncrementalGrowth;
       const step3 = -cumulativeBaselineChurnImpact;
