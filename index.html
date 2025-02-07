@@ -3,20 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Cloud Target Calculator</title>
+  <!-- Import Open Sans from Google Fonts for a modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Page background: gradient */
+    /* Base styles */
     body {
       background: linear-gradient(135deg, #0078d4, #74ebd5);
       margin: 0;
       padding: 20px;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: 'Open Sans', sans-serif;
       color: #333;
+      font-size: 16px;
+      line-height: 1.6;
     }
-    /* Bubble styling for containers */
+    /* Container “bubble” styles */
     .bubble {
       background: #fff;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       margin-bottom: 20px;
       padding: 20px;
       position: relative;
@@ -24,38 +28,56 @@
     /* Form styling */
     form label {
       display: block;
-      margin: 10px 0;
+      margin-bottom: 10px;
+      font-weight: 600;
     }
     form input,
     form select {
       width: 100%;
       max-width: 300px;
-      padding: 8px;
+      padding: 10px;
       margin-top: 4px;
+      margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
+      font-size: 16px;
     }
     form button {
-      padding: 10px 20px;
+      padding: 12px 24px;
       margin-top: 15px;
-      background-color: #01960e;
+      background-color: #0078d4;
       border: none;
       border-radius: 5px;
       color: #fff;
       cursor: pointer;
       font-size: 16px;
+      transition: background-color 0.3s ease;
     }
     form button:hover {
-      background-color: #5cc0aa;
+      background-color: #005a9e;
     }
-    /* Advanced Options */
+    /* Advanced Options Toggle Button */
     #advancedToggle {
       background-color: #f68418;
       margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    #advancedToggle:hover {
+      background-color: #d96c0e;
     }
     #advancedOptions {
       display: none;
       margin-top: 10px;
+      padding: 10px;
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 5px;
     }
     /* Business-style table styling */
     .table-business {
@@ -68,7 +90,8 @@
       background-color: #2c3e50;
       color: #ecf0f1;
     }
-    .table-business th, .table-business td {
+    .table-business th,
+    .table-business td {
       padding: 12px 15px;
       border: 1px solid #ddd;
     }
@@ -88,16 +111,64 @@
     .detailRevenue, .detailGrowth, .detailChurn {
       display: none;
     }
-    /* When the parent container has "show-details", reveal them */
     .show-details .detailRevenue,
     .show-details .detailGrowth,
     .show-details .detailChurn {
       display: table-cell;
     }
-    /* Responsive containers for table and charts */
+    /* Responsive container styling */
     .table-responsive, .chart-responsive {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+    }
+    /* Balance Summary (Accounting Table) */
+    #balanceSummary {
+      margin-bottom: 20px;
+      font-size: 18px;
+      line-height: 1.5;
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .accounting-table {
+      width: 100%;
+      max-width: 400px;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+    }
+    .accounting-table td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .accounting-table td.number {
+      text-align: right;
+    }
+    .accounting-table .total-row td {
+      font-weight: 600;
+    }
+    .accounting-table .total-row td.number {
+      border-top: 2px solid #000;
+    }
+    /* Collapsible form styling */
+    #calcForm {
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      max-height: 1000px; /* high default value */
+    }
+    #calcForm.collapsed {
+      max-height: 0;
+    }
+    /* Form toggle handle style */
+    #formToggleHandle {
+      cursor: pointer;
+      text-align: center;
+      padding: 10px;
+      background-color: #f0f4f8;
+      color: #0078d4;
+      border-radius: 0 0 10px 10px;
+      margin-top: 10px;
+      font-weight: 600;
     }
     /* Footer styling */
     footer {
@@ -121,58 +192,6 @@
         font-size: 14px;
       }
     }
-    /* Collapsible form styling */
-    #calcForm {
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-      max-height: 1000px; /* a high default value */
-    }
-    #calcForm.collapsed {
-      max-height: 0;
-    }
-    /* Form toggle handle style */
-    #formToggleHandle {
-      cursor: pointer;
-      text-align: center;
-      padding: 10px;
-      /* Optional: you can uncomment the background-color below if you want a colored handle */
-      /* background-color: #2c3e50; */
-      color: #2c3e50;
-      border-radius: 0 0 10px 10px;
-      margin-top: -20px; /* overlap a bit the bottom of the bubble */
-    }
-    /* Balance Summary styling */
-    #balanceSummary {
-      margin-bottom: 20px;
-      font-size: 18px;
-      line-height: 1.5;
-    }
-    #balanceSummary p {
-      margin: 5px 0;
-    }
-    #balanceSummary hr {
-      border: 0;
-      border-top: 1px solid #ccc;
-      margin: 10px 0;
-    }
-    .accounting-table {
-      width: 30%;
-      border-collapse: collapse;
-      font-family: Arial, sans-serif;
-    }
-    .accounting-table td {
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
-    }
-    .accounting-table td.number {
-      text-align: right;
-    }
-    .accounting-table .total-row td {
-      font-weight: bold;
-    }
-    .accounting-table .total-row td.number {
-      border-top: 2px solid #000;
-    }
   </style>
 
   <!-- Include Plotly from the CDN for charts -->
@@ -184,7 +203,7 @@
     <h1>Cloud Target Calculator v2</h1>
     <p>
       Fill in the form below to get insights into the number of customers or the consumption growth you'll need to hit your overall targets.
-      You can also use the advanced options to adjust your lead conversion rates.
+      Use advanced options to adjust your lead conversion rates.
     </p>
     <form id="calcForm">
       <label>
@@ -197,15 +216,15 @@
       </label>
       <label>
         Ramp-up Period in Months:
-        <input type="number" id="ramp" value="3" min="1" step="any" required>
+        <input type="number" id="ramp" value="1" min="1" step="any" required>
       </label>
       <label>
         Organic Growth Rate per Month [as %]:
-        <input type="number" id="growth" value="1" min="0" step="any" required>
+        <input type="number" id="growth" value="0" min="0" step="any" required>
       </label>
       <label>
         Revenue Churn Rate per Month [as %]:
-        <input type="number" id="churn" value="1" min="0" step="any" required>
+        <input type="number" id="churn" value="0" min="0" step="any" required>
       </label>
       <label>
         Total Revenue Target:
@@ -213,7 +232,7 @@
       </label>
       <label>
         Baseline Recurring Revenue per Month:
-        <input type="number" id="baseline" value="1000" min="0" step="any" required>
+        <input type="number" id="baseline" value="0" min="0" step="any" required>
       </label>
       <label>
         % of Additional Revenue from New Customers (Acquisition):
@@ -295,20 +314,36 @@
   </footer>
 
   <script>
-    // Helper function to format numbers (with commas, 2 decimals).
     function formatNum(num) {
-      return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return num.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
     }
-    // Helper function to format currency; negatives are shown as ($X.XX)
     function formatCurrency(num) {
       if (num < 0) {
         return "($" + formatNum(Math.abs(num)) + ")";
-      } else {
-        return "$" + formatNum(num);
       }
+      return "$" + formatNum(num);
     }
-    
-    // Update the URL with current form values.
+
+    function collapseForm() {
+      document.getElementById('calcForm').classList.add('collapsed');
+      document.getElementById('formToggleHandle').textContent = "⬇️ Show Form";
+    }
+    function expandForm() {
+      document.getElementById('calcForm').classList.remove('collapsed');
+      document.getElementById('formToggleHandle').textContent = "⬆️ Hide Form";
+    }
+    function hideAdvanced() {
+      document.getElementById('advancedOptions').style.display = 'none';
+      document.getElementById('advancedToggle').textContent = 'Advanced Options';
+    }
+    function showAdvanced() {
+      document.getElementById('advancedOptions').style.display = 'block';
+      document.getElementById('advancedToggle').textContent = 'Hide Advanced Options';
+    }
+
     function updateUrlParams() {
       const params = new URLSearchParams();
       params.set('months', document.getElementById('months').value);
@@ -319,30 +354,28 @@
       params.set('targetRevenue', document.getElementById('targetRevenue').value);
       params.set('baseline', document.getElementById('baseline').value);
       params.set('pctAcq', document.getElementById('pctAcq').value);
-      // Seasonality parameters.
       params.set('startMonth', document.getElementById('startMonth').value);
       params.set('startYear', document.getElementById('startYear').value);
       params.set('seasonal', document.getElementById('seasonalToggle').checked ? "true" : "false");
-      // Advanced options:
       params.set('mqlPerSql', document.getElementById('mqlPerSql').value);
       params.set('sqlPerWin', document.getElementById('sqlPerWin').value);
-
       history.pushState(null, '', '?' + params.toString());
     }
-    
-    // Toggle Advanced Options.
+
+    function finalizeAndHide() {
+      collapseForm();
+      hideAdvanced();
+    }
+
     document.getElementById('advancedToggle').addEventListener('click', function() {
       const adv = document.getElementById('advancedOptions');
       if (adv.style.display === 'none' || adv.style.display === '') {
-        adv.style.display = 'block';
-        this.textContent = 'Hide Advanced Options';
+        showAdvanced();
       } else {
-        adv.style.display = 'none';
-        this.textContent = 'Advanced Options';
+        hideAdvanced();
       }
     });
-    
-    // Toggle Detailed Columns.
+
     document.getElementById('toggleDetails').addEventListener('click', function() {
       const tableContainer = document.getElementById('resultsTable');
       if (tableContainer.classList.contains('show-details')) {
@@ -353,23 +386,21 @@
         this.textContent = 'Hide Detailed Columns';
       }
     });
-    
-    // Toggle form visibility with sliding effect.
-    const formToggleHandle = document.getElementById('formToggleHandle');
-    const calcForm = document.getElementById('calcForm');
-    formToggleHandle.addEventListener('click', function() {
-      calcForm.classList.toggle('collapsed');
+
+    document.getElementById('formToggleHandle').addEventListener('click', function() {
+      const calcForm = document.getElementById('calcForm');
       if (calcForm.classList.contains('collapsed')) {
-        formToggleHandle.textContent = "⬇️ Show Form";
+        expandForm();
       } else {
-        formToggleHandle.textContent = "⬆️ Hide Form";
+        collapseForm();
       }
     });
-    
-    // Pre-populate the form from URL parameters.
+
     window.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
+      let hasParams = false;
       if (params.toString()) {
+        hasParams = true;
         if (params.has('months')) document.getElementById('months').value = params.get('months');
         if (params.has('targetSpend')) document.getElementById('targetSpend').value = params.get('targetSpend');
         if (params.has('ramp')) document.getElementById('ramp').value = params.get('ramp');
@@ -384,194 +415,243 @@
         if (params.has('mqlPerSql')) document.getElementById('mqlPerSql').value = params.get('mqlPerSql');
         if (params.has('sqlPerWin')) document.getElementById('sqlPerWin').value = params.get('sqlPerWin');
 
-        // If advanced params are present, show advanced section.
         if (params.has('mqlPerSql') || params.has('sqlPerWin')) {
-          document.getElementById('advancedOptions').style.display = 'block';
-          document.getElementById('advancedToggle').textContent = 'Hide Advanced Options';
+          showAdvanced();
         }
-        // Auto-trigger the calculation.
+        // auto-run
         document.getElementById('calcForm').dispatchEvent(new Event('submit'));
       }
+      if (hasParams) {
+        collapseForm();
+      } else {
+        expandForm();
+      }
     });
-    
-    // Main calculation logic.
+
+    // The main logic
     document.getElementById('calcForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
-      // Read form inputs.
+      // 1) Grab user inputs
       const n = parseInt(document.getElementById('months').value, 10);
       const s = parseFloat(document.getElementById('targetSpend').value);
       const r = parseInt(document.getElementById('ramp').value, 10);
-      const g = parseFloat(document.getElementById('growth').value) / 100;
-      const c = parseFloat(document.getElementById('churn').value) / 100;
+      const g = parseFloat(document.getElementById('growth').value)/100;
+      const c = parseFloat(document.getElementById('churn').value)/100;
       const T = parseFloat(document.getElementById('targetRevenue').value);
       const B = parseFloat(document.getElementById('baseline').value);
-      const P = parseFloat(document.getElementById('pctAcq').value) / 100;
-      
-      // Seasonality inputs.
+      const P = parseFloat(document.getElementById('pctAcq').value)/100;
+
       const startMonth = parseInt(document.getElementById('startMonth').value, 10);
       const startYear = parseInt(document.getElementById('startYear').value, 10);
       const seasonalEnabled = document.getElementById('seasonalToggle').checked;
-      const baselineDays = 30;  // baseline for calculations
-      const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-      // Adjust February for leap years.
-      if (((startYear % 4 === 0) && (startYear % 100 !== 0)) || (startYear % 400 === 0)) {
-        daysInMonth[1] = 29;
-      }
-      
-      // Advanced Options.
+
       const mqlPerSql = parseFloat(document.getElementById('mqlPerSql').value);
       const sqlPerWin = parseFloat(document.getElementById('sqlPerWin').value);
 
-      // Array of month names.
-      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      // For months
+      const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+      // leap check
+      if (((startYear % 4)===0 && (startYear%100)!==0)||(startYear%400)===0) {
+        daysInMonth[1]=29;
+      }
+      const baselineDays = 30;
+      const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-      // 1) Compute baseline total (growth + churn) with seasonality adjustments.
+      // 2) baseline total
       let baselineTotal = 0;
-      let cumulativeBaselineNoGrowth = 0;
-      for (let month = 1; month <= n; month++) {
-        let currentMonthIndex = (startMonth + month - 1) % 12;
-        let monthFactor = seasonalEnabled ? (daysInMonth[currentMonthIndex] / baselineDays) : 1;
-        const baselineMonthRevenue = (B * Math.pow(1 + g, month - 1) * Math.pow(1 - c, month - 1)) * monthFactor;
-        baselineTotal += baselineMonthRevenue;
-        cumulativeBaselineNoGrowth += (B * Math.pow(1 - c, month - 1)) * monthFactor;
+      let monthFactors = [];
+      for (let i=0; i<n; i++){
+        const idx = (startMonth + i)%12;
+        let factor = 1;
+        if (seasonalEnabled) {
+          factor = daysInMonth[idx]/ baselineDays;
+        }
+        monthFactors.push(factor);
+
+        const baseRev = B* Math.pow(1+ g, i)* Math.pow(1- c, i)* factor;
+        baselineTotal += baseRev;
       }
 
-      // 2) Additional revenue from new customers.
-      const newRevenueTarget = (T - baselineTotal) * P;
+      // 3) new vs proactive
+      const addlTarget = T- baselineTotal;
+      let newRevenueTarget = Math.max(0, addlTarget* P);
+      let proactiveTarget = Math.max(0, addlTarget*(1-P));
 
-      // 3) Revenue per new customer.
-      const effectiveRevenue = (i) => {
-        let base = (i <= r) ? s * (i / r) : s * Math.pow(1 + g, i - r);
-        return base * Math.pow(1 - c, i - 1);
-      };
+      // effectiveRevenue
+      function effectiveRevenue(age) {
+        let base = (age<=r)? s*(age/r) : s* Math.pow(1+g, age-r);
+        return base* Math.pow(1- c, age-1);
+      }
 
-      // Updated multiplier calculation incorporating seasonality:
-      let multiplier = 0;
-      for (let m = 1; m <= n; m++) {
-        for (let age = 1; age <= n - m + 1; age++) {
-          let revenueMonthIndex = (startMonth + m + age - 2) % 12;
-          let monthFactor = seasonalEnabled ? (daysInMonth[revenueMonthIndex] / baselineDays) : 1;
-          multiplier += effectiveRevenue(age) * monthFactor;
+      // total contribution
+      let totalContr=0;
+      for (let m=0; m<n; m++){
+        const factor= monthFactors[m];
+        let ages= (n- m);
+        for (let age=1; age<= ages; age++){
+          totalContr += effectiveRevenue(age)* factor;
         }
       }
-      
-      const customersPerMonth = newRevenueTarget / multiplier;
-
-      // Table accumulators.
-      let cumulativeNewCustRevenue = 0;
-      let cumulativeNewCustNoGrowth = 0;
-      let cumulativeNewCustIncrementalGrowth = 0;
-      let cumulativeNewCustChurnImpact = 0;
-      let cumulativeBaselineIncrementalGrowth = 0;
-      let cumulativeBaselineChurnImpact = 0;
-      let cumulativeTotalRevenue = 0;
-      let runningTotalNewCustomers = 0;
-
-      let tableRows = '';
-
-      // Build the monthly breakdown table.
-      for (let month = 1; month <= n; month++) {
-        // Determine current calendar month and year.
-        let currentMonthIndex = (startMonth + month - 1) % 12;
-        let yearOffset = Math.floor((startMonth + month - 1) / 12);
-        let currentYear = startYear + yearOffset;
-        let currentMonthName = monthNames[currentMonthIndex] + " " + currentYear;
-        
-        let monthFactor = seasonalEnabled ? (daysInMonth[currentMonthIndex] / baselineDays) : 1;
-        
-        const newCustomers = customersPerMonth;
-        runningTotalNewCustomers += newCustomers;
-
-        let newCustMonthRevenue = 0;
-        let newCustMonthNoGrowth = 0;
-        let newCustMonthIncrementalGrowth = 0;
-        let newCustMonthChurnImpact = 0;
-
-        for (let age = 1; age <= month; age++) {
-          const baseRevenue = (age <= r) ? s * (age / r) : s * Math.pow(1 + g, age - r);
-          const effRev = baseRevenue * Math.pow(1 - c, age - 1);
-          const noGrowth = (age <= r) ? s * (age / r) : s;
-          const effNoGrowth = noGrowth * Math.pow(1 - c, age - 1);
-          const incRevenue = effRev - effNoGrowth;
-          const churnLoss = baseRevenue - effRev;
-
-          newCustMonthRevenue += newCustomers * effRev;
-          newCustMonthNoGrowth += newCustomers * effNoGrowth;
-          newCustMonthIncrementalGrowth += newCustomers * incRevenue;
-          newCustMonthChurnImpact += newCustomers * churnLoss;
-        }
-        // Apply seasonality.
-        newCustMonthRevenue *= monthFactor;
-        newCustMonthNoGrowth *= monthFactor;
-        newCustMonthIncrementalGrowth *= monthFactor;
-        newCustMonthChurnImpact *= monthFactor;
-
-        // Baseline revenue.
-        const baselineMonthRevenue = (B * Math.pow(1 + g, month - 1) * Math.pow(1 - c, month - 1)) * monthFactor;
-        const baselineMonthNoGrowth = (B * Math.pow(1 - c, month - 1)) * monthFactor;
-        const baselineMonthIncrementalGrowth = baselineMonthRevenue - baselineMonthNoGrowth;
-        const baselineMonthChurnImpact = ((B * Math.pow(1 + g, month - 1)) - (B * Math.pow(1 + g, month - 1) * Math.pow(1 - c, month - 1))) * monthFactor;
-
-        cumulativeNewCustRevenue += newCustMonthRevenue;
-        cumulativeNewCustNoGrowth += newCustMonthNoGrowth;
-        cumulativeNewCustIncrementalGrowth += newCustMonthIncrementalGrowth;
-        cumulativeNewCustChurnImpact += newCustMonthChurnImpact;
-        cumulativeBaselineIncrementalGrowth += baselineMonthIncrementalGrowth;
-        cumulativeBaselineChurnImpact += baselineMonthChurnImpact;
-        cumulativeTotalRevenue += (newCustMonthRevenue + baselineMonthRevenue);
-
-        tableRows += `
-          <tr>
-            <td style="text-align:left;">${currentMonthName}</td>
-            <td>${formatNum(newCustomers)}</td>
-            <td>${formatNum(runningTotalNewCustomers)}</td>
-            <td class="detailRevenue">$${formatNum(newCustMonthRevenue)}</td>
-            <td class="detailRevenue">$${formatNum(baselineMonthRevenue)}</td>
-            <td>$${formatNum(newCustMonthRevenue + baselineMonthRevenue)}</td>
-            <td class="detailGrowth">$${formatNum(newCustMonthIncrementalGrowth)}</td>
-            <td class="detailGrowth">$${formatNum(baselineMonthIncrementalGrowth)}</td>
-            <td>$${formatNum(newCustMonthIncrementalGrowth + baselineMonthIncrementalGrowth)}</td>
-            <td class="detailChurn">${formatCurrency(-newCustMonthChurnImpact)}</td>
-            <td class="detailChurn">${formatCurrency(-baselineMonthChurnImpact)}</td>
-            <td>${formatCurrency(-(newCustMonthChurnImpact + baselineMonthChurnImpact))}</td>
-            <td>$${formatNum(cumulativeTotalRevenue)}</td>
-          </tr>
-        `;
+      let baseNewCust = 0;
+      if (totalContr>0 && newRevenueTarget>0) {
+        baseNewCust = newRevenueTarget/ totalContr;
+      }
+      let monthlyCustomers= new Array(n).fill(0);
+      for (let m=0; m<n; m++){
+        monthlyCustomers[m]= baseNewCust* monthFactors[m];
       }
 
-      // Build the results HTML with an added balance summary.
-      // We group the revenue into two items:
-      //   Existing Business Revenue = T - newRevenueTarget
-      //   New Customer Revenue = newRevenueTarget
-      // Their sum equals the total revenue target T.
-      const resultsHTML = `
+      // We'll build table in two passes
+      function buildMonthlyTable() {
+        let localCumulativeRevenue=0;
+        let localTableRows="";
+        let cumulativeNewCustRevenue=0;
+        let runningTotalCustomers=0;
+
+        // We'll also track the monthly details (growth, churn)
+        let cumulativeNewCustNoGrowth=0;
+        let cumulativeNewCustIncrementalGrowth=0;
+        let cumulativeNewCustChurnImpact=0;
+
+        let cumulativeBaselineIncrementalGrowth=0;
+        let cumulativeBaselineChurnImpact=0;
+
+        for (let m=0; m<n; m++){
+          const newCustCount= monthlyCustomers[m];
+          runningTotalCustomers += newCustCount;
+
+          let newCustMonthRevenue= 0;
+          let newCustMonthNoGrowth= 0;
+          let newCustMonthIncrementalGrowth= 0;
+          let newCustMonthChurnImpact= 0;
+
+          for (let age=1; age<=(m+1); age++){
+            const effRev= effectiveRevenue(age);
+            // For growth calculations
+            const noGrowth= (age<=r)? s*(age/r) : s;
+            const effNoGrowth= noGrowth* Math.pow(1- c, age-1);
+            const incRev= effRev- effNoGrowth;
+            const churnLoss= noGrowth- effRev;
+
+            newCustMonthRevenue += (newCustCount* effRev);
+            newCustMonthNoGrowth += (newCustCount* effNoGrowth);
+            newCustMonthIncrementalGrowth += (newCustCount* incRev);
+            newCustMonthChurnImpact += (newCustCount* churnLoss);
+          }
+          // multiply by factor
+          newCustMonthRevenue *= monthFactors[m];
+          newCustMonthNoGrowth *= monthFactors[m];
+          newCustMonthIncrementalGrowth *= monthFactors[m];
+          newCustMonthChurnImpact *= monthFactors[m];
+
+          cumulativeNewCustRevenue += newCustMonthRevenue;
+          cumulativeNewCustNoGrowth += newCustMonthNoGrowth;
+          cumulativeNewCustIncrementalGrowth += newCustMonthIncrementalGrowth;
+          cumulativeNewCustChurnImpact += newCustMonthChurnImpact;
+
+          // baseline
+          const baselineMonthRevenue= B* Math.pow(1+ g, m)* Math.pow(1- c, m)* monthFactors[m];
+
+          const baselineMonthNoGrowth= B* Math.pow(1- c, m)* monthFactors[m];
+          const baselineMonthIncrementalGrowth= baselineMonthRevenue- baselineMonthNoGrowth;
+          const baselineMonthChurnImpact= (B* Math.pow(1+ g, m)- (B* Math.pow(1+ g, m)* Math.pow(1- c, m)))* monthFactors[m];
+
+          cumulativeBaselineIncrementalGrowth += baselineMonthIncrementalGrowth;
+          cumulativeBaselineChurnImpact += baselineMonthChurnImpact;
+
+          const monthlyTotal= newCustMonthRevenue+ baselineMonthRevenue;
+          localCumulativeRevenue += monthlyTotal;
+
+          const idx= (startMonth+ m)%12;
+          const yOff= Math.floor((startMonth+ m)/12);
+          const moName= monthNames[idx]+ " "+ (startYear+ yOff);
+
+          localTableRows += `
+            <tr>
+              <td style="text-align:left;">${moName}</td>
+              <td>${formatNum(newCustCount)}</td>
+              <td>${formatNum(runningTotalCustomers)}</td>
+              <td class="detailRevenue">${formatCurrency(newCustMonthRevenue)}</td>
+              <td class="detailRevenue">${formatCurrency(baselineMonthRevenue)}</td>
+              <td>${formatCurrency(monthlyTotal)}</td>
+
+              <!-- Growth columns -->
+              <td class="detailGrowth">${formatCurrency(newCustMonthIncrementalGrowth)}</td>
+              <td class="detailGrowth">${formatCurrency(baselineMonthIncrementalGrowth)}</td>
+              <td>${formatCurrency(newCustMonthIncrementalGrowth+ baselineMonthIncrementalGrowth)}</td>
+
+              <!-- Churn columns -->
+              <td class="detailChurn">${formatCurrency(- newCustMonthChurnImpact)}</td>
+              <td class="detailChurn">${formatCurrency(- baselineMonthChurnImpact)}</td>
+              <td>${formatCurrency(-(newCustMonthChurnImpact+ baselineMonthChurnImpact))}</td>
+
+              <td>${formatCurrency(localCumulativeRevenue)}</td>
+            </tr>
+          `;
+        }
+
+        return {
+          tableHTML: localTableRows,
+          newCustRev: cumulativeNewCustRevenue,
+          totalCustomers: monthlyCustomers.reduce((acc,x)=> acc+ x, 0),
+          finalCumulativeRevenue: localCumulativeRevenue
+        };
+      }
+
+      // pass1
+      let pass1= buildMonthlyTable();
+      let computedNewCustRev= pass1.newCustRev;
+
+      // rescale if needed
+      if (computedNewCustRev>0) {
+        let ratio= newRevenueTarget/ computedNewCustRev;
+        if (ratio>0 && ratio!==1) {
+          for (let i=0; i<n; i++){
+            monthlyCustomers[i]*= ratio;
+          }
+        }
+      }
+
+      // pass2 final
+      let pass2= buildMonthlyTable();
+      let finalNewCustRev= pass2.newCustRev;
+      let totalCustomers= pass2.totalCustomers;
+
+      let finalProactiveRev= (T- baselineTotal)- finalNewCustRev;
+      if (finalProactiveRev<0) {
+        finalProactiveRev=0;
+      }
+
+      // Build final summary
+      const resultsHTML= `
         <h2>Results</h2>
-        <p>
-          The baseline revenue over the ${n}-month period, accounting for ${seasonalEnabled ? "seasonality, growth & churn" : "growth & churn"}, is $${formatNum(baselineTotal)}. 
-          To achieve the desired in-year revenue, an additional $${formatNum(newRevenueTarget)} must come from new customers, and $${formatNum(T - newRevenueTarget - baselineTotal)} from growing existing customers.
-          This plan requires attracting ${formatNum(customersPerMonth)} new customers per month, or a total of ${formatNum(customersPerMonth * n)} over the period.
-        </p>
         <div id="balanceSummary">
           <table class="accounting-table">
             <tr>
-              <td>Baseline</td>
-              <td class="number">$${formatNum(baselineTotal)}</td>
+              <td>Existing Business Revenue</td>
+              <td class="number">${formatCurrency(baselineTotal)}</td>
             </tr>
             <tr>
               <td>New Customer Revenue</td>
-              <td class="number">$${formatNum(newRevenueTarget)}</td>
+              <td class="number">${formatCurrency(finalNewCustRev)}</td>
             </tr>
             <tr>
               <td>Proactive Growth Revenue</td>
-              <td class="number">$${formatNum(T - newRevenueTarget - baselineTotal)}</td>
+              <td class="number">${formatCurrency(finalProactiveRev)}</td>
             </tr>
             <tr class="total-row">
-              <td>Total</td>
-              <td class="number">$${formatNum(baselineTotal + newRevenueTarget + (T - newRevenueTarget - baselineTotal))}</td>
+              <td>Total Revenue Target</td>
+              <td class="number">${formatCurrency(T)}</td>
             </tr>
           </table>
         </div>
+        <p>
+          The baseline revenue over the ${n}-month period is ${formatCurrency(baselineTotal)}. 
+          This plan yields ${formatCurrency(finalNewCustRev)} from
+          ${formatNum(totalCustomers)} new customers
+          and ${formatCurrency(finalProactiveRev)} from growing existing customers.
+        </p>
         <h3>Baseline + Customer Adds Breakdown</h3>
         <div class="table-responsive">
           <table class="table-business">
@@ -583,50 +663,66 @@
                 <th class="detailRevenue">New Cust. Revenue</th>
                 <th class="detailRevenue">Baseline Revenue</th>
                 <th>Total Monthly Revenue</th>
+
                 <th class="detailGrowth">New Cust. Organic Growth</th>
                 <th class="detailGrowth">Baseline Organic Growth</th>
                 <th>Total Organic Growth</th>
+
                 <th class="detailChurn">New Cust. Churn</th>
                 <th class="detailChurn">Baseline Churn</th>
                 <th>Total Churn</th>
+
                 <th>Cumulative Total Revenue</th>
               </tr>
             </thead>
             <tbody>
-              ${tableRows}
+              ${pass2.tableHTML}
             </tbody>
           </table>
         </div>
       `;
       document.getElementById('resultsTable').innerHTML = resultsHTML;
-      
-      // --------------------------------------------------------------------
-      // Build the Proactive Growth Target Breakdown Table.
-      const proactiveGrowthTarget = T - newRevenueTarget - baselineTotal;
-      const divisions = (n * n + n) / 2;
-      const dividedGrowthTarget = proactiveGrowthTarget / divisions;
-      let proactiveTableRows = '';
-      let cumulativeProactive = 0;
-      for (let month = 1; month <= n; month++) {
-          let currentMonthIndex = (startMonth + month - 1) % 12;
-          let yearOffset = Math.floor((startMonth + month - 1) / 12);
-          let currentYear = startYear + yearOffset;
-          let currentMonthName = monthNames[currentMonthIndex] + " " + currentYear;
-          const monthlyTarget = month * dividedGrowthTarget;
-          cumulativeProactive += monthlyTarget;
-          proactiveTableRows += `
+
+      // Proactive table
+      const monthFactorsSum= monthFactors.reduce((acc,f,i)=> acc+ f*(i+1), 0);
+      let proactiveRows= "";
+      if (finalProactiveRev>0 && monthFactorsSum>0) {
+        const base= finalProactiveRev/ monthFactorsSum;
+        let cumul=0;
+        for (let i=0; i<n; i++){
+          const idx= (startMonth+ i)%12;
+          const yOff= Math.floor((startMonth+ i)/12);
+          const moName= monthNames[idx]+ " "+ (startYear+ yOff);
+
+          const monthly= monthFactors[i]*(i+1)* base;
+          cumul+= monthly;
+          proactiveRows+= `
             <tr>
-              <td style="text-align:left;">${currentMonthName}</td>
-              <td>$${formatNum(monthlyTarget)}</td>
-              <td>$${formatNum(cumulativeProactive)}</td>
+              <td style="text-align:left;">${moName}</td>
+              <td>${formatCurrency(monthly)}</td>
+              <td>${formatCurrency(cumul)}</td>
             </tr>
           `;
+        }
+      } else {
+        // zero
+        for (let i=0; i<n; i++){
+          const idx= (startMonth+ i)%12;
+          const yOff= Math.floor((startMonth+ i)/12);
+          const moName= monthNames[idx]+ " "+ (startYear+ yOff);
+          proactiveRows+= `
+            <tr>
+              <td style="text-align:left;">${moName}</td>
+              <td>${formatCurrency(0)}</td>
+              <td>${formatCurrency(0)}</td>
+            </tr>
+          `;
+        }
       }
-      const proactiveTableHTML = `
+      const proactiveHTML= `
         <h3>Proactive Growth Target Breakdown</h3>
         <p>
-          This table breaks down the proactive growth target (revenue required from growing existing customers) across the months.
-          The monthly target is determined by dividing the total proactive target by ((months² + months)/2) and multiplying by the month number.
+          This table breaks down the proactive growth target across months.
         </p>
         <div class="table-responsive">
           <table class="table-business">
@@ -638,80 +734,71 @@
               </tr>
             </thead>
             <tbody>
-              ${proactiveTableRows}
+              ${proactiveRows}
             </tbody>
           </table>
         </div>
       `;
-      document.getElementById('resultsTable').innerHTML += proactiveTableHTML;
+      document.getElementById('resultsTable').innerHTML += proactiveHTML;
 
-      // Update URL parameters.
+      // Update URL
       updateUrlParams();
 
-      // --------------------------------------------------------------------
-      // Build the Plotly Waterfall Chart.
-      const step1 = cumulativeBaselineNoGrowth + cumulativeBaselineChurnImpact;
-      const step2 = cumulativeBaselineIncrementalGrowth;
-      const step3 = -cumulativeBaselineChurnImpact;
-      const step4 = cumulativeNewCustNoGrowth + cumulativeNewCustChurnImpact;
-      const step5 = cumulativeNewCustIncrementalGrowth;
-      const step6 = -cumulativeNewCustChurnImpact;
-      const step7 = T - newRevenueTarget - baselineTotal;
-      const finalTotal = step1 + step2 + step3 + step4 + step5 + step6 + step7;
-
-      const waterfallData = [{
-        type: 'waterfall',
-        orientation: "v",
-        measure: ['absolute','relative','relative','relative','relative','relative','relative','total'],
+      // Waterfall
+      const finalTotal= baselineTotal+ finalNewCustRev+ finalProactiveRev;
+      const waterfallData= [{
+        type:'waterfall',
+        orientation:'v',
+        measure:['absolute','relative','relative','total'],
         x: [
-          ["Baseline", "Baseline", "Baseline", "Acquisition", "Acquisition", "Acquisition", "Growth", "Target"],
-          ['Baseline', 'Organic Growth', 'Churn of Baseline', 'Customer Adds', 'Adds Organic Growth', 'Churn of Adds', 'Proactive', 'Final Total']
+          ["Baseline","Acquisition","Proactive","Total"], 
+          ["Baseline","New Cust.","Growth","Final"]
         ],
-        y: [step1, step2, step3, step4, step5, step6, step7, finalTotal],
+        y: [
+          baselineTotal,
+          finalNewCustRev,
+          finalProactiveRev,
+          finalTotal
+        ],
         text: [
-          '$' + formatNum(step1),
-          '$' + formatNum(step2),
-          '$' + formatNum(Math.abs(step3)),
-          '$' + formatNum(step4),
-          '$' + formatNum(step5),
-          '$' + formatNum(Math.abs(step6)),
-          '$' + formatNum(step7),
-          '$' + formatNum(finalTotal)
+          formatCurrency(baselineTotal),
+          formatCurrency(finalNewCustRev),
+          formatCurrency(finalProactiveRev),
+          formatCurrency(finalTotal)
         ],
-        textposition: 'outside',
-        cliponaxis: false,
-        connector: { line: { color: 'rgb(63, 63, 63)' } }
+        textposition:'outside',
+        cliponaxis:false,
+        connector:{ line:{ color:'rgb(63,63,63)' } }
       }];
-
-      const layout = {
-        title: 'Revenue Waterfall Chart',
-        waterfallgap: 0.3,
-        yaxis: { title: 'Revenue' },
-        autosize: true
+      const layout= {
+        title:'Revenue Waterfall Chart',
+        waterfallgap:0.3,
+        yaxis:{ title:'Revenue'},
+        autosize:true
       };
-
       Plotly.newPlot('waterfallChart', waterfallData, layout);
 
-      // --------------------------------------------------------------------
-      // Build the Marketing Funnel Chart.
-      const wins = runningTotalNewCustomers;
-      const sqls = wins * sqlPerWin;
-      const mqls = sqls * mqlPerSql;
-      
-      const funnelData = [{
-        type: 'funnel',
-        y: ['MQLs', 'SQLs', 'Wins'],
-        x: [mqls, sqls, wins],
-        textinfo: "value+percent initial"
+      // Marketing Funnel
+      const totalCust= monthlyCustomers.reduce((acc, x)=> acc+ x, 0);
+      const wins= formatNum(totalCust);
+      const sqls= wins* sqlPerWin;
+      const mqls= sqls* mqlPerSql;
+
+      const funnelData= [{
+        type:'funnel',
+        y:['MQLs','SQLs','Wins'],
+        x:[mqls, sqls, wins],
+        textinfo:'value+percent initial'
       }];
-      
-      const funnelLayout = {
-        title: 'Marketing Funnel',
-        margin: { l: 150 },
-        autosize: true
+      const funnelLayout= {
+        title:'Marketing Funnel',
+        margin:{ l:150 },
+        autosize:true
       };
-      
       Plotly.newPlot('funnelChart', funnelData, funnelLayout);
+
+      // finalize
+      finalizeAndHide();
     });
   </script>
 </body>
