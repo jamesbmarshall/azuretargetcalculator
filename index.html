@@ -2,310 +2,239 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cloud Target Calculator</title>
+  <title>Cloud Target Calculator | Optimize Revenue Growth</title>
+  <meta name="description" content="Cloud Target Calculator helps you forecast revenue, optimize customer acquisition, and track growth trends effectively.">
+  <meta name="keywords" content="Cloud Calculator, Revenue Growth, Customer Acquisition, Business Analytics, SaaS Metrics">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Open Graph Meta Tags for SEO -->
+  <meta property="og:title" content="Cloud Target Calculator | Optimize Revenue Growth">
+  <meta property="og:description" content="Cloud Target Calculator helps you forecast revenue, optimize customer acquisition, and track growth trends effectively.">
+  <meta property="og:image" content="https://example.com/preview-image.jpg">
+  <meta property="og:url" content="https://example.com/cloud-target-calculator">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Schema Markup for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Cloud Target Calculator",
+    "description": "Predict customer acquisition, churn, and revenue growth.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "author": {
+      "@type": "Person",
+      "name": "James Marshall"
+    }
+  }
+  </script>
+
   <!-- Import Open Sans from Google Fonts for a modern look -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS for Utility-First Styling -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
+
+  <!-- Include Plotly (deferred for performance) -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js" defer></script>
+
+  <!-- Optional external stylesheet for additional custom styles -->
+  <link rel="stylesheet" href="style.css">
+
   <style>
-    /* Base styles */
-    body {
-      background: linear-gradient(135deg, #0078d4, #74ebd5);
-      margin: 0;
-      padding: 20px;
-      font-family: 'Open Sans', sans-serif;
-      color: #333;
-      font-size: 16px;
-      line-height: 1.6;
+    /* Provide aria-label for chart containers to improve accessibility */
+    #waterfallChart,
+    #funnelChart {
+      aria-label: "Data Visualization";
+      role: region;
     }
-    /* Container “bubble” styles */
-    .bubble {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-      padding: 20px;
-      position: relative;
-    }
-    /* Form styling */
-    form label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-    form input,
-    form select {
-      width: 100%;
-      max-width: 300px;
-      padding: 10px;
-      margin-top: 4px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-    form button {
-      padding: 12px 24px;
-      margin-top: 15px;
-      background-color: #0078d4;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-    form button:hover {
-      background-color: #005a9e;
-    }
-    /* Advanced Options Toggle Button */
+
+    /* Buttons aria-label (optional) */
     #advancedToggle {
-      background-color: #f68418;
-      margin-top: 10px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
+      aria-label: "Toggle Advanced Options";
     }
-    #advancedToggle:hover {
-      background-color: #d96c0e;
+    #toggleDetails {
+      aria-label: "Toggle Detailed Columns";
     }
-    #advancedOptions {
-      display: none;
-      margin-top: 10px;
-      padding: 10px;
-      background: #f8f9fa;
-      border: 1px solid #ddd;
-      border-radius: 5px;
+
+    /* Inset box-shadow for focus to prevent clipping if overflow is hidden */
+    button:focus,
+    input:focus,
+    select:focus {
+      outline: none;
+      box-shadow: inset 0 0 0 2px #0078d4;
     }
-    /* Business-style table styling */
-    .table-business {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      font-size: 16px;
-    }
-    .table-business thead {
-      background-color: #2c3e50;
-      color: #ecf0f1;
-    }
-    .table-business th,
-    .table-business td {
-      padding: 12px 15px;
-      border: 1px solid #ddd;
-    }
-    .table-business th {
-      text-align: left;
-    }
-    .table-business td {
-      text-align: right;
-    }
-    .table-business tbody tr:nth-child(odd) {
-      background-color: #f9f9f9;
-    }
-    .table-business tbody tr:hover {
-      background-color: #f1f1f1;
-    }
-    /* Hide detailed columns by default */
-    .detailRevenue, .detailGrowth, .detailChurn {
-      display: none;
-    }
-    .show-details .detailRevenue,
-    .show-details .detailGrowth,
-    .show-details .detailChurn {
-      display: table-cell;
-    }
-    /* Responsive container styling */
-    .table-responsive, .chart-responsive {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    /* Balance Summary (Accounting Table) */
-    #balanceSummary {
-      margin-bottom: 20px;
-      font-size: 18px;
-      line-height: 1.5;
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .accounting-table {
-      width: 100%;
-      max-width: 400px;
-      border-collapse: collapse;
-      font-family: Arial, sans-serif;
-    }
-    .accounting-table td {
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
-    }
-    .accounting-table td.number {
-      text-align: right;
-    }
-    .accounting-table .total-row td {
-      font-weight: 600;
-    }
-    .accounting-table .total-row td.number {
-      border-top: 2px solid #000;
-    }
-    /* Collapsible form styling */
+
+    /* Collapsible form approach using .collapsed / .expanded classes */
     #calcForm {
       overflow: hidden;
       transition: max-height 0.5s ease;
-      max-height: 1000px; /* high default value */
     }
     #calcForm.collapsed {
       max-height: 0;
     }
-    /* Form toggle handle style */
-    #formToggleHandle {
-      cursor: pointer;
-      text-align: center;
-      padding: 10px;
-      background-color: #f0f4f8;
-      color: #0078d4;
-      border-radius: 0 0 10px 10px;
-      margin-top: 10px;
-      font-weight: 600;
+    #calcForm.expanded {
+      max-height: 9999px; /* arbitrarily large to accommodate all fields */
     }
-    /* Footer styling */
-    footer {
-      text-align: center;
-      padding: 10px;
-      color: #fff;
-      font-size: 14px;
-    }
-    /* Mobile responsive adjustments */
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-      .bubble {
-        padding: 15px;
-      }
-      form input, form select {
-        width: 100%;
-      }
-      .table-business th, .table-business td {
-        font-size: 14px;
-      }
+
+    /* Hide advanced options by default, show via JS */
+    #advancedOptions {
+      display: none;
     }
   </style>
-
-  <!-- Include Plotly from the CDN for charts -->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
-<body>
-  <!-- Form Bubble -->
-  <div class="bubble" id="formContainer">
-    <h1>Cloud Target Calculator v2</h1>
-    <p>
-      Fill in the form below to get insights into the number of customers or the consumption growth you'll need to hit your overall targets.
-      Use advanced options to adjust your lead conversion rates.
-    </p>
-    <form id="calcForm">
-      <label>
-        Months in Scope:
-        <input type="number" id="months" value="12" min="1" step="any" required>
-      </label>
-      <label>
-        Target Spend per Customer, per Month:
-        <input type="number" id="targetSpend" value="1000" min="1" step="any" required>
-      </label>
-      <label>
-        Ramp-up Period in Months:
-        <input type="number" id="ramp" value="1" min="1" step="any" required>
-      </label>
-      <label>
-        Organic Growth Rate per Month [as %]:
-        <input type="number" id="growth" value="0" min="0" step="any" required>
-      </label>
-      <label>
-        Revenue Churn Rate per Month [as %]:
-        <input type="number" id="churn" value="0" min="0" step="any" required>
-      </label>
-      <label>
-        Total Revenue Target:
-        <input type="number" id="targetRevenue" value="78000" min="1" step="any" required>
-      </label>
-      <label>
-        Baseline Recurring Revenue per Month:
-        <input type="number" id="baseline" value="0" min="0" step="any" required>
-      </label>
-      <label>
-        % of Additional Revenue from New Customers (Acquisition):
-        <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required>
-      </label>
-      <!-- Seasonality Inputs -->
-      <label>
-        Plan Start Month:
-        <select id="startMonth">
-          <option value="0">January</option>
-          <option value="1">February</option>
-          <option value="2">March</option>
-          <option value="3">April</option>
-          <option value="4">May</option>
-          <option value="5">June</option>
-          <option value="6">July</option>
-          <option value="7">August</option>
-          <option value="8">September</option>
-          <option value="9">October</option>
-          <option value="10">November</option>
-          <option value="11">December</option>
-        </select>
-      </label>
-      <label>
-        Plan Start Year:
-        <input type="number" id="startYear" value="2025" min="2000" step="1" required>
-      </label>
-      <label>
-        Use Seasonal Adjustments:
-        <input type="checkbox" id="seasonalToggle" checked>
-      </label>
-      
-      <!-- Advanced Options Toggle -->
-      <button type="button" id="advancedToggle">Advanced Options</button>
-      <div id="advancedOptions">
-        <label>
-          MQLs per SQL:
-          <input type="number" id="mqlPerSql" value="5" min="0" step="any">
-        </label>
-        <label>
-          SQLs per Win:
-          <input type="number" id="sqlPerWin" value="3" min="0" step="any">
-        </label>
+
+<body class="bg-gradient-to-r from-[#0078d4] to-[#74ebd5] p-5 font-[Open Sans] text-[#333] leading-relaxed">
+  <!-- Main Container -->
+  <div class="max-w-screen-xl mx-auto">
+    <!-- Form Bubble -->
+    <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative">
+      <h1 class="text-2xl font-bold mb-2">Cloud Target Calculator v2</h1>
+      <p class="mb-4">
+        Fill in the form below to get insights into the number of customers or the consumption growth you'll need to hit your overall targets.
+        Use advanced options to adjust your lead conversion rates.
+      </p>
+
+      <!-- Collapsible Form -->
+      <!-- Default to .expanded so it’s open on load; JS can auto-collapse if needed -->
+      <form id="calcForm" class="transition-max-height duration-500 expanded">
+        <!-- Fieldset for main metrics -->
+        <fieldset class="mb-4">
+          <legend class="font-semibold mb-2">Key Revenue Inputs</legend>
+
+          <label class="block mb-2 font-semibold" for="months">Months in Scope:</label>
+          <input type="number" id="months" value="12" min="1" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="block mb-2 font-semibold" for="targetSpend">Target Spend per Customer, per Month:</label>
+          <input type="number" id="targetSpend" value="1000" min="1" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="block mb-2 font-semibold" for="ramp">Ramp-up Period in Months:</label>
+          <input type="number" id="ramp" value="1" min="1" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="block mb-2 font-semibold" for="growth">Organic Growth Rate per Month [as %]:</label>
+          <input type="number" id="growth" value="0" min="0" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="block mb-2 font-semibold" for="churn">Revenue Churn Rate per Month [as %]:</label>
+          <input type="number" id="churn" value="0" min="0" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="block mb-2 font-semibold" for="targetRevenue">Total Revenue Target:</label>
+          <input type="number" id="targetRevenue" value="78000" min="1" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="block mb-2 font-semibold" for="baseline">Baseline Recurring Revenue per Month:</label>
+          <input type="number" id="baseline" value="0" min="0" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="block mb-2 font-semibold" for="pctAcq">% of Additional Revenue from New Customers (Acquisition):</label>
+          <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </fieldset>
+
+        <!-- Seasonality Inputs -->
+        <fieldset class="mb-4">
+          <legend class="font-semibold mb-2">Seasonality</legend>
+
+          <label class="block mb-2 font-semibold" for="startMonth">Plan Start Month:</label>
+          <select id="startMonth"
+                  class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+          </select>
+
+          <label class="block mb-2 font-semibold" for="startYear">Plan Start Year:</label>
+          <input type="number" id="startYear" value="2025" min="2000" step="1" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="inline-flex items-center cursor-pointer mb-4">
+            <input type="checkbox" id="seasonalToggle" checked
+                   class="mr-2" />
+            <span class="font-semibold">Use Seasonal Adjustments</span>
+          </label>
+        </fieldset>
+
+        <!-- Advanced Options Toggle -->
+        <button type="button" id="advancedToggle"
+                class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded mb-2"
+                aria-label="Toggle Advanced Options">
+          Advanced Options
+        </button>
+        <fieldset id="advancedOptions" class="bg-gray-50 border border-gray-200 rounded p-4 mb-4" style="display:none;">
+          <legend class="font-semibold mb-2">Advanced Conversion Inputs</legend>
+
+          <label class="block mb-2 font-semibold" for="mqlPerSql">MQLs per SQL:</label>
+          <input type="number" id="mqlPerSql" value="5" min="0" step="any"
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+          <label class="block mb-2 font-semibold" for="sqlPerWin">SQLs per Win:</label>
+          <input type="number" id="sqlPerWin" value="3" min="0" step="any"
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </fieldset>
+
+        <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
+          Calculate
+        </button>
+      </form>
+
+      <!-- Form Toggle Handle -->
+      <div id="formToggleHandle"
+           class="text-center mt-4 bg-blue-100 text-blue-600 rounded-b-lg p-2 font-semibold cursor-pointer">
+        ⬆️ Hide Form
       </div>
-      <button type="submit">Calculate</button>
-    </form>
-    <!-- Form Toggle Handle -->
-    <div id="formToggleHandle">⬆️ Hide Form</div>
-  </div>
+    </section>
 
-  <!-- Results Bubble -->
-  <div class="bubble" id="resultsContainer">
-    <!-- Toggle Detailed Columns -->
-    <button type="button" id="toggleDetails">Show Detailed Columns</button>
-    <!-- Container for the dynamic results table -->
-    <div class="table-responsive" id="resultsTable"></div>
-    <!-- Container for the waterfall chart -->
-    <div class="chart-responsive">
-      <div id="waterfallChart" style="height: 400px; margin-top: 30px;"></div>
-    </div>
-  </div>
+    <!-- Results Bubble -->
+    <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative" id="resultsContainer">
+      <!-- Toggle Detailed Columns -->
+      <button type="button" id="toggleDetails"
+              class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded mb-4"
+              aria-label="Toggle Detailed Columns">
+        Show Detailed Columns
+      </button>
+      <!-- Container for the dynamic results table -->
+      <div class="table-responsive overflow-x-auto" id="resultsTable"></div>
+      <!-- Container for the waterfall chart -->
+      <div class="chart-responsive overflow-x-auto mt-6">
+        <div id="waterfallChart"
+             style="height: 400px;"
+             role="region"
+             aria-label="Revenue Waterfall Chart showing monthly revenue contributions">
+        </div>
+      </div>
+    </section>
 
-  <!-- Marketing Funnel Bubble -->
-  <div class="bubble" id="funnelContainer">
-    <h2>Marketing Funnel</h2>
-    <p>
-      This is the breakdown of marketing qualified leads, to sales qualified leads, to wins based on a default of 5:3:1,
-      or your own conversion if you've changed any advanced options.
-    </p>
-    <div class="chart-responsive">
-      <div id="funnelChart" style="height: 400px; margin-top: 30px;"></div>
-    </div>
-    <div class="table-responsive" id="funnelTable"></div>
+    <!-- Marketing Funnel Bubble -->
+    <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative" id="funnelContainer">
+      <h2 class="text-xl font-semibold mb-2">Marketing Funnel</h2>
+      <p class="mb-4">
+        This is the breakdown of marketing qualified leads, to sales qualified leads, to wins based on a default of 5:3:1,
+        or your own conversion if you've changed any advanced options.
+      </p>
+      <div class="chart-responsive overflow-x-auto">
+        <div id="funnelChart"
+             style="height: 400px;"
+             role="region"
+             aria-label="Funnel Chart showing lead-to-win conversion rates">
+        </div>
+      </div>
+      <div class="table-responsive overflow-x-auto mt-4" id="funnelTable"></div>
+    </section>
   </div>
 
   <!-- Footer Section -->
@@ -313,493 +242,7 @@
     © 2025 James Marshall. All rights reserved.
   </footer>
 
-  <script>
-    function formatNum(num) {
-      return num.toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-    }
-    function formatCurrency(num) {
-      if (num < 0) {
-        return "($" + formatNum(Math.abs(num)) + ")";
-      }
-      return "$" + formatNum(num);
-    }
-
-    function collapseForm() {
-      document.getElementById('calcForm').classList.add('collapsed');
-      document.getElementById('formToggleHandle').textContent = "⬇️ Show Form";
-    }
-    function expandForm() {
-      document.getElementById('calcForm').classList.remove('collapsed');
-      document.getElementById('formToggleHandle').textContent = "⬆️ Hide Form";
-    }
-    function hideAdvanced() {
-      document.getElementById('advancedOptions').style.display = 'none';
-      document.getElementById('advancedToggle').textContent = 'Advanced Options';
-    }
-    function showAdvanced() {
-      document.getElementById('advancedOptions').style.display = 'block';
-      document.getElementById('advancedToggle').textContent = 'Hide Advanced Options';
-    }
-
-    function updateUrlParams() {
-      const params = new URLSearchParams();
-      params.set('months', document.getElementById('months').value);
-      params.set('targetSpend', document.getElementById('targetSpend').value);
-      params.set('ramp', document.getElementById('ramp').value);
-      params.set('growth', document.getElementById('growth').value);
-      params.set('churn', document.getElementById('churn').value);
-      params.set('targetRevenue', document.getElementById('targetRevenue').value);
-      params.set('baseline', document.getElementById('baseline').value);
-      params.set('pctAcq', document.getElementById('pctAcq').value);
-      params.set('startMonth', document.getElementById('startMonth').value);
-      params.set('startYear', document.getElementById('startYear').value);
-      params.set('seasonal', document.getElementById('seasonalToggle').checked ? "true" : "false");
-      params.set('mqlPerSql', document.getElementById('mqlPerSql').value);
-      params.set('sqlPerWin', document.getElementById('sqlPerWin').value);
-      history.pushState(null, '', '?' + params.toString());
-    }
-
-    function finalizeAndHide() {
-      collapseForm();
-      hideAdvanced();
-    }
-
-    document.getElementById('advancedToggle').addEventListener('click', function() {
-      const adv = document.getElementById('advancedOptions');
-      if (adv.style.display === 'none' || adv.style.display === '') {
-        showAdvanced();
-      } else {
-        hideAdvanced();
-      }
-    });
-
-    document.getElementById('toggleDetails').addEventListener('click', function() {
-      const tableContainer = document.getElementById('resultsTable');
-      if (tableContainer.classList.contains('show-details')) {
-        tableContainer.classList.remove('show-details');
-        this.textContent = 'Show Detailed Columns';
-      } else {
-        tableContainer.classList.add('show-details');
-        this.textContent = 'Hide Detailed Columns';
-      }
-    });
-
-    document.getElementById('formToggleHandle').addEventListener('click', function() {
-      const calcForm = document.getElementById('calcForm');
-      if (calcForm.classList.contains('collapsed')) {
-        expandForm();
-      } else {
-        collapseForm();
-      }
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      let hasParams = false;
-      if (params.toString()) {
-        hasParams = true;
-        if (params.has('months')) document.getElementById('months').value = params.get('months');
-        if (params.has('targetSpend')) document.getElementById('targetSpend').value = params.get('targetSpend');
-        if (params.has('ramp')) document.getElementById('ramp').value = params.get('ramp');
-        if (params.has('growth')) document.getElementById('growth').value = params.get('growth');
-        if (params.has('churn')) document.getElementById('churn').value = params.get('churn');
-        if (params.has('targetRevenue')) document.getElementById('targetRevenue').value = params.get('targetRevenue');
-        if (params.has('baseline')) document.getElementById('baseline').value = params.get('baseline');
-        if (params.has('pctAcq')) document.getElementById('pctAcq').value = params.get('pctAcq');
-        if (params.has('startMonth')) document.getElementById('startMonth').value = params.get('startMonth');
-        if (params.has('startYear')) document.getElementById('startYear').value = params.get('startYear');
-        if (params.has('seasonal')) document.getElementById('seasonalToggle').checked = (params.get('seasonal') === "true");
-        if (params.has('mqlPerSql')) document.getElementById('mqlPerSql').value = params.get('mqlPerSql');
-        if (params.has('sqlPerWin')) document.getElementById('sqlPerWin').value = params.get('sqlPerWin');
-
-        if (params.has('mqlPerSql') || params.has('sqlPerWin')) {
-          showAdvanced();
-        }
-        // auto-run
-        document.getElementById('calcForm').dispatchEvent(new Event('submit'));
-      }
-      if (hasParams) {
-        collapseForm();
-      } else {
-        expandForm();
-      }
-    });
-
-    // The main logic
-    document.getElementById('calcForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      // 1) Grab user inputs
-      const n = parseInt(document.getElementById('months').value, 10);
-      const s = parseFloat(document.getElementById('targetSpend').value);
-      const r = parseInt(document.getElementById('ramp').value, 10);
-      const g = parseFloat(document.getElementById('growth').value)/100;
-      const c = parseFloat(document.getElementById('churn').value)/100;
-      const T = parseFloat(document.getElementById('targetRevenue').value);
-      const B = parseFloat(document.getElementById('baseline').value);
-      const P = parseFloat(document.getElementById('pctAcq').value)/100;
-
-      const startMonth = parseInt(document.getElementById('startMonth').value, 10);
-      const startYear = parseInt(document.getElementById('startYear').value, 10);
-      const seasonalEnabled = document.getElementById('seasonalToggle').checked;
-
-      const mqlPerSql = parseFloat(document.getElementById('mqlPerSql').value);
-      const sqlPerWin = parseFloat(document.getElementById('sqlPerWin').value);
-
-      // For months
-      const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
-      // leap check
-      if (((startYear % 4)===0 && (startYear%100)!==0)||(startYear%400)===0) {
-        daysInMonth[1]=29;
-      }
-      const baselineDays = 30;
-      const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-
-      // 2) baseline total
-      let baselineTotal = 0;
-      let monthFactors = [];
-      for (let i=0; i<n; i++){
-        const idx = (startMonth + i)%12;
-        let factor = 1;
-        if (seasonalEnabled) {
-          factor = daysInMonth[idx]/ baselineDays;
-        }
-        monthFactors.push(factor);
-
-        const baseRev = B* Math.pow(1+ g, i)* Math.pow(1- c, i)* factor;
-        baselineTotal += baseRev;
-      }
-
-      // 3) new vs proactive
-      const addlTarget = T- baselineTotal;
-      let newRevenueTarget = Math.max(0, addlTarget* P);
-      let proactiveTarget = Math.max(0, addlTarget*(1-P));
-
-      // effectiveRevenue
-      function effectiveRevenue(age) {
-        let base = (age<=r)? s*(age/r) : s* Math.pow(1+g, age-r);
-        return base* Math.pow(1- c, age-1);
-      }
-
-      // total contribution
-      let totalContr=0;
-      for (let m=0; m<n; m++){
-        const factor= monthFactors[m];
-        let ages= (n- m);
-        for (let age=1; age<= ages; age++){
-          totalContr += effectiveRevenue(age)* factor;
-        }
-      }
-      let baseNewCust = 0;
-      if (totalContr>0 && newRevenueTarget>0) {
-        baseNewCust = newRevenueTarget/ totalContr;
-      }
-      let monthlyCustomers= new Array(n).fill(0);
-      for (let m=0; m<n; m++){
-        monthlyCustomers[m]= baseNewCust* monthFactors[m];
-      }
-
-      // We'll build table in two passes
-      function buildMonthlyTable() {
-        let localCumulativeRevenue=0;
-        let localTableRows="";
-        let cumulativeNewCustRevenue=0;
-        let runningTotalCustomers=0;
-
-        // We'll also track the monthly details (growth, churn)
-        let cumulativeNewCustNoGrowth=0;
-        let cumulativeNewCustIncrementalGrowth=0;
-        let cumulativeNewCustChurnImpact=0;
-
-        let cumulativeBaselineIncrementalGrowth=0;
-        let cumulativeBaselineChurnImpact=0;
-
-        for (let m=0; m<n; m++){
-          const newCustCount= monthlyCustomers[m];
-          runningTotalCustomers += newCustCount;
-
-          let newCustMonthRevenue= 0;
-          let newCustMonthNoGrowth= 0;
-          let newCustMonthIncrementalGrowth= 0;
-          let newCustMonthChurnImpact= 0;
-
-          for (let age=1; age<=(m+1); age++){
-            const effRev= effectiveRevenue(age);
-            // For growth calculations
-            const noGrowth= (age<=r)? s*(age/r) : s;
-            const effNoGrowth= noGrowth* Math.pow(1- c, age-1);
-            const incRev= effRev- effNoGrowth;
-            const churnLoss= noGrowth- effRev;
-
-            newCustMonthRevenue += (newCustCount* effRev);
-            newCustMonthNoGrowth += (newCustCount* effNoGrowth);
-            newCustMonthIncrementalGrowth += (newCustCount* incRev);
-            newCustMonthChurnImpact += (newCustCount* churnLoss);
-          }
-          // multiply by factor
-          newCustMonthRevenue *= monthFactors[m];
-          newCustMonthNoGrowth *= monthFactors[m];
-          newCustMonthIncrementalGrowth *= monthFactors[m];
-          newCustMonthChurnImpact *= monthFactors[m];
-
-          cumulativeNewCustRevenue += newCustMonthRevenue;
-          cumulativeNewCustNoGrowth += newCustMonthNoGrowth;
-          cumulativeNewCustIncrementalGrowth += newCustMonthIncrementalGrowth;
-          cumulativeNewCustChurnImpact += newCustMonthChurnImpact;
-
-          // baseline
-          const baselineMonthRevenue= B* Math.pow(1+ g, m)* Math.pow(1- c, m)* monthFactors[m];
-
-          const baselineMonthNoGrowth= B* Math.pow(1- c, m)* monthFactors[m];
-          const baselineMonthIncrementalGrowth= baselineMonthRevenue- baselineMonthNoGrowth;
-          const baselineMonthChurnImpact= (B* Math.pow(1+ g, m)- (B* Math.pow(1+ g, m)* Math.pow(1- c, m)))* monthFactors[m];
-
-          cumulativeBaselineIncrementalGrowth += baselineMonthIncrementalGrowth;
-          cumulativeBaselineChurnImpact += baselineMonthChurnImpact;
-
-          const monthlyTotal= newCustMonthRevenue+ baselineMonthRevenue;
-          localCumulativeRevenue += monthlyTotal;
-
-          const idx= (startMonth+ m)%12;
-          const yOff= Math.floor((startMonth+ m)/12);
-          const moName= monthNames[idx]+ " "+ (startYear+ yOff);
-
-          localTableRows += `
-            <tr>
-              <td style="text-align:left;">${moName}</td>
-              <td>${formatNum(newCustCount)}</td>
-              <td>${formatNum(runningTotalCustomers)}</td>
-              <td class="detailRevenue">${formatCurrency(newCustMonthRevenue)}</td>
-              <td class="detailRevenue">${formatCurrency(baselineMonthRevenue)}</td>
-              <td>${formatCurrency(monthlyTotal)}</td>
-
-              <!-- Growth columns -->
-              <td class="detailGrowth">${formatCurrency(newCustMonthIncrementalGrowth)}</td>
-              <td class="detailGrowth">${formatCurrency(baselineMonthIncrementalGrowth)}</td>
-              <td>${formatCurrency(newCustMonthIncrementalGrowth+ baselineMonthIncrementalGrowth)}</td>
-
-              <!-- Churn columns -->
-              <td class="detailChurn">${formatCurrency(- newCustMonthChurnImpact)}</td>
-              <td class="detailChurn">${formatCurrency(- baselineMonthChurnImpact)}</td>
-              <td>${formatCurrency(-(newCustMonthChurnImpact+ baselineMonthChurnImpact))}</td>
-
-              <td>${formatCurrency(localCumulativeRevenue)}</td>
-            </tr>
-          `;
-        }
-
-        return {
-          tableHTML: localTableRows,
-          newCustRev: cumulativeNewCustRevenue,
-          totalCustomers: monthlyCustomers.reduce((acc,x)=> acc+ x, 0),
-          finalCumulativeRevenue: localCumulativeRevenue
-        };
-      }
-
-      // pass1
-      let pass1= buildMonthlyTable();
-      let computedNewCustRev= pass1.newCustRev;
-
-      // rescale if needed
-      if (computedNewCustRev>0) {
-        let ratio= newRevenueTarget/ computedNewCustRev;
-        if (ratio>0 && ratio!==1) {
-          for (let i=0; i<n; i++){
-            monthlyCustomers[i]*= ratio;
-          }
-        }
-      }
-
-      // pass2 final
-      let pass2= buildMonthlyTable();
-      let finalNewCustRev= pass2.newCustRev;
-      let totalCustomers= pass2.totalCustomers;
-
-      let finalProactiveRev= (T- baselineTotal)- finalNewCustRev;
-      if (finalProactiveRev<0) {
-        finalProactiveRev=0;
-      }
-
-      // Build final summary
-      const resultsHTML= `
-        <h2>Results</h2>
-        <div id="balanceSummary">
-          <table class="accounting-table">
-            <tr>
-              <td>Existing Business Revenue</td>
-              <td class="number">${formatCurrency(baselineTotal)}</td>
-            </tr>
-            <tr>
-              <td>New Customer Revenue</td>
-              <td class="number">${formatCurrency(finalNewCustRev)}</td>
-            </tr>
-            <tr>
-              <td>Proactive Growth Revenue</td>
-              <td class="number">${formatCurrency(finalProactiveRev)}</td>
-            </tr>
-            <tr class="total-row">
-              <td>Total Revenue Target</td>
-              <td class="number">${formatCurrency(T)}</td>
-            </tr>
-          </table>
-        </div>
-        <p>
-          The baseline revenue over the ${n}-month period is ${formatCurrency(baselineTotal)}. 
-          This plan yields ${formatCurrency(finalNewCustRev)} from
-          ${formatNum(totalCustomers)} new customers
-          and ${formatCurrency(finalProactiveRev)} from growing existing customers.
-        </p>
-        <h3>Baseline + Customer Adds Breakdown</h3>
-        <div class="table-responsive">
-          <table class="table-business">
-            <thead>
-              <tr>
-                <th>Month</th>
-                <th>New Cust. Added</th>
-                <th>Running Total New Cust.</th>
-                <th class="detailRevenue">New Cust. Revenue</th>
-                <th class="detailRevenue">Baseline Revenue</th>
-                <th>Total Monthly Revenue</th>
-
-                <th class="detailGrowth">New Cust. Organic Growth</th>
-                <th class="detailGrowth">Baseline Organic Growth</th>
-                <th>Total Organic Growth</th>
-
-                <th class="detailChurn">New Cust. Churn</th>
-                <th class="detailChurn">Baseline Churn</th>
-                <th>Total Churn</th>
-
-                <th>Cumulative Total Revenue</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${pass2.tableHTML}
-            </tbody>
-          </table>
-        </div>
-      `;
-      document.getElementById('resultsTable').innerHTML = resultsHTML;
-
-      // Proactive table
-      const monthFactorsSum= monthFactors.reduce((acc,f,i)=> acc+ f*(i+1), 0);
-      let proactiveRows= "";
-      if (finalProactiveRev>0 && monthFactorsSum>0) {
-        const base= finalProactiveRev/ monthFactorsSum;
-        let cumul=0;
-        for (let i=0; i<n; i++){
-          const idx= (startMonth+ i)%12;
-          const yOff= Math.floor((startMonth+ i)/12);
-          const moName= monthNames[idx]+ " "+ (startYear+ yOff);
-
-          const monthly= monthFactors[i]*(i+1)* base;
-          cumul+= monthly;
-          proactiveRows+= `
-            <tr>
-              <td style="text-align:left;">${moName}</td>
-              <td>${formatCurrency(monthly)}</td>
-              <td>${formatCurrency(cumul)}</td>
-            </tr>
-          `;
-        }
-      } else {
-        // zero
-        for (let i=0; i<n; i++){
-          const idx= (startMonth+ i)%12;
-          const yOff= Math.floor((startMonth+ i)/12);
-          const moName= monthNames[idx]+ " "+ (startYear+ yOff);
-          proactiveRows+= `
-            <tr>
-              <td style="text-align:left;">${moName}</td>
-              <td>${formatCurrency(0)}</td>
-              <td>${formatCurrency(0)}</td>
-            </tr>
-          `;
-        }
-      }
-      const proactiveHTML= `
-        <h3>Proactive Growth Target Breakdown</h3>
-        <p>
-          This table breaks down the proactive growth target across months.
-        </p>
-        <div class="table-responsive">
-          <table class="table-business">
-            <thead>
-              <tr>
-                <th>Month</th>
-                <th>Monthly Proactive Growth Target</th>
-                <th>Cumulative Proactive Growth Target</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${proactiveRows}
-            </tbody>
-          </table>
-        </div>
-      `;
-      document.getElementById('resultsTable').innerHTML += proactiveHTML;
-
-      // Update URL
-      updateUrlParams();
-
-      // Waterfall
-      const finalTotal= baselineTotal+ finalNewCustRev+ finalProactiveRev;
-      const waterfallData= [{
-        type:'waterfall',
-        orientation:'v',
-        measure:['absolute','relative','relative','total'],
-        x: [
-          ["Baseline","Acquisition","Proactive","Total"], 
-          ["Baseline","New Cust.","Growth","Final"]
-        ],
-        y: [
-          baselineTotal,
-          finalNewCustRev,
-          finalProactiveRev,
-          finalTotal
-        ],
-        text: [
-          formatCurrency(baselineTotal),
-          formatCurrency(finalNewCustRev),
-          formatCurrency(finalProactiveRev),
-          formatCurrency(finalTotal)
-        ],
-        textposition:'outside',
-        cliponaxis:false,
-        connector:{ line:{ color:'rgb(63,63,63)' } }
-      }];
-      const layout= {
-        title:'Revenue Waterfall Chart',
-        waterfallgap:0.3,
-        yaxis:{ title:'Revenue'},
-        autosize:true
-      };
-      Plotly.newPlot('waterfallChart', waterfallData, layout);
-
-      // Marketing Funnel
-      const totalCust= monthlyCustomers.reduce((acc, x)=> acc+ x, 0);
-      const wins= formatNum(totalCust);
-      const sqls= wins* sqlPerWin;
-      const mqls= sqls* mqlPerSql;
-
-      const funnelData= [{
-        type:'funnel',
-        y:['MQLs','SQLs','Wins'],
-        x:[mqls, sqls, wins],
-        textinfo:'value+percent initial'
-      }];
-      const funnelLayout= {
-        title:'Marketing Funnel',
-        margin:{ l:150 },
-        autosize:true
-      };
-      Plotly.newPlot('funnelChart', funnelData, funnelLayout);
-
-      // finalize
-      finalizeAndHide();
-    });
-  </script>
+  <!-- Main JS for calculations (defer or load at bottom for performance) -->
+  <script src="app.js" defer></script>
 </body>
 </html>
