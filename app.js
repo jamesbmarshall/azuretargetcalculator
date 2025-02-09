@@ -55,6 +55,35 @@
       hideAdvanced();
     }
 
+    function sharePage() {
+      const shareData = {
+        title: 'Cloud Target Calculator',
+        text: 'Check out these results for your Cloud Target plan!',
+        url: window.location.href
+      };
+    
+      if (navigator.share) {
+        // Use Web Share API on supported mobile browsers
+        navigator.share(shareData).catch(err => {
+          console.warn('Share API failed, fallback to copy link', err);
+          copyLinkFallback();
+        });
+      } else {
+        // Fallback for desktop or unsupported browsers
+        copyLinkFallback();
+      }
+    }
+    
+    function copyLinkFallback() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Share link copied to clipboard!');
+      }).catch(err => {
+        console.error('Could not copy link: ', err);
+      });
+    }
+    
+    document.getElementById('shareBtn').addEventListener('click', sharePage);
+
     document.getElementById('advancedToggle').addEventListener('click', function() {
       const adv = document.getElementById('advancedOptions');
       if (adv.style.display === 'none' || adv.style.display === '') {
