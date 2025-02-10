@@ -341,8 +341,7 @@
       }
 
       // Build final summary
-      const resultsHTML= `
-        <h2 class="text-2xl font-semibold mb-3">Results</h2>
+      const resultsHTML= `       
         <div id="balanceSummary">
           <table class="accounting-table">
             <tr>
