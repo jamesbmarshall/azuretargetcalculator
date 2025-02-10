@@ -96,113 +96,157 @@
       <h1 class="text-3xl font-bold mb-2">Cloud Revenue Target Calculator v2</h1>
       <p class="mb-4">Welcome to the Cloud Revenue Target Calculator—your go-to tool for planning and optimizing revenue growth with confidence. Whether you’re forecasting customer acquisition, tracking churn, or setting ambitious revenue goals, this calculator simplifies complex data into clear, actionable insights. Discover how each customer impacts your bottom line, adjust growth scenarios with ease, and unlock smarter strategies for hitting your targets. Ready to get started? Just fill in your key metrics below, and let’s map out your path to growth.</p>
 </section>
-<section class="bubble bg-white rounded-lg shadown-md mb-6 p-6 relative">
-      <!-- Collapsible Form -->
-      <!-- Default to .expanded so it’s open on load; JS can auto-collapse if needed -->
-      <form id="calcForm" class="transition-max-height duration-500 expanded">
-        <!-- Fieldset for main metrics -->
-        <fieldset class="mb-4">
-          <legend class="text-2xl font-semibold mb-3">Step One: Key Revenue Inputs</legend>
-          <p class="mb-4">
-            Fill in the form below to get insights into the number of customers or the consumption growth you'll need to hit your overall targets.
-            Use advanced options to adjust your lead conversion rates.
-          </p>
+<section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative">
+  <legend class="text-2xl font-semibold mb-3">Step 1: Key Revenue Inputs</legend>
+  <!-- Step Navigation -->
+  <p class="mb-4">
+    Fill in the form below to get insights into the number of customers or the consumption growth
+    you'll need to hit your overall targets. Use advanced options to adjust your lead conversion rates.
+  </p>
+  <!-- A simple horizontal “tabs” or “steps” bar at the top for easy jumping -->
+  <nav class="flex space-x-2 mb-4" aria-label="Form Steps">
+    <button type="button"
+            class="px-4 py-2 font-semibold rounded bg-blue-600 text-white stepNavBtn"
+            data-step="0">
+      Current Business
+    </button>
+    <button type="button"
+            class="px-4 py-2 font-semibold rounded bg-gray-200 text-gray-700 stepNavBtn"
+            data-step="1">
+      Targets
+    </button>
+    <button type="button"
+            class="px-4 py-2 font-semibold rounded bg-gray-200 text-gray-700 stepNavBtn"
+            data-step="2">
+      Advanced
+    </button>
+  </nav>
 
-          <label class="block mb-2 font-semibold" for="months">Months in Scope:</label>
-          <input type="number" id="months" value="12" min="1" step="any" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+  <!-- Carousel Container -->
+  <form id="calcForm" class="transition-all duration-500">
+    
+    <!-- STEP 1 CARD -->
+    <div class="formStep" id="step1" data-step="0">
+      <fieldset class="mb-4">
+        <!-- Key Revenue Fields -->
+        <label class="block mb-2 font-semibold" for="ramp">Ramp-up Period in Months:</label>
+        <input type="number" id="ramp" value="1" min="1" step="any" required
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
 
-          <label class="block mb-2 font-semibold" for="targetSpend">Target Spend per Customer, per Month:</label>
-          <input type="number" id="targetSpend" value="1000" min="1" step="any" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <label class="block mb-2 font-semibold" for="growth">Organic Growth Rate per Month [as %]:</label>
+        <input type="number" id="growth" value="0" min="0" step="any" required
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
 
-          <label class="block mb-2 font-semibold" for="ramp">Ramp-up Period in Months:</label>
-          <input type="number" id="ramp" value="1" min="1" step="any" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <label class="block mb-2 font-semibold" for="churn">Revenue Churn Rate per Month [as %]:</label>
+        <input type="number" id="churn" value="0" min="0" step="any" required
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
 
-          <label class="block mb-2 font-semibold" for="growth">Organic Growth Rate per Month [as %]:</label>
-          <input type="number" id="growth" value="0" min="0" step="any" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <label class="block mb-2 font-semibold" for="baseline">Baseline Recurring Revenue per Month:</label>
+        <input type="number" id="baseline" value="0" min="0" step="any" required
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+      </fieldset>
 
-          <label class="block mb-2 font-semibold" for="churn">Revenue Churn Rate per Month [as %]:</label>
-          <input type="number" id="churn" value="0" min="0" step="any" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-
-          <label class="block mb-2 font-semibold" for="targetRevenue">Total Revenue Target:</label>
-          <input type="number" id="targetRevenue" value="78000" min="1" step="any" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-
-          <label class="block mb-2 font-semibold" for="baseline">Baseline Recurring Revenue per Month:</label>
-          <input type="number" id="baseline" value="0" min="0" step="any" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-
-          <label class="block mb-2 font-semibold" for="pctAcq">% of Additional Revenue from New Customers (Acquisition):</label>
-          <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-        </fieldset>
-
-        <!-- Seasonality Inputs -->
-        <fieldset class="mb-4">
-          <legend class="font-semibold mb-2">Seasonality</legend>
-
-          <label class="block mb-2 font-semibold" for="startMonth">Plan Start Month:</label>
-          <select id="startMonth"
-                  class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
-
-          <label class="block mb-2 font-semibold" for="startYear">Plan Start Year:</label>
-          <input type="number" id="startYear" value="2025" min="2000" step="1" required
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-
-          <label class="inline-flex items-center cursor-pointer mb-4">
-            <input type="checkbox" id="seasonalToggle" checked
-                   class="mr-2" />
-            <span class="font-semibold">Use Seasonal Adjustments</span>
-          </label>
-        </fieldset>
-
-        <!-- Advanced Options Toggle -->
-        <button type="button" id="advancedToggle"
-                class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded mb-2"
-                aria-label="Toggle Advanced Options">
-          Advanced Options
+      <!-- Next Step Button -->
+      <div class="flex justify-end">
+        <button type="button"
+                class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded nextStepBtn">
+          Next
         </button>
-        <fieldset id="advancedOptions" class="bg-gray-50 border border-gray-200 rounded p-4 mb-4" style="display:none;">
-          <legend class="font-semibold mb-2">Advanced Conversion Inputs</legend>
+      </div>
+    </div> <!-- end step1 -->
 
-          <label class="block mb-2 font-semibold" for="mqlPerSql">MQLs per SQL:</label>
-          <input type="number" id="mqlPerSql" value="5" min="0" step="any"
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+    <!-- STEP 2 CARD -->
+    <div class="formStep hidden" id="step2" data-step="1">
+      <fieldset class="mb-4">
+        <label class="block mb-2 font-semibold" for="targetSpend">Target Spend per Customer, per Month:</label>
+        <input type="number" id="targetSpend" value="1000" min="1" step="any" required
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
 
-          <label class="block mb-2 font-semibold" for="sqlPerWin">SQLs per Win:</label>
-          <input type="number" id="sqlPerWin" value="3" min="0" step="any"
-                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-        </fieldset>
+        <label class="block mb-2 font-semibold" for="targetRevenue">Total Revenue Target:</label>
+        <input type="number" id="targetRevenue" value="78000" min="1" step="any" required
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
 
+        <label class="block mb-2 font-semibold" for="pctAcq">% of Additional Revenue from New Customers (Acquisition):</label>
+        <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />      
+
+      <!-- Step navigation: back + final submit -->
+      <div class="flex justify-between mt-4">
+        <button type="button"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
+          Back
+        </button>
+        <button type="button"
+                class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded nextStepBtn">
+          Next
+        </button>
+      </div>
+    </div> <!-- end step2 -->
+
+    <!-- STEP 3 CARD -->
+    <div class="formStep hidden" id="step3" data-step="2">
+      <!-- Add any content or fields for Step 3 here. -->
+      <legend class="text-lg font-semibold mb-3">Calendar Settings</legend>
+      <label class="block mb-2 font-semibold" for="months">Months in Scope:</label>
+        <input type="number" id="months" value="12" min="1" step="any" required
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+      <label class="block mb-2 font-semibold" for="startMonth">Plan Start Month:</label>
+      <select id="startMonth"
+              class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
+        <option value="0">January</option>
+        <option value="1">February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
+      </select>
+
+      <label class="block mb-2 font-semibold" for="startYear">Plan Start Year:</label>
+      <input type="number" id="startYear" value="2025" min="2000" step="1" required
+             class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+<br />
+      <label class="inline-flex items-center cursor-pointer mb-4">
+        <input type="checkbox" id="seasonalToggle" checked
+               class="mr-2" />
+        <span class="font-semibold">Use Seasonal Adjustments</span>
+      </label>
+      <legend class="text-lg font-semibold mb-3">Marketing Conversion Settings</legend>
+      <label class="block mb-2 font-semibold" for="mqlPerSql">MQLs per SQL:</label>
+      <input type="number" id="mqlPerSql" value="5" min="0" step="any"
+             class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
+      <label class="block mb-2 font-semibold" for="sqlPerWin">SQLs per Win:</label>
+      <input type="number" id="sqlPerWin" value="3" min="0" step="any"
+             class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+    </fieldset>
+
+   
+      <!-- Step navigation: back + final submit -->
+      <div class="flex justify-between mt-4">
+        <button type="button"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
+          Back
+        </button>
         <button type="submit"
                 class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
           Calculate
         </button>
-      </form>
-
-      <!-- Form Toggle Handle -->
-      <div id="formToggleHandle"
-           class="text-center mt-4 bg-blue-100 text-blue-600 rounded-b-lg p-2 font-semibold cursor-pointer">
-        ⬆️ Hide Form
       </div>
-    </section>
+    </div><!-- end step3 -->
+  </form>
+
+  <!-- Form Toggle Handle -->
+  <div id="formToggleHandle"
+       class="text-center mt-4 bg-blue-100 text-blue-600 rounded-b-lg p-2 font-semibold cursor-pointer">
+    ⬆️ Hide Form
+  </div>
+</section>
 
     <!-- Results Bubble -->
     <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative" id="resultsContainer">

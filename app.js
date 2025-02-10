@@ -23,14 +23,7 @@
       calcForm.classList.add('expanded');
       document.getElementById('formToggleHandle').textContent = "⬆️ Hide Form";
     }
-    function hideAdvanced() {
-      document.getElementById('advancedOptions').style.display = 'none';
-      document.getElementById('advancedToggle').textContent = 'Advanced Options';
-    }
-    function showAdvanced() {
-      document.getElementById('advancedOptions').style.display = 'block';
-      document.getElementById('advancedToggle').textContent = 'Hide Advanced Options';
-    }
+
 
     function updateUrlParams() {
       const params = new URLSearchParams();
@@ -52,7 +45,7 @@
 
     function finalizeAndHide() {
       collapseForm();
-      hideAdvanced();
+ 
     }
 
     function sharePage() {
@@ -84,14 +77,7 @@
     
     document.getElementById('shareBtn').addEventListener('click', sharePage);
 
-    document.getElementById('advancedToggle').addEventListener('click', function() {
-      const adv = document.getElementById('advancedOptions');
-      if (adv.style.display === 'none' || adv.style.display === '') {
-        showAdvanced();
-      } else {
-        hideAdvanced();
-      }
-    });
+ 
 
     document.getElementById('toggleDetails').addEventListener('click', function() {
       const tableContainer = document.getElementById('resultsTable');
@@ -132,9 +118,7 @@
         if (params.has('mqlPerSql')) document.getElementById('mqlPerSql').value = params.get('mqlPerSql');
         if (params.has('sqlPerWin')) document.getElementById('sqlPerWin').value = params.get('sqlPerWin');
 
-        if (params.has('mqlPerSql') || params.has('sqlPerWin')) {
-          showAdvanced();
-        }
+
         // auto-run
         document.getElementById('calcForm').dispatchEvent(new Event('submit'));
       }
@@ -518,3 +502,78 @@
       // finalize
       finalizeAndHide();
     });
+
+   // Gather all .formStep elements
+  const steps = Array.from(document.querySelectorAll('.formStep'));
+  let currentStep = 0; // start on step 0
+
+  // Hide all steps
+  function hideAllSteps() {
+    steps.forEach(el => el.classList.add('hidden'));
+  }
+  // Show a single step by index
+  function showStep(index) {
+    if (index < 0) index = 0;
+    if (index >= steps.length) index = steps.length - 1;
+
+    hideAllSteps();
+    steps[index].classList.remove('hidden');
+    currentStep = index;
+    updateNavStyling(index);
+  }
+
+  // Step nav styling
+  function updateNavStyling(stepIndex) {
+    const navButtons = document.querySelectorAll('.stepNavBtn');
+    navButtons.forEach(btn => {
+      btn.classList.remove('bg-blue-600','text-white');
+      btn.classList.add('bg-gray-200','text-gray-700');
+    });
+    // highlight the button with data-step = stepIndex
+    const activeBtn = document.querySelector(`.stepNavBtn[data-step="${stepIndex}"]`);
+    if (activeBtn) {
+      activeBtn.classList.remove('bg-gray-200','text-gray-700');
+      activeBtn.classList.add('bg-blue-600','text-white');
+    }
+  }
+
+  // Show step 0 at start
+  showStep(0);
+
+  // Buttons that jump directly to a step
+  document.querySelectorAll('.stepNavBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetStep = parseInt(btn.dataset.step, 10);
+      showStep(targetStep);
+    });
+  });
+
+  // Next step
+  document.querySelectorAll('.nextStepBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      showStep(currentStep + 1);
+    });
+  });
+  // Previous step
+  document.querySelectorAll('.prevStepBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      showStep(currentStep - 1);
+    });
+  });
+
+
+
+  // Hide/Show form
+  const formToggleHandle = document.getElementById('formToggleHandle');
+  const calcForm = document.getElementById('calcForm');
+  formToggleHandle.addEventListener('click', () => {
+    if (calcForm.classList.contains('collapsed')) {
+      calcForm.classList.remove('collapsed');
+      formToggleHandle.textContent = "⬆️ Hide Form";
+    } else {
+      calcForm.classList.add('collapsed');
+      formToggleHandle.textContent = "⬇️ Show Form";
+    }
+  });
+
+  
