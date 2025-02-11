@@ -204,3 +204,6 @@ footer {
   }
 }
 
+.border-red-500 {
+  border-color: #f87171 !important; /* Tailwind-ish red color */
+}

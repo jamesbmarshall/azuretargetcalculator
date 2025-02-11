@@ -30,33 +30,29 @@ function expandForm() {
 }
 
 /********************************************
- * Step Validation
+ * Step Validation - no alerts, minimal hover
  ********************************************/
 /**
- * Validate all required fields within a given step.
- * @param {number} stepIndex - The step's index (0-based).
- * @returns {boolean} - true if valid, otherwise false.
+ * Validate all required fields within a given step using checkValidity().
+ * If an input is invalid, highlight it in red, call reportValidity() for 
+ * that field, and return false immediately.
  */
 function validateStep(stepIndex) {
   const currentStepEl = document.querySelector(`.formStep[data-step="${stepIndex}"]`);
   const inputs = currentStepEl.querySelectorAll('input, select');
-  let isValid = true;
+  // Clear old error styling
+  inputs.forEach(input => input.classList.remove('border-red-500'));
 
-  inputs.forEach(input => {
-    // Check built-in HTML validation
+  for (let i = 0; i < inputs.length; i++) {
+    const input = inputs[i];
     if (!input.checkValidity()) {
-      input.classList.add('border-red-500'); // highlight invalid field
-      isValid = false;
-    } else {
-      input.classList.remove('border-red-500');
+      // Mark invalid, show minimal browser tooltip
+      input.classList.add('border-red-500');
+      input.reportValidity(); 
+      return false; // Stop on first invalid
     }
-  });
-
-  if (!isValid) {
-    alert("Please fill out all required fields correctly before proceeding.");
   }
-
-  return isValid;
+  return true; // If we get here, everything in this step is valid
 }
 
 /********************************************
@@ -93,7 +89,7 @@ function sharePage() {
     text: 'Check out these results for your Cloud Target plan!',
     url: window.location.href
   };
-  
+
   if (navigator.share) {
     navigator.share(shareData).catch(err => {
       console.warn('Share API failed, fallback to copy link', err);
@@ -184,9 +180,8 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   // 1) Validate all steps before calculating
   for (let i = 0; i < steps.length; i++) {
     if (!validateStep(i)) {
-      // Jump to the invalid step so the user can fix it
       showStep(i);
-      return; // Stop submission if invalid
+      return; // Do not proceed if invalid
     }
   }
 
@@ -281,20 +276,13 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     let cumulativeNewCustRevenue = 0;
     let runningTotalCustomers = 0;
 
-    // Track advanced metrics
-    let cumulativeNewCustNoGrowth = 0;
-    let cumulativeNewCustIncrementalGrowth = 0;
-    let cumulativeNewCustChurnImpact = 0;
-    let cumulativeBaselineIncrementalGrowth = 0;
-    let cumulativeBaselineChurnImpact = 0;
-
+    // We’ll track incremental growth / churn for new & baseline
     for (let m = 0; m < n; m++) {
       const newCustCount = monthlyCustomers[m];
       runningTotalCustomers += newCustCount;
 
       // ========== NEW CUSTOMER METRICS ==========
       let newCustMonthRevenue = 0;
-      let newCustMonthNoGrowth = 0;
       let newCustMonthIncrementalGrowth = 0;
       let newCustMonthChurnImpact = 0;
 
@@ -304,25 +292,21 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
         // "No growth" scenario for comparison
         const noGrowth = (age <= r) ? s*(age / r) : s;
         const effNoGrowth = noGrowth * Math.pow((1 - c), age - 1);
+
         const incRev = effRev - effNoGrowth;
         const churnLoss = noGrowth - effRev;
 
         newCustMonthRevenue += (newCustCount * effRev);
-        newCustMonthNoGrowth += (newCustCount * effNoGrowth);
         newCustMonthIncrementalGrowth += (newCustCount * incRev);
         newCustMonthChurnImpact += (newCustCount * churnLoss);
       }
 
       // Adjust by seasonal factor
       newCustMonthRevenue *= monthFactors[m];
-      newCustMonthNoGrowth *= monthFactors[m];
       newCustMonthIncrementalGrowth *= monthFactors[m];
       newCustMonthChurnImpact *= monthFactors[m];
 
       cumulativeNewCustRevenue += newCustMonthRevenue;
-      cumulativeNewCustNoGrowth += newCustMonthNoGrowth;
-      cumulativeNewCustIncrementalGrowth += newCustMonthIncrementalGrowth;
-      cumulativeNewCustChurnImpact += newCustMonthChurnImpact;
 
       // ========== BASELINE METRICS ==========
       const baselineMonthRevenue = B
@@ -330,16 +314,12 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
         * Math.pow((1 - c), m)
         * monthFactors[m];
 
-      // Baseline "no growth" scenario
       const baselineMonthNoGrowth = B * Math.pow((1 - c), m) * monthFactors[m];
       const baselineMonthIncrementalGrowth = baselineMonthRevenue - baselineMonthNoGrowth;
       const baselineMonthChurnImpact = (
         (B * Math.pow((1 + g), m)) -
         (B * Math.pow((1 + g), m) * Math.pow((1 - c), m))
       ) * monthFactors[m];
-
-      cumulativeBaselineIncrementalGrowth += baselineMonthIncrementalGrowth;
-      cumulativeBaselineChurnImpact += baselineMonthChurnImpact;
 
       const monthlyTotal = newCustMonthRevenue + baselineMonthRevenue;
       localCumulativeRevenue += monthlyTotal;
@@ -383,11 +363,11 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     };
   }
 
-  // First pass: see how much revenue from the base newCust distribution
+  // First pass
   let pass1 = buildMonthlyTable();
   let computedNewCustRev = pass1.newCustRev;
 
-  // If needed, scale monthly new-customer distribution to match newRevenueTarget
+  // Scale if needed
   if (computedNewCustRev > 0) {
     let ratio = newRevenueTarget / computedNewCustRev;
     if (ratio > 0 && ratio !== 1) {
@@ -397,7 +377,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     }
   }
 
-  // Second pass with updated distribution
+  // Second pass
   let pass2 = buildMonthlyTable();
   let finalNewCustRev = pass2.newCustRev;
   let totalCustomers = pass2.totalCustomers;
@@ -409,7 +389,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   }
 
   // Build final summary
-  const resultsHTML = `       
+  const resultsHTML = `
     <div id="balanceSummary">
       <table class="accounting-table">
         <tr>
@@ -431,7 +411,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
       </table>
     </div>
     <p>
-      The baseline revenue over the ${n}-month period is ${formatCurrency(baselineTotal)}. 
+      The baseline revenue over the ${n}-month period is ${formatCurrency(baselineTotal)}.
       This plan yields ${formatCurrency(finalNewCustRev)} from
       ${formatNum(totalCustomers)} new customers
       and ${formatCurrency(finalProactiveRev)} from growing existing customers.
@@ -532,7 +512,6 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   updateUrlParams();
 
   // ========== Plotly Charts: Waterfall + Funnel ==========
-
   // Revenue Waterfall
   const finalTotal = baselineTotal + finalNewCustRev + finalProactiveRev;
   const waterfallData = [{
@@ -580,7 +559,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   }];
   const funnelLayout = {
     title: 'Marketing Funnel',
-    margin: { l:150 },
+    margin: { l: 150 },
     autosize: true
   };
   Plotly.newPlot('funnelChart', funnelData, funnelLayout);
@@ -592,9 +571,8 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
 /********************************************
  * Multi-Step Navigation
  ********************************************/
-// Gather all step elements
 const steps = Array.from(document.querySelectorAll('.formStep'));
-let currentStep = 0; // start on step 0
+let currentStep = 0;
 
 // Hide all steps
 function hideAllSteps() {
@@ -627,14 +605,13 @@ function updateNavStyling(stepIndex) {
   }
 }
 
-// Show step 0 at start
+// Start on step 0
 showStep(0);
 
-// Buttons that jump directly to a step
+// Nav buttons
 document.querySelectorAll('.stepNavBtn').forEach(btn => {
   btn.addEventListener('click', () => {
     const targetStep = parseInt(btn.dataset.step, 10);
-    // Validate current step first
     if (validateStep(currentStep)) {
       showStep(targetStep);
     }

@@ -87,23 +87,32 @@
     }
   </style>
 </head>
+<body>
 
-<body class="bg-gradient-to-r from-[#0078d4] to-[#74ebd5] p-5 font-[Open Sans] text-[#333] leading-relaxed">
-  <!-- Main Container -->
-  <div class="max-w-screen-xl mx-auto">
-    <!-- Form Bubble -->
-    <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative">
-      <h1 class="text-3xl font-bold mb-2">Cloud Revenue Target Calculator v2</h1>
-      <p class="mb-4">Welcome to the Cloud Revenue Target Calculator—your go-to tool for planning and optimizing revenue growth with confidence. Whether you’re forecasting customer acquisition, tracking churn, or setting ambitious revenue goals, this calculator simplifies complex data into clear, actionable insights. Discover how each customer impacts your bottom line, adjust growth scenarios with ease, and unlock smarter strategies for hitting your targets. Ready to get started? Just fill in your key metrics below, and let’s map out your path to growth.</p>
+<!-- ===== BEGIN HTML STRUCTURE ===== -->
+
+<!-- Header Bubble (Intro) -->
+<section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative">
+  <h1 class="text-3xl font-bold mb-2">Cloud Revenue Target Calculator v2</h1>
+  <p class="mb-4">
+    Welcome to the Cloud Revenue Target Calculator—your go-to tool for planning and optimizing 
+    revenue growth with confidence. Whether you’re forecasting customer acquisition, tracking churn, 
+    or setting ambitious revenue goals, this calculator simplifies complex data into clear, actionable 
+    insights. Discover how each customer impacts your bottom line, adjust growth scenarios with ease, 
+    and unlock smarter strategies for hitting your targets. Ready to get started? Just fill in your key 
+    metrics below, and let’s map out your path to growth.
+  </p>
 </section>
+
+<!-- Main Calculator Bubble -->
 <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative">
   <legend class="text-2xl font-semibold mb-3">Step 1: Key Revenue Inputs</legend>
-  <!-- Step Navigation -->
   <p class="mb-4">
-    Fill in the form below to get insights into the number of customers or the consumption growth
+    Fill in the form below to get insights into the number of customers or the consumption growth 
     you'll need to hit your overall targets. Use advanced options to adjust your lead conversion rates.
   </p>
-  <!-- A simple horizontal “tabs” or “steps” bar at the top for easy jumping -->
+
+  <!-- Step Navigation (Tabs) -->
   <nav class="flex space-x-2 mb-4" aria-label="Form Steps">
     <button type="button"
             class="px-4 py-2 font-semibold rounded bg-blue-600 text-white stepNavBtn"
@@ -122,15 +131,15 @@
     </button>
   </nav>
 
-  <!-- Carousel Container -->
-  <form id="calcForm" class="transition-all duration-500">
-    
+  <!-- Multi-step Form: using `novalidate` to control validity ourselves -->
+  <form id="calcForm" novalidate class="transition-all duration-500">
+
     <!-- STEP 1 CARD -->
     <div class="formStep" id="step1" data-step="0">
       <fieldset class="mb-4">
         <!-- Key Revenue Fields -->
         <label class="block mb-2 font-semibold" for="ramp">Ramp-up Period in Months:</label>
-        <input type="number" id="ramp" value="1" min="1" step="any" required
+        <input type="number" id="ramp" value="1" min="1" step="1" required
                class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
 
         <label class="block mb-2 font-semibold" for="growth">Organic Growth Rate per Month [as %]:</label>
@@ -168,7 +177,8 @@
 
         <label class="block mb-2 font-semibold" for="pctAcq">% of Additional Revenue from New Customers (Acquisition):</label>
         <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />      
+               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+      </fieldset>
 
       <!-- Step navigation: back + final submit -->
       <div class="flex justify-between mt-4">
@@ -188,8 +198,9 @@
       <!-- Add any content or fields for Step 3 here. -->
       <legend class="text-lg font-semibold mb-3">Calendar Settings</legend>
       <label class="block mb-2 font-semibold" for="months">Months in Scope:</label>
-        <input type="number" id="months" value="12" min="1" step="any" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+      <input type="number" id="months" value="12" min="1" step="any" required
+             class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+
       <label class="block mb-2 font-semibold" for="startMonth">Plan Start Month:</label>
       <select id="startMonth"
               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
@@ -210,12 +221,13 @@
       <label class="block mb-2 font-semibold" for="startYear">Plan Start Year:</label>
       <input type="number" id="startYear" value="2025" min="2000" step="1" required
              class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-<br />
+
+      <br />
       <label class="inline-flex items-center cursor-pointer mb-4">
-        <input type="checkbox" id="seasonalToggle" checked
-               class="mr-2" />
+        <input type="checkbox" id="seasonalToggle" checked class="mr-2" />
         <span class="font-semibold">Use Seasonal Adjustments</span>
       </label>
+
       <legend class="text-lg font-semibold mb-3">Marketing Conversion Settings</legend>
       <label class="block mb-2 font-semibold" for="mqlPerSql">MQLs per SQL:</label>
       <input type="number" id="mqlPerSql" value="5" min="0" step="any"
@@ -224,9 +236,7 @@
       <label class="block mb-2 font-semibold" for="sqlPerWin">SQLs per Win:</label>
       <input type="number" id="sqlPerWin" value="3" min="0" step="any"
              class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-    </fieldset>
-
-   
+    
       <!-- Step navigation: back + final submit -->
       <div class="flex justify-between mt-4">
         <button type="button"
@@ -250,7 +260,7 @@
 
     <!-- Results Bubble -->
     <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative" id="resultsContainer">
-      <h2 class="text-2xl font-semibold mb-3">Step Two: Review Your Personalised Plan</h2>
+      <h2 class="text-2xl font-semibold mb-3">Step 2: Review Your Personalised Plan</h2>
       <!-- Toggle Detailed Columns -->
       <button type="button" id="toggleDetails"
               class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded mb-4"
