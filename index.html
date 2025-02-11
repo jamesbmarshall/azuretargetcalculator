@@ -87,12 +87,12 @@
     }
   </style>
 </head>
-<body>
+<body class="font-[Open_Sans]">
 
 <!-- ===== BEGIN HTML STRUCTURE ===== -->
 
 <!-- Header Bubble (Intro) -->
-<section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative">
+<section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto">
   <h1 class="text-3xl font-bold mb-2">Cloud Revenue Target Calculator v2</h1>
   <p class="mb-4">
     Welcome to the Cloud Revenue Target Calculator—your go-to tool for planning and optimizing 
@@ -105,7 +105,7 @@
 </section>
 
 <!-- Main Calculator Bubble -->
-<section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative">
+<section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto">
   <legend class="text-2xl font-semibold mb-3">Step 1: Key Revenue Inputs</legend>
   <p class="mb-4">
     Fill in the form below to get insights into the number of customers or the consumption growth 
@@ -136,23 +136,32 @@
 
     <!-- STEP 1 CARD -->
     <div class="formStep" id="step1" data-step="0">
-      <fieldset class="mb-4">
+      <!-- Split the fieldset into two columns on medium screens and above -->
+      <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
         <!-- Key Revenue Fields -->
-        <label class="block mb-2 font-semibold" for="ramp">Ramp-up Period in Months:</label>
-        <input type="number" id="ramp" value="1" min="1" step="1" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <div>
+          <label class="block mb-2 font-semibold" for="ramp">Ramp-up Period in Months:</label>
+          <input type="number" id="ramp" value="1" min="1" step="1" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
 
-        <label class="block mb-2 font-semibold" for="growth">Organic Growth Rate per Month [as %]:</label>
-        <input type="number" id="growth" value="0" min="0" step="any" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <div>
+          <label class="block mb-2 font-semibold" for="growth">Organic Growth Rate per Month [as %]:</label>
+          <input type="number" id="growth" value="0" min="0" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
 
-        <label class="block mb-2 font-semibold" for="churn">Revenue Churn Rate per Month [as %]:</label>
-        <input type="number" id="churn" value="0" min="0" step="any" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <div>
+          <label class="block mb-2 font-semibold" for="churn">Revenue Churn Rate per Month [as %]:</label>
+          <input type="number" id="churn" value="0" min="0" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
 
-        <label class="block mb-2 font-semibold" for="baseline">Baseline Recurring Revenue per Month:</label>
-        <input type="number" id="baseline" value="0" min="0" step="any" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <div>
+          <label class="block mb-2 font-semibold" for="baseline">Baseline Recurring Revenue per Month:</label>
+          <input type="number" id="baseline" value="0" min="0" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
       </fieldset>
 
       <!-- Next Step Button -->
@@ -166,18 +175,24 @@
 
     <!-- STEP 2 CARD -->
     <div class="formStep hidden" id="step2" data-step="1">
-      <fieldset class="mb-4">
-        <label class="block mb-2 font-semibold" for="targetSpend">Target Spend per Customer, per Month:</label>
-        <input type="number" id="targetSpend" value="1000" min="1" step="any" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+      <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
+        <div>
+          <label class="block mb-2 font-semibold" for="targetSpend">Target Spend per Customer, per Month:</label>
+          <input type="number" id="targetSpend" value="1000" min="1" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
 
-        <label class="block mb-2 font-semibold" for="targetRevenue">Total Revenue Target:</label>
-        <input type="number" id="targetRevenue" value="78000" min="1" step="any" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <div>
+          <label class="block mb-2 font-semibold" for="targetRevenue">Total Revenue Target:</label>
+          <input type="number" id="targetRevenue" value="78000" min="1" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
 
-        <label class="block mb-2 font-semibold" for="pctAcq">% of Additional Revenue from New Customers (Acquisition):</label>
-        <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
-               class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <div>
+          <label class="block mb-2 font-semibold" for="pctAcq">% of Additional Revenue from New Customers (Acquisition):</label>
+          <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
       </fieldset>
 
       <!-- Step navigation: back + final submit -->
@@ -197,45 +212,60 @@
     <div class="formStep hidden" id="step3" data-step="2">
       <!-- Add any content or fields for Step 3 here. -->
       <legend class="text-lg font-semibold mb-3">Calendar Settings</legend>
-      <label class="block mb-2 font-semibold" for="months">Months in Scope:</label>
-      <input type="number" id="months" value="12" min="1" step="any" required
-             class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
 
-      <label class="block mb-2 font-semibold" for="startMonth">Plan Start Month:</label>
-      <select id="startMonth"
-              class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
-        <option value="0">January</option>
-        <option value="1">February</option>
-        <option value="2">March</option>
-        <option value="3">April</option>
-        <option value="4">May</option>
-        <option value="5">June</option>
-        <option value="6">July</option>
-        <option value="7">August</option>
-        <option value="8">September</option>
-        <option value="9">October</option>
-        <option value="10">November</option>
-        <option value="11">December</option>
-      </select>
+      <!-- Also split into two columns -->
+      <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
+        <div>
+          <label class="block mb-2 font-semibold" for="months">Months in Scope:</label>
+          <input type="number" id="months" value="12" min="1" step="any" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
 
-      <label class="block mb-2 font-semibold" for="startYear">Plan Start Year:</label>
-      <input type="number" id="startYear" value="2025" min="2000" step="1" required
-             class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <div>
+          <label class="block mb-2 font-semibold" for="startMonth">Plan Start Month:</label>
+          <select id="startMonth"
+                  class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+          </select>
+        </div>
 
-      <br />
-      <label class="inline-flex items-center cursor-pointer mb-4">
-        <input type="checkbox" id="seasonalToggle" checked class="mr-2" />
-        <span class="font-semibold">Use Seasonal Adjustments</span>
-      </label>
+        <div>
+          <label class="block mb-2 font-semibold" for="startYear">Plan Start Year:</label>
+          <input type="number" id="startYear" value="2025" min="2000" step="1" required
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
+
+        <div class="flex items-center mt-2">
+          <input type="checkbox" id="seasonalToggle" checked class="mr-2" />
+          <label for="seasonalToggle" class="font-semibold">Use Seasonal Adjustments</label>
+        </div>
+      </fieldset>
 
       <legend class="text-lg font-semibold mb-3">Marketing Conversion Settings</legend>
-      <label class="block mb-2 font-semibold" for="mqlPerSql">MQLs per SQL:</label>
-      <input type="number" id="mqlPerSql" value="5" min="0" step="any"
-             class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+      <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
+        <div>
+          <label class="block mb-2 font-semibold" for="mqlPerSql">MQLs per SQL:</label>
+          <input type="number" id="mqlPerSql" value="5" min="0" step="any"
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
 
-      <label class="block mb-2 font-semibold" for="sqlPerWin">SQLs per Win:</label>
-      <input type="number" id="sqlPerWin" value="3" min="0" step="any"
-             class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        <div>
+          <label class="block mb-2 font-semibold" for="sqlPerWin">SQLs per Win:</label>
+          <input type="number" id="sqlPerWin" value="3" min="0" step="any"
+                 class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+        </div>
+      </fieldset>
     
       <!-- Step navigation: back + final submit -->
       <div class="flex justify-between mt-4">
@@ -258,54 +288,54 @@
   </div>
 </section>
 
-    <!-- Results Bubble -->
-    <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative" id="resultsContainer">
-      <h2 class="text-2xl font-semibold mb-3">Step 2: Review Your Personalised Plan</h2>
-      <!-- Toggle Detailed Columns -->
-      <button type="button" id="toggleDetails"
-              class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded mb-4"
-              aria-label="Toggle Detailed Columns">
-        Show Detailed Columns
-      </button>
-      <button id="shareBtn" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
-        Share
-      </button>
-      <!-- Container for the dynamic results table -->
-      <div class="table-responsive overflow-x-auto" id="resultsTable"></div>
-      <!-- Container for the waterfall chart -->
-      <div class="chart-responsive overflow-x-auto mt-6">
-        <div id="waterfallChart"
-             style="height: 400px;"
-             role="region"
-             aria-label="Revenue Waterfall Chart showing monthly revenue contributions">
-        </div>
-      </div>
-    </section>
-
-    <!-- Marketing Funnel Bubble -->
-    <section class="bubble bg-white rounded-lg shadow-md mb-6 p-6 relative" id="funnelContainer">
-      <h2 class="text-xl font-semibold mb-2">Marketing Funnel</h2>
-      <p class="mb-4">
-        This is the breakdown of marketing qualified leads, to sales qualified leads, to wins based on a default of 5:3:1,
-        or your own conversion if you've changed any advanced options.
-      </p>
-      <div class="chart-responsive overflow-x-auto">
-        <div id="funnelChart"
-             style="height: 400px;"
-             role="region"
-             aria-label="Funnel Chart showing lead-to-win conversion rates">
-        </div>
-      </div>
-      <div class="table-responsive overflow-x-auto mt-4" id="funnelTable"></div>
-    </section>
+<!-- Results Bubble -->
+<section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto" id="resultsContainer">
+  <h2 class="text-2xl font-semibold mb-3">Step 2: Review Your Personalised Plan</h2>
+  <!-- Toggle Detailed Columns -->
+  <button type="button" id="toggleDetails"
+          class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded mb-4"
+          aria-label="Toggle Detailed Columns">
+    Show Detailed Columns
+  </button>
+  <button id="shareBtn" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
+    Share
+  </button>
+  <!-- Container for the dynamic results table -->
+  <div class="table-responsive overflow-x-auto" id="resultsTable"></div>
+  <!-- Container for the waterfall chart -->
+  <div class="chart-responsive overflow-x-auto mt-6">
+    <div id="waterfallChart"
+         style="height: 400px;"
+         role="region"
+         aria-label="Revenue Waterfall Chart showing monthly revenue contributions">
+    </div>
   </div>
+</section>
 
-  <!-- Footer Section -->
-  <footer>
-    © 2025 James Marshall. All rights reserved.
-  </footer>
+<!-- Marketing Funnel Bubble -->
+<section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto" id="funnelContainer">
+  <h2 class="text-xl font-semibold mb-2">Marketing Funnel</h2>
+  <p class="mb-4">
+    This is the breakdown of marketing qualified leads, to sales qualified leads, to wins based on a default of 5:3:1,
+    or your own conversion if you've changed any advanced options.
+  </p>
+  <div class="chart-responsive overflow-x-auto">
+    <div id="funnelChart"
+         style="height: 400px;"
+         role="region"
+         aria-label="Funnel Chart showing lead-to-win conversion rates">
+    </div>
+  </div>
+  <div class="table-responsive overflow-x-auto mt-4" id="funnelTable"></div>
+</section>
 
-  <!-- Main JS for calculations (defer or load at bottom for performance) -->
-  <script src="app.js" defer></script>
+<!-- Footer Section -->
+<footer class="mx-auto">
+  © 2025 James Marshall. All rights reserved.
+</footer>
+
+<!-- Main JS for calculations (defer or load at bottom for performance) -->
+<script src="app.js" defer></script>
+
 </body>
 </html>
