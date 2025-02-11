@@ -561,19 +561,4 @@
     });
   });
 
-
-
-  // Hide/Show form
-  const formToggleHandle = document.getElementById('formToggleHandle');
-  const calcForm = document.getElementById('calcForm');
-  formToggleHandle.addEventListener('click', () => {
-    if (calcForm.classList.contains('collapsed')) {
-      calcForm.classList.remove('collapsed');
-      formToggleHandle.textContent = "⬆️ Hide Form";
-    } else {
-      calcForm.classList.add('collapsed');
-      formToggleHandle.textContent = "⬇️ Show Form";
-    }
-  });
-
   
