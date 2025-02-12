@@ -1,4 +1,11 @@
-/* Base styles */
+/* ==========================================================================
+   1. GLOBAL BASE STYLES
+   ========================================================================== */
+/* 
+   Set the base typography, spacing, and background for the entire page.
+   A diagonal linear gradient gives the body a dynamic look,
+   while a standard sans-serif font and comfortable line height ensure readability.
+*/
 body {
   background: linear-gradient(135deg, #0078d4, #74ebd5);
   margin: 0;
@@ -9,7 +16,14 @@ body {
   line-height: 1.6;
 }
 
-/* Container “bubble” styles */
+
+/* ==========================================================================
+   2. CONTAINER & PANEL STYLES
+   ========================================================================== */
+/* 
+   The '.bubble' class styles content panels with a white background,
+   soft rounded corners, and a subtle shadow to create a "floating" effect.
+*/
 .bubble {
   background: #fff;
   border-radius: 10px;
@@ -19,12 +33,21 @@ body {
   position: relative;
 }
 
-/* Form styling */
+
+/* ==========================================================================
+   3. FORM ELEMENT STYLES
+   ========================================================================== */
+/* 
+   These rules style form elements for clarity and ease of use.
+   Labels are block elements with extra margin for separation.
+   Inputs and selects are given consistent sizing, padding, and border styling.
+*/
 form label {
   display: block;
   margin-bottom: 10px;
   font-weight: 600;
 }
+
 form input,
 form select {
   width: 100%;
@@ -36,6 +59,11 @@ form select {
   border-radius: 4px;
   font-size: 16px;
 }
+
+/* 
+   Primary form button styling includes ample padding, a distinct blue background,
+   rounded corners, and a smooth color transition on hover.
+*/
 form button {
   padding: 12px 24px;
   margin-top: 15px;
@@ -51,7 +79,14 @@ form button:hover {
   background-color: #005a9e;
 }
 
-/* Advanced Options Toggle Button */
+
+/* ==========================================================================
+   4. ADVANCED OPTIONS TOGGLE BUTTON & PANEL
+   ========================================================================== */
+/* 
+   A dedicated button (#advancedToggle) is styled to allow users to reveal
+   additional form options. Its vibrant color and hover effect signal interactivity.
+*/
 #advancedToggle {
   background-color: #f68418;
   margin-top: 10px;
@@ -66,6 +101,11 @@ form button:hover {
 #advancedToggle:hover {
   background-color: #d96c0e;
 }
+
+/* 
+   The advanced options panel (#advancedOptions) is hidden by default and styled
+   with a light background, border, and padding to differentiate it from other content.
+*/
 #advancedOptions {
   display: none;
   margin-top: 10px;
@@ -75,13 +115,24 @@ form button:hover {
   border-radius: 5px;
 }
 
-/* Business-style table styling */
+
+/* ==========================================================================
+   5. BUSINESS-STYLE TABLES
+   ========================================================================== */
+/* 
+   These rules apply a clean, professional look to tables displaying business data.
+   The table spans the full width with consistent padding and border collapse.
+*/
 .table-business {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
   font-size: 16px;
 }
+/* 
+   Table headers are given a dark background with contrasting light text,
+   while cells have consistent padding and borders.
+*/
 .table-business thead {
   background-color: #2c3e50;
   color: #ecf0f1;
@@ -91,12 +142,17 @@ form button:hover {
   padding: 12px 15px;
   border: 1px solid #ddd;
 }
+/* Align header text to the left and body cell text to the right for clarity. */
 .table-business th {
   text-align: left;
 }
 .table-business td {
   text-align: right;
 }
+/* 
+   Alternating row backgrounds and a hover effect improve readability and 
+   give immediate visual feedback when interacting with table rows.
+*/
 .table-business tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
@@ -104,7 +160,14 @@ form button:hover {
   background-color: #f1f1f1;
 }
 
-/* Hide detailed columns by default */
+
+/* ==========================================================================
+   6. DETAIL COLUMNS VISIBILITY TOGGLING
+   ========================================================================== */
+/* 
+   Specific columns related to revenue, growth, and churn are hidden by default.
+   When a parent container has the 'show-details' class, these columns become visible.
+*/
 .detailRevenue, .detailGrowth, .detailChurn {
   display: none;
 }
@@ -114,13 +177,20 @@ form button:hover {
   display: table-cell;
 }
 
-/* Responsive container styling: scale for desktop, scroll on mobile */
+
+/* ==========================================================================
+   7. RESPONSIVE CONTAINER STYLING FOR TABLES & CHARTS
+   ========================================================================== */
+/* 
+   On larger screens, table and chart containers display normally without horizontal scrolling.
+   On screens 768px wide or smaller, overflow is handled by enabling horizontal scrolling
+   (with touch support) to ensure all content remains accessible.
+*/
 .table-responsive, .chart-responsive {
   /* By default, no horizontal scroll on larger screens */
   overflow-x: visible;
 }
 
-/* Only on smaller screens, allow horizontal scroll if content overflows */
 @media (max-width: 768px) {
   .table-responsive, .chart-responsive {
     overflow-x: auto;
@@ -128,7 +198,14 @@ form button:hover {
   }
 }
 
-/* Balance Summary (Accounting Table) */
+
+/* ==========================================================================
+   8. ACCOUNTING & BALANCE SUMMARY STYLES
+   ========================================================================== */
+/* 
+   The balance summary (#balanceSummary) is designed with larger typography, padding,
+   and a subtle shadow to stand out as a key informational panel.
+*/
 #balanceSummary {
   margin-bottom: 20px;
   font-size: 18px;
@@ -138,6 +215,11 @@ form button:hover {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+/* 
+   The accounting table (.accounting-table) is styled for displaying financial data,
+   with adjustments for font, padding, and borders to emphasize totals and numerical alignment.
+*/
 .accounting-table {
   width: 100%;
   max-width: 400px;
@@ -158,17 +240,33 @@ form button:hover {
   border-top: 2px solid #000;
 }
 
-/* Collapsible form styling */
+
+/* ==========================================================================
+   9. COLLAPSIBLE FORM STYLING & TOGGLE HANDLER
+   ========================================================================== */
+/* 
+   The collapsible form (#calcForm) is set up with an animated max-height transition
+   to smoothly expand or collapse content. Two approaches are defined:
+     - The '.collapsed' state sets max-height to 0.
+     - The '.expanded' state sets an arbitrarily large max-height to show all content.
+   Note: Both approaches are included so you can choose the one that best fits your needs.
+*/
 #calcForm {
   overflow: hidden;
   transition: max-height 0.5s ease;
-  max-height: 1000px; /* high default value */
+  max-height: 1000px; /* high default value to display all content initially */
 }
 #calcForm.collapsed {
   max-height: 0;
 }
+#calcForm.expanded {
+  max-height: 9999px; /* arbitrarily large to accommodate all fields when expanded */
+}
 
-/* Form toggle handle style */
+/* 
+   The toggle handle (#formToggleHandle) is styled to indicate that it is clickable,
+   inviting users to collapse or expand the form. It features centered text and a light background.
+*/
 #formToggleHandle {
   cursor: pointer;
   text-align: center;
@@ -180,7 +278,14 @@ form button:hover {
   font-weight: 600;
 }
 
-/* Footer styling */
+
+/* ==========================================================================
+   10. FOOTER STYLING
+   ========================================================================== */
+/* 
+   A simple footer style centers the text and applies padding,
+   with a smaller font size and white text to ensure good contrast.
+*/
 footer {
   text-align: center;
   padding: 10px;
@@ -188,7 +293,17 @@ footer {
   font-size: 14px;
 }
 
-/* Mobile responsive adjustments */
+
+/* ==========================================================================
+   11. MOBILE RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+/* 
+   For devices with a maximum width of 600px, several adjustments ensure an optimal layout:
+     - Reduced body padding for a tighter layout.
+     - Slightly reduced padding in '.bubble' containers.
+     - Form inputs and selects span the full width.
+     - Table text sizes are decreased for improved legibility.
+*/
 @media (max-width: 600px) {
   body {
     padding: 10px;
@@ -204,6 +319,62 @@ footer {
   }
 }
 
+
+/* ==========================================================================
+   12. UTILITY CLASSES
+   ========================================================================== */
+/* 
+   A utility class for applying a prominent red border (#f87171),
+   similar to Tailwind CSS's red-500 shade, with !important to override other rules.
+*/
 .border-red-500 {
   border-color: #f87171 !important; /* Tailwind-ish red color */
+}
+
+
+/* ==========================================================================
+   13. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+/* 
+   These rules add ARIA attributes to improve the accessibility of interactive elements,
+   including chart containers and buttons. This helps assistive technologies understand the content.
+*/
+#waterfallChart,
+#funnelChart {
+  aria-label: "Data Visualization";
+  role: region;
+}
+
+#advancedToggle {
+  aria-label: "Toggle Advanced Options";
+}
+#toggleDetails {
+  aria-label: "Toggle Detailed Columns";
+}
+
+
+/* ==========================================================================
+   14. FOCUS STYLING FOR INTERACTIVE ELEMENTS
+   ========================================================================== */
+/* 
+   Enhance focus states for buttons, inputs, and selects to provide clear visual cues.
+   The inset box-shadow is used so that the focus outline isn’t clipped if the container hides overflow.
+*/
+button:focus,
+input:focus,
+select:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px #0078d4;
+}
+
+
+/* ==========================================================================
+   15. ADDITIONAL ADVANCED OPTIONS VISIBILITY RULE
+   ========================================================================== */
+/* 
+   This final rule reiterates that the advanced options panel should remain hidden by default.
+   It works in tandem with JavaScript to show or hide these options as needed.
+*/
+#advancedOptions {
+  display: none;
 }

@@ -1,6 +1,16 @@
 /********************************************
- * Helper Functions
+ * 1. HELPER FUNCTIONS
+ *
+ * These functions provide utility operations such as
+ * formatting numbers and currencies, and controlling
+ * the collapse/expand state of the main calculation form.
  ********************************************/
+
+/**
+ * Format a number to include commas and two decimal places.
+ * @param {number} num - The number to format.
+ * @returns {string} The formatted number string.
+ */
 function formatNum(num) {
   return num.toLocaleString('en-US', {
     minimumFractionDigits: 2,
@@ -8,6 +18,12 @@ function formatNum(num) {
   });
 }
 
+/**
+ * Format a number as a currency string.
+ * Negative values are wrapped in parentheses.
+ * @param {number} num - The number to format as currency.
+ * @returns {string} The formatted currency string.
+ */
 function formatCurrency(num) {
   if (num < 0) {
     return "($" + formatNum(Math.abs(num)) + ")";
@@ -15,6 +31,10 @@ function formatCurrency(num) {
   return "$" + formatNum(num);
 }
 
+/**
+ * Collapse the calculation form by removing the "expanded" class,
+ * adding the "collapsed" class, and updating the toggle handle text.
+ */
 function collapseForm() {
   const calcForm = document.getElementById('calcForm');
   calcForm.classList.remove('expanded');
@@ -22,6 +42,10 @@ function collapseForm() {
   document.getElementById('formToggleHandle').textContent = "⬇️ Show Form";
 }
 
+/**
+ * Expand the calculation form by removing the "collapsed" class,
+ * adding the "expanded" class, and updating the toggle handle text.
+ */
 function expandForm() {
   const calcForm = document.getElementById('calcForm');
   calcForm.classList.remove('collapsed');
@@ -29,35 +53,52 @@ function expandForm() {
   document.getElementById('formToggleHandle').textContent = "⬆️ Hide Form";
 }
 
+
 /********************************************
- * Step Validation - no alerts, minimal hover
+ * 2. STEP VALIDATION
+ *
+ * This function validates the required inputs for a given
+ * step of the multi-step form, highlighting any invalid fields.
  ********************************************/
+
 /**
- * Validate all required fields within a given step using checkValidity().
- * If an input is invalid, highlight it in red, call reportValidity() for 
- * that field, and return false immediately.
+ * Validate all required fields within a specific form step.
+ * If an input is invalid, it is highlighted and its built-in
+ * validity message is displayed.
+ *
+ * @param {number} stepIndex - The index of the form step to validate.
+ * @returns {boolean} True if all fields are valid, false otherwise.
  */
 function validateStep(stepIndex) {
   const currentStepEl = document.querySelector(`.formStep[data-step="${stepIndex}"]`);
   const inputs = currentStepEl.querySelectorAll('input, select');
-  // Clear old error styling
+  
+  // Clear any previous error styling from all inputs.
   inputs.forEach(input => input.classList.remove('border-red-500'));
 
+  // Validate each input field; on first failure, mark and report.
   for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i];
     if (!input.checkValidity()) {
-      // Mark invalid, show minimal browser tooltip
       input.classList.add('border-red-500');
-      input.reportValidity(); 
-      return false; // Stop on first invalid
+      input.reportValidity();
+      return false; // Stop checking further if one field is invalid.
     }
   }
-  return true; // If we get here, everything in this step is valid
+  return true; // All inputs are valid.
 }
 
+
 /********************************************
- * URL Params Management
+ * 3. URL PARAMS MANAGEMENT
+ *
+ * Functions for reading from and updating the URL query parameters
+ * based on the current form values. This is useful for shareable links.
  ********************************************/
+
+/**
+ * Update the URL query parameters to reflect current form values.
+ */
 function updateUrlParams() {
   const params = new URLSearchParams();
   params.set('months', document.getElementById('months').value);
@@ -76,13 +117,26 @@ function updateUrlParams() {
   history.pushState(null, '', '?' + params.toString());
 }
 
+/**
+ * Finalize the form submission process by collapsing the form.
+ */
 function finalizeAndHide() {
   collapseForm();
 }
 
+
 /********************************************
- * Share / Table Toggle
+ * 4. SHARE / TABLE TOGGLE FUNCTIONS & EVENTS
+ *
+ * These functions support sharing the page via the native
+ * share API or clipboard fallback, and toggling the display
+ * of detailed table columns.
  ********************************************/
+
+/**
+ * Attempt to share the current page using the Web Share API.
+ * If it fails, fall back to copying the URL to the clipboard.
+ */
 function sharePage() {
   const shareData = {
     title: 'Cloud Target Calculator',
@@ -100,6 +154,9 @@ function sharePage() {
   }
 }
 
+/**
+ * Fallback function to copy the current page URL to the clipboard.
+ */
 function copyLinkFallback() {
   navigator.clipboard.writeText(window.location.href)
     .then(() => {
@@ -110,10 +167,10 @@ function copyLinkFallback() {
     });
 }
 
-// Share button
+// Attach event listener for the share button.
 document.getElementById('shareBtn').addEventListener('click', sharePage);
 
-// Toggle expanded table columns
+// Attach event listener for toggling detailed columns in the results table.
 document.getElementById('toggleDetails').addEventListener('click', function() {
   const tableContainer = document.getElementById('resultsTable');
   if (tableContainer.classList.contains('show-details')) {
@@ -125,8 +182,12 @@ document.getElementById('toggleDetails').addEventListener('click', function() {
   }
 });
 
+
 /********************************************
- * Form Toggle Handle (Show/Hide)
+ * 5. FORM TOGGLE HANDLE (SHOW/HIDE)
+ *
+ * Enables the user to collapse or expand the calculation form
+ * by clicking on the designated handle.
  ********************************************/
 document.getElementById('formToggleHandle').addEventListener('click', function() {
   const calcForm = document.getElementById('calcForm');
@@ -137,8 +198,12 @@ document.getElementById('formToggleHandle').addEventListener('click', function()
   }
 });
 
+
 /********************************************
- * On Page Load: Load URL Query Params
+ * 6. ON PAGE LOAD: LOAD URL QUERY PARAMETERS
+ *
+ * When the page loads, this section parses any URL query parameters,
+ * populates the form fields with their values, and auto-submits the form.
  ********************************************/
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
@@ -160,10 +225,11 @@ window.addEventListener('DOMContentLoaded', () => {
     if (params.has('mqlPerSql'))      document.getElementById('mqlPerSql').value = params.get('mqlPerSql');
     if (params.has('sqlPerWin'))      document.getElementById('sqlPerWin').value = params.get('sqlPerWin');
 
-    // auto-run
+    // Auto-run the calculation by submitting the form.
     document.getElementById('calcForm').dispatchEvent(new Event('submit'));
   }
 
+  // If URL parameters are present, collapse the form; otherwise, expand it.
   if (hasParams) {
     collapseForm();
   } else {
@@ -171,21 +237,32 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
 /********************************************
- * Main Calculation + Submission
+ * 7. MAIN CALCULATION + FORM SUBMISSION
+ *
+ * This large section handles the main calculation logic
+ * when the user submits the form. It validates the form,
+ * computes revenue projections and customer targets over
+ * multiple months, builds detailed HTML tables for results,
+ * updates charts using Plotly, and finally updates the URL.
  ********************************************/
 document.getElementById('calcForm').addEventListener('submit', function(event) {
   event.preventDefault();
 
-  // 1) Validate all steps before calculating
+  // -----------------------------------------------------
+  // 7a. VALIDATE ALL FORM STEPS BEFORE PROCEEDING
+  // -----------------------------------------------------
   for (let i = 0; i < steps.length; i++) {
     if (!validateStep(i)) {
       showStep(i);
-      return; // Do not proceed if invalid
+      return; // Stop processing if any step is invalid.
     }
   }
 
-  // 2) All steps valid. Proceed with calculations.
+  // -----------------------------------------------------
+  // 7b. INITIALIZE INPUT VALUES AND PARAMETERS
+  // -----------------------------------------------------
   const n = parseInt(document.getElementById('months').value, 10);
   const s = parseFloat(document.getElementById('targetSpend').value);
   const r = parseInt(document.getElementById('ramp').value, 10);
@@ -202,22 +279,23 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   const mqlPerSql = parseFloat(document.getElementById('mqlPerSql').value);
   const sqlPerWin = parseFloat(document.getElementById('sqlPerWin').value);
 
+  // Define days in each month; adjust for leap years.
   const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
-  // leap year check
   if (((startYear % 4) === 0 && (startYear % 100) !== 0) || (startYear % 400) === 0) {
     daysInMonth[1] = 29;
   }
-
   const baselineDays = 30;
   const monthNames = [
     "January","February","March","April","May","June",
     "July","August","September","October","November","December"
   ];
 
-  // 2a) Calculate baseline total
+  // -----------------------------------------------------
+  // 7c. CALCULATE BASELINE REVENUE & MONTHLY FACTORS
+  // -----------------------------------------------------
   let baselineTotal = 0;
   let monthFactors = [];
-  for (let i=0; i<n; i++) {
+  for (let i = 0; i < n; i++) {
     const idx = (startMonth + i) % 12;
     let factor = 1;
     if (seasonalEnabled) {
@@ -225,31 +303,37 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     }
     monthFactors.push(factor);
 
-    // baseline revenue
+    // Calculate baseline revenue for the month.
     const baseRev = B * Math.pow((1 + g), i) * Math.pow((1 - c), i) * factor;
     baselineTotal += baseRev;
   }
 
-  // 2b) Additional target
+  // -----------------------------------------------------
+  // 7d. CALCULATE ADDITIONAL REVENUE TARGETS
+  // -----------------------------------------------------
   const addlTarget = T - baselineTotal;
   let newRevenueTarget = Math.max(0, addlTarget * P);
   let proactiveTarget = Math.max(0, addlTarget * (1 - P));
 
-  // 2c) Effective monthly revenue for a single new customer of "age" months
+  // -----------------------------------------------------
+  // 7e. EFFECTIVE REVENUE FUNCTION FOR NEW CUSTOMERS
+  // -----------------------------------------------------
   function effectiveRevenue(age) {
     let base;
     if (age <= r) {
-      // Ramp period
+      // Ramp-up period: revenue increases gradually.
       base = s * (age / r);
     } else {
-      // Post-ramp with organic growth
+      // Post-ramp: revenue grows organically.
       base = s * Math.pow((1 + g), age - r);
     }
-    // Subtract churn impact
+    // Adjust for churn.
     return base * Math.pow((1 - c), age - 1);
   }
 
-  // 2d) Calculate total contribution per new customer
+  // -----------------------------------------------------
+  // 7f. CALCULATE TOTAL CONTRIBUTION PER NEW CUSTOMER
+  // -----------------------------------------------------
   let totalContr = 0;
   for (let m = 0; m < n; m++) {
     const factor = monthFactors[m];
@@ -259,40 +343,42 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     }
   }
 
-  // 2e) Distribute new customers monthly
+  // -----------------------------------------------------
+  // 7g. DISTRIBUTE NEW CUSTOMERS MONTHLY
+  // -----------------------------------------------------
   let baseNewCust = 0;
   if (totalContr > 0 && newRevenueTarget > 0) {
     baseNewCust = newRevenueTarget / totalContr;
   }
   let monthlyCustomers = new Array(n).fill(0);
-  for (let m=0; m<n; m++){
+  for (let m = 0; m < n; m++){
     monthlyCustomers[m] = baseNewCust * monthFactors[m];
   }
 
-  // Build table rows with advanced breakdown
+  // -----------------------------------------------------
+  // 7h. BUILD MONTHLY REVENUE & CUSTOMER TABLE
+  // -----------------------------------------------------
   function buildMonthlyTable() {
     let localCumulativeRevenue = 0;
     let localTableRows = "";
     let cumulativeNewCustRevenue = 0;
     let runningTotalCustomers = 0;
 
-    // We’ll track incremental growth / churn for new & baseline
+    // Loop over each month to calculate and compile detailed metrics.
     for (let m = 0; m < n; m++) {
       const newCustCount = monthlyCustomers[m];
       runningTotalCustomers += newCustCount;
 
-      // ========== NEW CUSTOMER METRICS ==========
+      // NEW CUSTOMER METRICS
       let newCustMonthRevenue = 0;
       let newCustMonthIncrementalGrowth = 0;
       let newCustMonthChurnImpact = 0;
 
       for (let age = 1; age <= (m + 1); age++) {
         const effRev = effectiveRevenue(age);
-
-        // "No growth" scenario for comparison
-        const noGrowth = (age <= r) ? s*(age / r) : s;
+        // "No growth" scenario for baseline comparison.
+        const noGrowth = (age <= r) ? s * (age / r) : s;
         const effNoGrowth = noGrowth * Math.pow((1 - c), age - 1);
-
         const incRev = effRev - effNoGrowth;
         const churnLoss = noGrowth - effRev;
 
@@ -301,14 +387,13 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
         newCustMonthChurnImpact += (newCustCount * churnLoss);
       }
 
-      // Adjust by seasonal factor
+      // Adjust calculations based on seasonal factors.
       newCustMonthRevenue *= monthFactors[m];
       newCustMonthIncrementalGrowth *= monthFactors[m];
       newCustMonthChurnImpact *= monthFactors[m];
-
       cumulativeNewCustRevenue += newCustMonthRevenue;
 
-      // ========== BASELINE METRICS ==========
+      // BASELINE METRICS
       const baselineMonthRevenue = B
         * Math.pow((1 + g), m)
         * Math.pow((1 - c), m)
@@ -324,7 +409,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
       const monthlyTotal = newCustMonthRevenue + baselineMonthRevenue;
       localCumulativeRevenue += monthlyTotal;
 
-      // Build row
+      // Construct the HTML row for the current month.
       const idx = (startMonth + m) % 12;
       const yOff = Math.floor((startMonth + m) / 12);
       const moName = monthNames[idx] + " " + (startYear + yOff);
@@ -363,32 +448,38 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     };
   }
 
-  // First pass
+  // First calculation pass to build the table.
   let pass1 = buildMonthlyTable();
   let computedNewCustRev = pass1.newCustRev;
 
-  // Scale if needed
+  // -----------------------------------------------------
+  // 7i. SCALE NEW CUSTOMER NUMBERS IF NEEDED
+  // -----------------------------------------------------
   if (computedNewCustRev > 0) {
     let ratio = newRevenueTarget / computedNewCustRev;
     if (ratio > 0 && ratio !== 1) {
-      for (let i=0; i<n; i++) {
+      for (let i = 0; i < n; i++) {
         monthlyCustomers[i] *= ratio;
       }
     }
   }
 
-  // Second pass
+  // Second calculation pass after scaling adjustments.
   let pass2 = buildMonthlyTable();
   let finalNewCustRev = pass2.newCustRev;
   let totalCustomers = pass2.totalCustomers;
 
-  // Proactive portion
+  // -----------------------------------------------------
+  // 7j. CALCULATE PROACTIVE GROWTH REVENUE
+  // -----------------------------------------------------
   let finalProactiveRev = (T - baselineTotal) - finalNewCustRev;
   if (finalProactiveRev < 0) {
     finalProactiveRev = 0;
   }
 
-  // Build final summary
+  // -----------------------------------------------------
+  // 7k. BUILD FINAL SUMMARY TABLE AND RESULTS HTML
+  // -----------------------------------------------------
   const resultsHTML = `
     <div id="balanceSummary">
       <table class="accounting-table">
@@ -428,15 +519,12 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
             <th class="detailRevenue">New Cust. Revenue</th>
             <th class="detailRevenue">Baseline Revenue</th>
             <th>Total Monthly Revenue</th>
-
             <th class="detailGrowth">New Cust. Organic Growth</th>
             <th class="detailGrowth">Baseline Organic Growth</th>
             <th class="detailGrowth">Total Organic Growth</th>
-
             <th class="detailChurn">New Cust. Churn</th>
             <th class="detailChurn">Baseline Churn</th>
             <th class="detailChurn">Total Churn</th>
-
             <th>Cumulative Total Revenue</th>
           </tr>
         </thead>
@@ -449,18 +537,19 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   `;
   document.getElementById('resultsTable').innerHTML = resultsHTML;
 
-  // Proactive growth table
-  const monthFactorsSum = monthFactors.reduce((acc, f, i) => acc + f*(i+1), 0);
+  // -----------------------------------------------------
+  // 7l. BUILD PROACTIVE GROWTH BREAKDOWN TABLE
+  // -----------------------------------------------------
+  const monthFactorsSum = monthFactors.reduce((acc, f, i) => acc + f * (i + 1), 0);
   let proactiveRows = "";
   if (finalProactiveRev > 0 && monthFactorsSum > 0) {
     const base = finalProactiveRev / monthFactorsSum;
     let cumul = 0;
-    for (let i=0; i<n; i++){
+    for (let i = 0; i < n; i++){
       const idx = (startMonth + i) % 12;
       const yOff = Math.floor((startMonth + i) / 12);
       const moName = monthNames[idx] + " " + (startYear + yOff);
-
-      const monthly = monthFactors[i]*(i+1)* base;
+      const monthly = monthFactors[i] * (i + 1) * base;
       cumul += monthly;
       proactiveRows += `
         <tr>
@@ -471,8 +560,8 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
       `;
     }
   } else {
-    // zero
-    for (let i=0; i<n; i++){
+    // If no proactive revenue, show zeros for each month.
+    for (let i = 0; i < n; i++){
       const idx = (startMonth + i) % 12;
       const yOff = Math.floor((startMonth + i) / 12);
       const moName = monthNames[idx] + " " + (startYear + yOff);
@@ -508,11 +597,15 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   `;
   document.getElementById('resultsTable').innerHTML += proactiveHTML;
 
-  // Update URL
+  // -----------------------------------------------------
+  // 7m. UPDATE URL PARAMETERS AFTER CALCULATION
+  // -----------------------------------------------------
   updateUrlParams();
 
-  // ========== Plotly Charts: Waterfall + Funnel ==========
-  // Revenue Waterfall
+  // -----------------------------------------------------
+  // 7n. PLOTLY CHARTS: WATERFALL & FUNNEL CHARTS
+  // -----------------------------------------------------
+  // Revenue Waterfall Chart Setup
   const finalTotal = baselineTotal + finalNewCustRev + finalProactiveRev;
   const waterfallData = [{
     type: 'waterfall',
@@ -546,7 +639,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   };
   Plotly.newPlot('waterfallChart', waterfallData, layout);
 
-  // Marketing Funnel
+  // Marketing Funnel Chart Setup
   const totalCust = monthlyCustomers.reduce((acc, x) => acc + x, 0);
   const wins = formatNum(totalCust);
   const sqls = wins * sqlPerWin;
@@ -564,40 +657,56 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   };
   Plotly.newPlot('funnelChart', funnelData, funnelLayout);
 
-  // Finalize
+  // -----------------------------------------------------
+  // 7o. FINALIZE THE CALCULATION PROCESS
+  // -----------------------------------------------------
   finalizeAndHide();
 });
 
+
 /********************************************
- * Multi-Step Navigation
+ * 8. MULTI-STEP NAVIGATION
+ *
+ * This section manages the multi-step form navigation,
+ * including functions to show/hide steps, update navigation
+ * button styling, and handle previous/next step events.
  ********************************************/
+
+// Retrieve all form steps and initialize the current step index.
 const steps = Array.from(document.querySelectorAll('.formStep'));
 let currentStep = 0;
 
-// Hide all steps
+/**
+ * Hide all form steps by adding a 'hidden' class.
+ */
 function hideAllSteps() {
   steps.forEach(el => el.classList.add('hidden'));
 }
 
-// Show a single step by index
+/**
+ * Show the form step at the given index.
+ * @param {number} index - The index of the step to display.
+ */
 function showStep(index) {
   if (index < 0) index = 0;
   if (index >= steps.length) index = steps.length - 1;
-
   hideAllSteps();
   steps[index].classList.remove('hidden');
   currentStep = index;
   updateNavStyling(index);
 }
 
-// Step nav styling
+/**
+ * Update the styling of navigation buttons to indicate the active step.
+ * @param {number} stepIndex - The index of the current active step.
+ */
 function updateNavStyling(stepIndex) {
   const navButtons = document.querySelectorAll('.stepNavBtn');
   navButtons.forEach(btn => {
     btn.classList.remove('bg-blue-600','text-white');
     btn.classList.add('bg-gray-200','text-gray-700');
   });
-  // highlight the active step button
+  // Highlight the active navigation button.
   const activeBtn = document.querySelector(`.stepNavBtn[data-step="${stepIndex}"]`);
   if (activeBtn) {
     activeBtn.classList.remove('bg-gray-200','text-gray-700');
@@ -605,10 +714,11 @@ function updateNavStyling(stepIndex) {
   }
 }
 
-// Start on step 0
+// Initially show step 0.
 showStep(0);
 
-// Nav buttons
+// Event listeners for navigation buttons.
+// Direct step navigation.
 document.querySelectorAll('.stepNavBtn').forEach(btn => {
   btn.addEventListener('click', () => {
     const targetStep = parseInt(btn.dataset.step, 10);
@@ -618,7 +728,7 @@ document.querySelectorAll('.stepNavBtn').forEach(btn => {
   });
 });
 
-// Next step
+// Next step button.
 document.querySelectorAll('.nextStepBtn').forEach(btn => {
   btn.addEventListener('click', () => {
     if (validateStep(currentStep)) {
@@ -627,7 +737,7 @@ document.querySelectorAll('.nextStepBtn').forEach(btn => {
   });
 });
 
-// Previous step
+// Previous step button.
 document.querySelectorAll('.prevStepBtn').forEach(btn => {
   btn.addEventListener('click', () => {
     showStep(currentStep - 1);
