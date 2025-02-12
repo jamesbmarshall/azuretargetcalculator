@@ -2,17 +2,18 @@
  * 1. HELPER FUNCTIONS
  *
  * These functions provide utility operations such as
- * formatting numbers and currencies, controlling the
- * collapse/expand state of the main calculation form, and
- * fading elements into view.
+ * formatting numbers and currencies (with and without monospace styling),
+ * controlling the collapse/expand state of the main calculation form,
+ * and fading elements into view.
  ********************************************/
 
 /**
  * Format a number to include commas and two decimal places.
+ * This helper returns the raw formatted string.
  * @param {number} num - The number to format.
  * @returns {string} The formatted number string.
  */
-function formatNum(num) {
+function rawFormatNum(num) {
   return num.toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
@@ -20,16 +21,40 @@ function formatNum(num) {
 }
 
 /**
- * Format a number as a currency string.
+ * Format a number with monospace styling by wrapping it in a span.
+ * This version is used for results tables.
+ * @param {number} num - The number to format.
+ * @returns {string} The formatted number wrapped in a span with class "number".
+ */
+function formatNum(num) {
+  return '<span class="number" style="font-family: \'Courier New\', Consolas, monospace;">' + rawFormatNum(num) + '</span>';
+}
+
+/**
+ * Format a number as a currency string with monospace styling.
  * Negative values are wrapped in parentheses.
+ * This version is used for results tables.
  * @param {number} num - The number to format as currency.
- * @returns {string} The formatted currency string.
+ * @returns {string} The formatted currency string wrapped in a span with class "number".
  */
 function formatCurrency(num) {
   if (num < 0) {
-    return "($" + formatNum(Math.abs(num)) + ")";
+    return '<span class="number" style="font-family: \'Courier New\', Consolas, monospace;">($' + rawFormatNum(Math.abs(num)) + ')</span>';
   }
-  return "$" + formatNum(num);
+  return '<span class="number" style="font-family: \'Courier New\', Consolas, monospace;">$' + rawFormatNum(num) + '</span>';
+}
+
+/**
+ * Format a number as a currency string without any HTML wrapping.
+ * This version is used for Plotly chart labels.
+ * @param {number} num - The number to format as currency.
+ * @returns {string} The formatted currency string.
+ */
+function rawFormatCurrency(num) {
+  if (num < 0) {
+    return "($" + rawFormatNum(Math.abs(num)) + ")";
+  }
+  return "$" + rawFormatNum(num);
 }
 
 /**
@@ -74,9 +99,6 @@ function fadeIn(element, duration) {
 
 /********************************************
  * 2. STEP VALIDATION
- *
- * This function validates the required inputs for a given
- * step of the multi-step form, highlighting any invalid fields.
  ********************************************/
 
 /**
@@ -109,9 +131,6 @@ function validateStep(stepIndex) {
 
 /********************************************
  * 3. URL PARAMS MANAGEMENT
- *
- * Functions for reading from and updating the URL query parameters
- * based on the current form values. This is useful for shareable links.
  ********************************************/
 
 /**
@@ -145,10 +164,6 @@ function finalizeAndHide() {
 
 /********************************************
  * 4. SHARE / TABLE TOGGLE FUNCTIONS & EVENTS
- *
- * These functions support sharing the page via the native
- * share API or clipboard fallback, and toggling the display
- * of detailed table columns.
  ********************************************/
 
 /**
@@ -203,9 +218,6 @@ document.getElementById('toggleDetails').addEventListener('click', function() {
 
 /********************************************
  * 5. FORM TOGGLE HANDLE (SHOW/HIDE)
- *
- * Enables the user to collapse or expand the calculation form
- * by clicking on the designated handle.
  ********************************************/
 document.getElementById('formToggleHandle').addEventListener('click', function() {
   const calcForm = document.getElementById('calcForm');
@@ -219,10 +231,6 @@ document.getElementById('formToggleHandle').addEventListener('click', function()
 
 /********************************************
  * 6. ON PAGE LOAD: LOAD URL QUERY PARAMETERS
- *
- * When the page loads, this section parses any URL query parameters,
- * populates the form fields with their values, auto-submits the form if needed,
- * and ensures that the results and marketing sections are initially hidden.
  ********************************************/
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
@@ -263,13 +271,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /********************************************
  * 7. MAIN CALCULATION + FORM SUBMISSION
- *
- * This large section handles the main calculation logic
- * when the user submits the form. It validates the form,
- * computes revenue projections and customer targets over
- * multiple months, builds detailed HTML tables for results,
- * updates charts using Plotly, updates the URL parameters,
- * and finally reveals the results and marketing sections with a fade-in.
  ********************************************/
 document.getElementById('calcForm').addEventListener('submit', function(event) {
   event.preventDefault();
@@ -629,7 +630,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   // -----------------------------------------------------
   // 7n. PLOTLY CHARTS: WATERFALL & FUNNEL CHARTS
   // -----------------------------------------------------
-  // Revenue Waterfall Chart Setup
+  // Revenue Waterfall Chart Setup (using raw formatting functions)
   const finalTotal = baselineTotal + finalNewCustRev + finalProactiveRev;
   const waterfallData = [{
     type: 'waterfall',
@@ -646,10 +647,10 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
       finalTotal
     ],
     text: [
-      formatCurrency(baselineTotal),
-      formatCurrency(finalNewCustRev),
-      formatCurrency(finalProactiveRev),
-      formatCurrency(finalTotal)
+      rawFormatCurrency(baselineTotal),
+      rawFormatCurrency(finalNewCustRev),
+      rawFormatCurrency(finalProactiveRev),
+      rawFormatCurrency(finalTotal)
     ],
     textposition: 'outside',
     cliponaxis: false,
@@ -663,9 +664,9 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   };
   Plotly.newPlot('waterfallChart', waterfallData, layout);
 
-  // Marketing Funnel Chart Setup
+  // Marketing Funnel Chart Setup (using raw numeric values)
   const totalCust = monthlyCustomers.reduce((acc, x) => acc + x, 0);
-  const wins = formatNum(totalCust);
+  const wins = totalCust;
   const sqls = wins * sqlPerWin;
   const mqls = sqls * mqlPerSql;
   const funnelData = [{
@@ -686,15 +687,15 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   // -----------------------------------------------------
   finalizeAndHide();
 
-    // Fade in the results and marketing sections now that calculation is complete.
-    fadeIn(document.getElementById('resultsContainer'));
-    fadeIn(document.getElementById('funnelContainer'));
+  // Fade in the results and marketing sections now that calculation is complete.
+  fadeIn(document.getElementById('resultsContainer'));
+  fadeIn(document.getElementById('funnelContainer'));
   
-    // Wait a short moment for the fade-in to complete, then force Plotly to recalculate the width.
-    setTimeout(() => {
-      Plotly.Plots.resize(document.getElementById('waterfallChart'));
-      Plotly.Plots.resize(document.getElementById('funnelChart'));
-    }, 500); // Adjust delay as needed (500ms is a good starting point)
+  // Wait a short moment for the fade-in to complete, then force Plotly to recalculate the width.
+  setTimeout(() => {
+    Plotly.Plots.resize(document.getElementById('waterfallChart'));
+    Plotly.Plots.resize(document.getElementById('funnelChart'));
+  }, 500); // Adjust delay as needed (500ms is a good starting point)
 });
 
 
