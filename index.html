@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ==========================
+       Basic Meta Information
+       ========================== -->
+  <meta charset="UTF-8">
+  <title>Cloud Target Calculator | Optimize Revenue Growth</title>
+  <meta name="description" content="Cloud Target Calculator helps you forecast revenue, optimize customer acquisition, and track growth trends effectively.">
+  <meta name="keywords" content="Cloud Calculator, Revenue Growth, Customer Acquisition, Business Analytics, SaaS Metrics">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ==========================
+       Open Graph Meta Tags for SEO & Social Sharing
+       ========================== -->
+  <meta property="og:title" content="Cloud Target Calculator | Optimize Revenue Growth">
+  <meta property="og:description" content="Cloud Target Calculator helps you forecast revenue, optimize customer acquisition, and track growth trends effectively.">
+  <meta property="og:image" content="/images/logo.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:url" content="https://targetcalculator.cloud">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- ==========================
+       Schema Markup for SEO (Structured Data)
+       ========================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Cloud Target Calculator",
+    "description": "Predict customer acquisition, churn, and revenue growth.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "author": {
+      "@type": "Person",
+      "name": "James Marshall"
+    }
+  }
+  </script>
+
+  <!-- ==========================
+       Fonts and External Resources
+       ========================== -->
+  <!-- Import Open Sans from Google Fonts for a modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS for utility-first styling (deferred for performance) -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
+
+  <!-- Include Plotly for charts (deferred for performance) -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js" defer></script>
+
+  <!-- Optional external stylesheet for additional custom styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body class="font-[Open_Sans]">
+  
+  <!-- ==========================
+       Page Structure Begins Here
+       ========================== -->
+
+  <!-- HEADER / INTRODUCTORY SECTION -->
+  <section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto">
+    <!-- Main Heading -->
+    <h1 class="text-3xl font-bold mb-2">Cloud Revenue Target Calculator v2</h1>
+    <!-- Introductory Text -->
+    <p class="mb-4">
+      Welcome to the Cloud Revenue Target Calculator—your go-to tool for planning and optimizing 
+      revenue growth with confidence. Whether you’re forecasting customer acquisition, tracking churn, 
+      or setting ambitious revenue goals, this calculator simplifies complex data into clear, actionable 
+      insights. Discover how each customer impacts your bottom line, adjust growth scenarios with ease, 
+      and unlock smarter strategies for hitting your targets. Ready to get started? Just fill in your key 
+      metrics below, and let’s map out your path to growth.
+    </p>
+  </section>
+
+  <!-- MAIN CALCULATOR SECTION -->
+  <section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto">
+    <!-- Section Title and Description -->
+    <h2 class="text-2xl font-semibold mb-3">Step 1: Key Revenue Inputs</h2>
+    <p class="mb-4">
+      Fill in the form below to get insights into the number of customers or the consumption growth 
+      you'll need to hit your overall targets. Use advanced options to adjust your lead conversion rates.
+    </p>
+
+    <!-- Step Navigation Tabs -->
+    <nav class="flex space-x-2 mb-4" aria-label="Form Steps">
+      <button type="button"
+              class="px-4 py-2 font-semibold rounded bg-blue-600 text-white stepNavBtn"
+              data-step="0">
+        Current Business
+      </button>
+      <button type="button"
+              class="px-4 py-2 font-semibold rounded bg-gray-200 text-gray-700 stepNavBtn"
+              data-step="1">
+        Targets
+      </button>
+      <button type="button"
+              class="px-4 py-2 font-semibold rounded bg-gray-200 text-gray-700 stepNavBtn"
+              data-step="2">
+        Settings
+      </button>
+    </nav>
+
+    <!-- Multi-step Form (novalidate used to manage validation manually) -->
+    <form id="calcForm" novalidate class="transition-all duration-500">
+      
+      <!-- ==========================
+           STEP 1: Current Business
+           ========================== -->
+      <div class="formStep" id="step1" data-step="0">
+        <!-- Use fieldset to group related inputs; grid layout for medium screens -->
+        <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
+          <!-- Ramp-up Period Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="ramp">A. Ramp-up Period in Months:*</label>
+            <p class="text-sm">How many months does it take for a new customer to reach a target spend, on average?</p>
+            <input type="number" id="ramp" value="1" min="1" step="1" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+          <!-- Organic Growth Rate Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="growth">B. Organic Growth Rate per Month [as %]:*</label>
+            <p class="text-sm">How much are customers 'growing themselves' without proactive engagement from your teams?</p>
+            <input type="number" id="growth" value="0" min="0" step="any" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+          <!-- Revenue Churn Rate Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="churn">C. Revenue Churn Rate per Month [as %]:*</label>
+            <p class="text-sm">How much is your business losing revenue each month from customers leaving or reducing spend?</p>
+            <input type="number" id="churn" value="0" min="0" step="any" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+          <!-- Baseline Recurring Revenue Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="baseline">D. Baseline Recurring Revenue per Month:*</label>
+            <p class="text-sm">What was the recurring revenue amount from the last month before your plan? <i>e.g. the last month of your financial year.</i> (Use zero if you're not sure!)</p>
+            <input type="number" id="baseline" value="0" min="0" step="any" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+        </fieldset>
+        <!-- Next Button -->
+        <div class="flex justify-end">
+          <button type="button"
+                  class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded nextStepBtn">
+            Next ▶️
+          </button>
+        </div>
+      </div>
+      <!-- End of STEP 1 -->
+
+      <!-- ==========================
+           STEP 2: Targets
+           ========================== -->
+      <div class="formStep hidden" id="step2" data-step="1">
+        <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
+          <!-- Target Spend per Customer Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="targetSpend">E. Target Spend per Customer, per Month:*</label>
+            <p class="text-sm max-w-md">This could be based on your current mean or median spend, or an aspirational amount. It should be what you're expecting <i>most</i> customers to approximately spend as it will be used to define how many customers you need to add.</p>
+            <input type="number" id="targetSpend" value="1000" min="1" step="any" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+          <!-- Total Revenue Target Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="targetRevenue">F. Total Revenue Target:*</label>
+            <p class="text-sm">Within the duration of your plan, how much revenue do you need to deliver?</p>
+            <input type="number" id="targetRevenue" value="78000" min="1" step="any" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+          <!-- Percentage of Additional Revenue from New Customers -->
+          <div>
+            <label class="block mb-2 font-semibold" for="pctAcq">G. % of Additional Revenue from New Customers (Acquisition):*</label>
+            <p class="text-sm max-w-md">How much of your revenue target do you expect to come from acquiring new customers, versus growing existing ones?</p>
+            <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+        </fieldset>
+        <!-- Navigation Buttons for Step 2 -->
+        <div class="flex justify-between mt-4">
+          <button type="button"
+                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
+            ◀️ Back
+          </button>
+          <button type="button"
+                  class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded nextStepBtn">
+            Next ▶️
+          </button>
+        </div>
+      </div>
+      <!-- End of STEP 2 -->
+
+      <!-- ==========================
+           STEP 3: Advanced Settings
+           ========================== -->
+      <div class="formStep hidden" id="step3" data-step="2">
+        <!-- Calendar Settings Section -->
+        <legend class="text-lg font-semibold mb-3">Calendar Settings</legend>
+        <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
+          <!-- Months in Scope Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="months">H. Months in Scope:*</label>
+            <p class="text-sm max-w-md">How many months are you building a plan for?</p>
+            <input type="number" id="months" value="12" min="1" step="any" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+          <!-- Plan Start Month Dropdown -->
+          <div>
+            <label class="block mb-2 font-semibold" for="startMonth">I. Plan Start Month:</label>
+            <p class="text-sm max-w-md">In which month will you begin executing your plan?</p>
+            <select id="startMonth"
+                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
+              <option value="0">January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+              <option value="4">May</option>
+              <option value="5">June</option>
+              <option value="6">July</option>
+              <option value="7">August</option>
+              <option value="8">September</option>
+              <option value="9">October</option>
+              <option value="10">November</option>
+              <option value="11">December</option>
+            </select>
+          </div>
+          <!-- Plan Start Year Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="startYear">J. Plan Start Year:*</label>
+            <p class="text-sm max-w-md">In which year will you begin executing your plan?</p>
+            <input type="number" id="startYear" value="2025" min="2000" step="1" required
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+          <!-- Seasonal Adjustments Checkbox -->
+          <div>
+            <label class="block mb-2 font-semibold" for="startYear">K. Seasonality Adjustments:</label>
+            <p class="text-sm max-w-md">Do you want to apply calendar seasonality adjustments to the plan calculations?</p>
+            <input type="checkbox" id="seasonalToggle" checked/>
+            
+            
+          </div>
+        </fieldset>
+
+        <!-- Marketing Conversion Settings Section -->
+        <legend class="text-lg font-semibold mb-3">Marketing Conversion Settings (Optional)</legend>
+        <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
+          <!-- MQLs per SQL Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="mqlPerSql">L. MQLs per SQL:</label>
+            <p class="text-sm max-w-md">How many marketing qualified leads (MQLs) do you need to generate a sales qualified lead (SQL)?</p>
+            <input type="number" id="mqlPerSql" value="5" min="0" step="any"
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+          <!-- SQLs per Win Input -->
+          <div>
+            <label class="block mb-2 font-semibold" for="sqlPerWin">M. SQLs per Win:</label>
+            <p class="text-sm max-w-md">How may sales qualified leads (SQLs) do you need per won customer?</p>
+            <input type="number" id="sqlPerWin" value="3" min="0" step="any"
+                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
+          </div>
+        </fieldset>
+        <!-- Navigation Buttons for Step 3: Back and Calculate -->
+        <div class="flex justify-between mt-4">
+          <button type="button"
+                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
+                  ◀️ Back
+          </button>
+          <button type="submit"
+                  class="bg-green-600 hover:bg-fuchsia-500 text-white py-2 px-4 rounded">
+            Calculate 👍🏻
+          </button>
+        </div>
+      </div>
+      <!-- End of STEP 3 -->
+    </form>
+
+    <!-- ==========================
+         Form Toggle Handle (Show/Hide)
+         ========================== -->
+    <div id="formToggleHandle"
+         class="text-center mt-4 bg-blue-100 text-blue-600 rounded-b-lg p-2 font-semibold cursor-pointer">
+      ⬆️ Hide Form
+    </div>
+  </section>
+
+  <!-- ==========================
+       RESULTS SECTION
+       ========================== -->
+  <section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto" id="resultsContainer">
+    <h2 class="text-2xl font-semibold mb-3">Step 2: Review Your Personalised Plan</h2>
+    <!-- Button to Toggle Detailed Columns in the Results Table -->
+    <button type="button" id="toggleDetails"
+            class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded mb-4"
+            aria-label="Toggle Detailed Columns">
+      Show Detailed Columns
+    </button>
+    <!-- Share Button for the Page -->
+    <button id="shareBtn" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
+      Share
+    </button>
+    <!-- Container for the Dynamic Results Table -->
+    <div class="table-responsive overflow-x-auto" id="resultsTable"></div>
+    <!-- Container for the Revenue Waterfall Chart -->
+    <div class="chart-responsive overflow-x-auto mt-6">
+      <div id="waterfallChart"
+           style="height: 400px;"
+           role="region"
+           aria-label="Revenue Waterfall Chart showing monthly revenue contributions">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================
+       MARKETING FUNNEL SECTION
+       ========================== -->
+  <section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto" id="funnelContainer">
+    <h2 class="text-xl font-semibold mb-2">Marketing Funnel</h2>
+    <p class="mb-4">
+      This is the breakdown of marketing qualified leads, to sales qualified leads, to wins based on a default of 5:3:1,
+      or your own conversion if you've changed any advanced options.
+    </p>
+    <!-- Container for the Funnel Chart -->
+    <div class="chart-responsive overflow-x-auto">
+      <div id="funnelChart"
+           style="height: 400px;"
+           role="region"
+           aria-label="Funnel Chart showing lead-to-win conversion rates">
+      </div>
+    </div>
+    <!-- Container for the Funnel Table (if applicable) -->
+    <div class="table-responsive overflow-x-auto mt-4" id="funnelTable"></div>
+  </section>
+
+  <!-- ==========================
+       FOOTER SECTION
+       ========================== -->
+  <footer class="mx-auto">
+    © 2025 James Marshall. All rights reserved.
+  </footer>
+
+  <!-- ==========================
+       Main JavaScript File for Calculations
+       ========================== -->
+  <script src="app.js" defer></script>
+
+</body>
+</html>
