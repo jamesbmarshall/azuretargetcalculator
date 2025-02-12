@@ -3,12 +3,17 @@
    ========================================================================== */
 /* 
    Set the base typography, spacing, and background for the entire page.
-   A diagonal linear gradient gives the body a dynamic look,
-   while a standard sans-serif font and comfortable line height ensure readability.
+   The gradient background is fixed and covers the full viewport height,
+   ensuring it does not restart at the footer.
 */
+html, body {
+  height: 100%;
+  margin: 0;
+}
 body {
   background: linear-gradient(135deg, #0078d4, #74ebd5);
-  margin: 0;
+  background-attachment: fixed;
+  min-height: 100vh;
   padding: 20px;
   font-family: 'Open Sans', sans-serif;
   color: #333;
@@ -47,7 +52,6 @@ form label {
   margin-bottom: 10px;
   font-weight: 600;
 }
-
 form input,
 form select {
   width: 100%;
@@ -59,7 +63,6 @@ form select {
   border-radius: 4px;
   font-size: 16px;
 }
-
 /* 
    Primary form button styling includes ample padding, a distinct blue background,
    rounded corners, and a smooth color transition on hover.
@@ -101,7 +104,6 @@ form button:hover {
 #advancedToggle:hover {
   background-color: #d96c0e;
 }
-
 /* 
    The advanced options panel (#advancedOptions) is hidden by default and styled
    with a light background, border, and padding to differentiate it from other content.
@@ -187,10 +189,8 @@ form button:hover {
    (with touch support) to ensure all content remains accessible.
 */
 .table-responsive, .chart-responsive {
-  /* By default, no horizontal scroll on larger screens */
   overflow-x: visible;
 }
-
 @media (max-width: 768px) {
   .table-responsive, .chart-responsive {
     overflow-x: auto;
@@ -215,7 +215,6 @@ form button:hover {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
 /* 
    The accounting table (.accounting-table) is styled for displaying financial data,
    with adjustments for font, padding, and borders to emphasize totals and numerical alignment.
@@ -249,7 +248,6 @@ form button:hover {
    to smoothly expand or collapse content. Two approaches are defined:
      - The '.collapsed' state sets max-height to 0.
      - The '.expanded' state sets an arbitrarily large max-height to show all content.
-   Note: Both approaches are included so you can choose the one that best fits your needs.
 */
 #calcForm {
   overflow: hidden;
@@ -262,7 +260,6 @@ form button:hover {
 #calcForm.expanded {
   max-height: 9999px; /* arbitrarily large to accommodate all fields when expanded */
 }
-
 /* 
    The toggle handle (#formToggleHandle) is styled to indicate that it is clickable,
    inviting users to collapse or expand the form. It features centered text and a light background.
@@ -328,7 +325,7 @@ footer {
    similar to Tailwind CSS's red-500 shade, with !important to override other rules.
 */
 .border-red-500 {
-  border-color: #f87171 !important; /* Tailwind-ish red color */
+  border-color: #f87171 !important;
 }
 
 
@@ -337,14 +334,13 @@ footer {
    ========================================================================== */
 /* 
    These rules add ARIA attributes to improve the accessibility of interactive elements,
-   including chart containers and buttons. This helps assistive technologies understand the content.
+   including chart containers and buttons.
 */
 #waterfallChart,
 #funnelChart {
   aria-label: "Data Visualization";
   role: region;
 }
-
 #advancedToggle {
   aria-label: "Toggle Advanced Options";
 }
@@ -358,7 +354,6 @@ footer {
    ========================================================================== */
 /* 
    Enhance focus states for buttons, inputs, and selects to provide clear visual cues.
-   The inset box-shadow is used so that the focus outline isn’t clipped if the container hides overflow.
 */
 button:focus,
 input:focus,
@@ -372,9 +367,31 @@ select:focus {
    15. ADDITIONAL ADVANCED OPTIONS VISIBILITY RULE
    ========================================================================== */
 /* 
-   This final rule reiterates that the advanced options panel should remain hidden by default.
-   It works in tandem with JavaScript to show or hide these options as needed.
+   Ensure the advanced options panel remains hidden by default.
 */
 #advancedOptions {
   display: none;
+}
+
+
+/* ==========================================================================
+   16. CHART CONTAINER FULL WIDTH FIX
+   ========================================================================== */
+/* 
+   Ensure that the Plotly chart containers always fill the width of their parent bubble.
+   These rules force the chart elements (#waterfallChart and #funnelChart) to span 100%
+   of the container's width and use border-box sizing.
+*/
+.chart-responsive,
+.table-responsive {
+  width: 100%;
+}
+#waterfallChart,
+#funnelChart {
+  width: 100% !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.chart-responsive > div {
+  width: 100%;
 }

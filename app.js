@@ -2,8 +2,9 @@
  * 1. HELPER FUNCTIONS
  *
  * These functions provide utility operations such as
- * formatting numbers and currencies, and controlling
- * the collapse/expand state of the main calculation form.
+ * formatting numbers and currencies, controlling the
+ * collapse/expand state of the main calculation form, and
+ * fading elements into view.
  ********************************************/
 
 /**
@@ -51,6 +52,23 @@ function expandForm() {
   calcForm.classList.remove('collapsed');
   calcForm.classList.add('expanded');
   document.getElementById('formToggleHandle').textContent = "⬆️ Hide Form";
+}
+
+/**
+ * Fade an element into view by setting its display to block and
+ * transitioning its opacity from 0 to 1 over the specified duration.
+ * @param {HTMLElement} element - The DOM element to fade in.
+ * @param {number} duration - Duration of the fade in milliseconds (default is 1000ms).
+ */
+function fadeIn(element, duration) {
+  duration = duration || 1000;
+  element.style.opacity = 0;
+  element.style.display = 'block';
+  element.style.transition = 'opacity ' + duration + 'ms ease-in-out';
+  // Allow a short delay for the browser to apply the initial style.
+  setTimeout(() => {
+    element.style.opacity = 1;
+  }, 50);
 }
 
 
@@ -203,11 +221,16 @@ document.getElementById('formToggleHandle').addEventListener('click', function()
  * 6. ON PAGE LOAD: LOAD URL QUERY PARAMETERS
  *
  * When the page loads, this section parses any URL query parameters,
- * populates the form fields with their values, and auto-submits the form.
+ * populates the form fields with their values, auto-submits the form if needed,
+ * and ensures that the results and marketing sections are initially hidden.
  ********************************************/
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   let hasParams = false;
+
+  // Initially hide the results and marketing funnel sections
+  document.getElementById('resultsContainer').style.display = 'none';
+  document.getElementById('funnelContainer').style.display = 'none';
 
   if (params.toString()) {
     hasParams = true;
@@ -245,7 +268,8 @@ window.addEventListener('DOMContentLoaded', () => {
  * when the user submits the form. It validates the form,
  * computes revenue projections and customer targets over
  * multiple months, builds detailed HTML tables for results,
- * updates charts using Plotly, and finally updates the URL.
+ * updates charts using Plotly, updates the URL parameters,
+ * and finally reveals the results and marketing sections with a fade-in.
  ********************************************/
 document.getElementById('calcForm').addEventListener('submit', function(event) {
   event.preventDefault();
@@ -661,6 +685,16 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   // 7o. FINALIZE THE CALCULATION PROCESS
   // -----------------------------------------------------
   finalizeAndHide();
+
+    // Fade in the results and marketing sections now that calculation is complete.
+    fadeIn(document.getElementById('resultsContainer'));
+    fadeIn(document.getElementById('funnelContainer'));
+  
+    // Wait a short moment for the fade-in to complete, then force Plotly to recalculate the width.
+    setTimeout(() => {
+      Plotly.Plots.resize(document.getElementById('waterfallChart'));
+      Plotly.Plots.resize(document.getElementById('funnelChart'));
+    }, 500); // Adjust delay as needed (500ms is a good starting point)
 });
 
 

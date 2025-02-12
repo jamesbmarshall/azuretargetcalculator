@@ -102,7 +102,7 @@
       <button type="button"
               class="px-4 py-2 font-semibold rounded bg-gray-200 text-gray-700 stepNavBtn"
               data-step="2">
-        Advanced
+        Settings
       </button>
     </nav>
 
@@ -117,25 +117,29 @@
         <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
           <!-- Ramp-up Period Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="ramp">Ramp-up Period in Months:</label>
+            <label class="block mb-2 font-semibold" for="ramp">A. Ramp-up Period in Months:*</label>
+            <p class="text-sm">How many months does it take for a new customer to reach a target spend, on average?</p>
             <input type="number" id="ramp" value="1" min="1" step="1" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- Organic Growth Rate Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="growth">Organic Growth Rate per Month [as %]:</label>
+            <label class="block mb-2 font-semibold" for="growth">B. Organic Growth Rate per Month [as %]:*</label>
+            <p class="text-sm">How much are customers 'growing themselves' without proactive engagement from your teams?</p>
             <input type="number" id="growth" value="0" min="0" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- Revenue Churn Rate Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="churn">Revenue Churn Rate per Month [as %]:</label>
+            <label class="block mb-2 font-semibold" for="churn">C. Revenue Churn Rate per Month [as %]:*</label>
+            <p class="text-sm">How much is your business losing revenue each month from customers leaving or reducing spend?</p>
             <input type="number" id="churn" value="0" min="0" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- Baseline Recurring Revenue Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="baseline">Baseline Recurring Revenue per Month:</label>
+            <label class="block mb-2 font-semibold" for="baseline">D. Baseline Recurring Revenue per Month:*</label>
+            <p class="text-sm">What was the recurring revenue amount from the last month before your plan? <i>e.g. the last month of your financial year.</i> (Use zero if you're not sure!)</p>
             <input type="number" id="baseline" value="0" min="0" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
@@ -144,7 +148,7 @@
         <div class="flex justify-end">
           <button type="button"
                   class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded nextStepBtn">
-            Next
+            Next ▶️
           </button>
         </div>
       </div>
@@ -157,19 +161,22 @@
         <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
           <!-- Target Spend per Customer Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="targetSpend">Target Spend per Customer, per Month:</label>
+            <label class="block mb-2 font-semibold" for="targetSpend">E. Target Spend per Customer, per Month:*</label>
+            <p class="text-sm max-w-md">This could be based on your current mean or median spend, or an aspirational amount. It should be what you're expecting <i>most</i> customers to approximately spend as it will be used to define how many customers you need to add.</p>
             <input type="number" id="targetSpend" value="1000" min="1" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- Total Revenue Target Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="targetRevenue">Total Revenue Target:</label>
+            <label class="block mb-2 font-semibold" for="targetRevenue">F. Total Revenue Target:*</label>
+            <p class="text-sm">Within the duration of your plan, how much revenue do you need to deliver?</p>
             <input type="number" id="targetRevenue" value="78000" min="1" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- Percentage of Additional Revenue from New Customers -->
           <div>
-            <label class="block mb-2 font-semibold" for="pctAcq">% of Additional Revenue from New Customers (Acquisition):</label>
+            <label class="block mb-2 font-semibold" for="pctAcq">G. % of Additional Revenue from New Customers (Acquisition):*</label>
+            <p class="text-sm max-w-md">How much of your revenue target do you expect to come from acquiring new customers, versus growing existing ones?</p>
             <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
@@ -178,11 +185,11 @@
         <div class="flex justify-between mt-4">
           <button type="button"
                   class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
-            Back
+            ◀️ Back
           </button>
           <button type="button"
                   class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded nextStepBtn">
-            Next
+            Next ▶️
           </button>
         </div>
       </div>
@@ -197,13 +204,15 @@
         <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
           <!-- Months in Scope Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="months">Months in Scope:</label>
+            <label class="block mb-2 font-semibold" for="months">H. Months in Scope:*</label>
+            <p class="text-sm max-w-md">How many months are you building a plan for?</p>
             <input type="number" id="months" value="12" min="1" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- Plan Start Month Dropdown -->
           <div>
-            <label class="block mb-2 font-semibold" for="startMonth">Plan Start Month:</label>
+            <label class="block mb-2 font-semibold" for="startMonth">I. Plan Start Month:</label>
+            <p class="text-sm max-w-md">In which month will you begin executing your plan?</p>
             <select id="startMonth"
                     class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
               <option value="0">January</option>
@@ -222,29 +231,35 @@
           </div>
           <!-- Plan Start Year Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="startYear">Plan Start Year:</label>
+            <label class="block mb-2 font-semibold" for="startYear">J. Plan Start Year:*</label>
+            <p class="text-sm max-w-md">In which year will you begin executing your plan?</p>
             <input type="number" id="startYear" value="2025" min="2000" step="1" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- Seasonal Adjustments Checkbox -->
-          <div class="flex items-center mt-2">
-            <input type="checkbox" id="seasonalToggle" checked class="mr-2" />
-            <label for="seasonalToggle" class="font-semibold">Use Seasonal Adjustments</label>
+          <div>
+            <label class="block mb-2 font-semibold" for="startYear">K. Seasonality Adjustments:</label>
+            <p class="text-sm max-w-md">Do you want to apply calendar seasonality adjustments to the plan calculations?</p>
+            <input type="checkbox" id="seasonalToggle" checked/>
+            
+            
           </div>
         </fieldset>
 
         <!-- Marketing Conversion Settings Section -->
-        <legend class="text-lg font-semibold mb-3">Marketing Conversion Settings</legend>
+        <legend class="text-lg font-semibold mb-3">Marketing Conversion Settings (Optional)</legend>
         <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
           <!-- MQLs per SQL Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="mqlPerSql">MQLs per SQL:</label>
+            <label class="block mb-2 font-semibold" for="mqlPerSql">L. MQLs per SQL:</label>
+            <p class="text-sm max-w-md">How many marketing qualified leads (MQLs) do you need to generate a sales qualified lead (SQL)?</p>
             <input type="number" id="mqlPerSql" value="5" min="0" step="any"
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- SQLs per Win Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="sqlPerWin">SQLs per Win:</label>
+            <label class="block mb-2 font-semibold" for="sqlPerWin">M. SQLs per Win:</label>
+            <p class="text-sm max-w-md">How may sales qualified leads (SQLs) do you need per won customer?</p>
             <input type="number" id="sqlPerWin" value="3" min="0" step="any"
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
@@ -253,11 +268,11 @@
         <div class="flex justify-between mt-4">
           <button type="button"
                   class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
-            Back
+                  ◀️ Back
           </button>
           <button type="submit"
-                  class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
-            Calculate
+                  class="bg-green-600 hover:bg-fuchsia-500 text-white py-2 px-4 rounded">
+            Calculate 👍🏻
           </button>
         </div>
       </div>
