@@ -56,6 +56,20 @@
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+          <!-- Pixel Code for https://app.tinyanalytics.io/ -->
+          <script defer src="https://app.tinyanalytics.io/pixel/sXdJy9ttIP4OpOi5"></script>
+          <!-- END Pixel Code -->
+
+                <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-51RZZ67MJC"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-51RZZ67MJC');
+      </script>
 </head>
 <body class="font-[Open_Sans]">
   
@@ -125,14 +139,14 @@
           <!-- Organic Growth Rate Input -->
           <div>
             <label class="block mb-2 font-semibold" for="growth">B. Organic Growth Rate per Month [as %]:*</label>
-            <p class="text-sm">How much are customers 'growing themselves' without proactive engagement from your teams?</p>
+            <p class="text-sm">How much are customers 'growing themselves' without proactive engagement from your teams? (Can be zero.)</p>
             <input type="number" id="growth" value="0" min="0" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- Revenue Churn Rate Input -->
           <div>
             <label class="block mb-2 font-semibold" for="churn">C. Revenue Churn Rate per Month [as %]:*</label>
-            <p class="text-sm">How much is your business losing revenue each month from customers leaving or reducing spend?</p>
+            <p class="text-sm">How much revenue is your business losing each month from customers leaving or reducing spend? (Can be zero.)</p>
             <input type="number" id="churn" value="0" min="0" step="any" required
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
