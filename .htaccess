@@ -1,0 +1,14 @@
+# Set the default character set and MIME type for HTML files
+AddDefaultCharset utf-8
+AddType "text/html; charset=utf-8" .html
+
+RewriteEngine On
+
+# 1. Redirect www to non-www
+RewriteCond %{HTTP_HOST} ^www\.targetcalculator\.cloud$ [NC]
+RewriteRule ^(.*)$ https://targetcalculator.cloud/$1 [L,R=301]
+
+# 2. Redirect homepage with trailing slash to homepage without slash
+RewriteCond %{HTTP_HOST} ^targetcalculator\.cloud$ [NC]
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ https://targetcalculator.cloud [L,R=301]
