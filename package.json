@@ -1,7 +1,7 @@
 {
-  "name": "ctc",
+  "name": "cloudtargetcalculator",
   "version": "1.0.0",
-  "description": "Hello, world.",
+  "description": "Cloud Target Calculator",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
