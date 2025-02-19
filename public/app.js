@@ -296,6 +296,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   const T = parseFloat(document.getElementById('targetRevenue').value);
   const B = parseFloat(document.getElementById('baseline').value);
   const P = parseFloat(document.getElementById('pctAcq').value) / 100;
+  const M = 300;
 
   const startMonth = parseInt(document.getElementById('startMonth').value, 10);
   const startYear = parseInt(document.getElementById('startYear').value, 10);
@@ -621,6 +622,20 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
     </div>
   `;
   document.getElementById('resultsTable').innerHTML += proactiveHTML;
+  const totalCust = monthlyCustomers.reduce((acc, x) => acc + x, 0);
+  const wins = totalCust;
+  const sqls = wins * sqlPerWin;
+  const mqls = sqls * mqlPerSql;
+  const marketingHTML = `
+<p class="mb-4">
+      This is the breakdown of marketing qualified leads, to sales qualified leads, to wins based on a ratio of ${mqlPerSql}:${sqlPerWin}:1. You should
+      ensure that you have a sufficient amount of activity planned to fill your funnel with enough leads for your sales team to progress. Based on an 
+      average lead acquisition cost of ${formatCurrency(M)}, you should consider allocating at least ${formatCurrency(M * mqls)} to your marketing budget.<br />
+      <br />
+      💡 <strong>Did you know:</strong> the sales cycle for a cloud opportunity can last anywhere between 3 and 9 months? Plan your activity schedule to take this into account.
+    </p>
+  `;
+  document.getElementById('marketingInsights').innerHTML = marketingHTML;
 
   // -----------------------------------------------------
   // 7m. UPDATE URL PARAMETERS AFTER CALCULATION
@@ -665,10 +680,7 @@ document.getElementById('calcForm').addEventListener('submit', function(event) {
   Plotly.newPlot('waterfallChart', waterfallData, layout);
 
   // Marketing Funnel Chart Setup (using raw numeric values)
-  const totalCust = monthlyCustomers.reduce((acc, x) => acc + x, 0);
-  const wins = totalCust;
-  const sqls = wins * sqlPerWin;
-  const mqls = sqls * mqlPerSql;
+  
   const funnelData = [{
     type: 'funnel',
     y: ['MQLs','SQLs','Wins'],
