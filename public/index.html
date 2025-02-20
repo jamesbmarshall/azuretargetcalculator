@@ -52,7 +52,7 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js" defer></script>
 
   <!-- Optional external stylesheet for additional custom styles -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -247,9 +247,24 @@
             <label class="block mb-2 font-semibold" for="startYear">K. Seasonality Adjustments:</label>
             <p class="text-sm max-w-md">Do you want to apply calendar seasonality adjustments to the plan calculations?</p>
             <input type="checkbox" id="seasonalToggle" checked/>
-            
-            
           </div>
+          <!-- Currency -->
+           <!-- Currency -->
+<div>
+  <label class="block mb-2 font-semibold" for="currency">L. Currency:</label>
+  <p class="text-sm">Select the currency in which your revenue values are denominated.</p>
+  <select id="currency" name="currency" class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
+    <option value="USD" selected>USD - United States Dollar</option>
+    <option value="EUR">EUR - Euro</option>
+    <option value="GBP">GBP - British Pound</option>
+    <option value="JPY">JPY - Japanese Yen</option>
+    <option value="AUD">AUD - Australian Dollar</option>
+    <option value="CAD">CAD - Canadian Dollar</option>
+    <option value="CHF">CHF - Swiss Franc</option>
+    <option value="CNY">CNY - Chinese Yuan</option>
+    <option value="INR">INR - Indian Rupee</option>
+  </select>
+</div>
         </fieldset>
 
         <!-- Marketing Conversion Settings Section -->
@@ -257,14 +272,14 @@
         <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
           <!-- MQLs per SQL Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="mqlPerSql">L. MQLs per SQL:</label>
+            <label class="block mb-2 font-semibold" for="mqlPerSql">M. MQLs per SQL:</label>
             <p class="text-sm max-w-md">How many marketing qualified leads (MQLs) do you need to generate a sales qualified lead (SQL)?</p>
             <input type="number" id="mqlPerSql" value="5" min="0" step="any"
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
           </div>
           <!-- SQLs per Win Input -->
           <div>
-            <label class="block mb-2 font-semibold" for="sqlPerWin">M. SQLs per Win:</label>
+            <label class="block mb-2 font-semibold" for="sqlPerWin">N. SQLs per Win:</label>
             <p class="text-sm max-w-md">How may sales qualified leads (SQLs) do you need per won customer?</p>
             <input type="number" id="sqlPerWin" value="3" min="0" step="any"
                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
@@ -276,10 +291,10 @@
                   class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
                   ◀️ Back
           </button>
-          <button type="submit"
-                  class="bg-green-600 hover:bg-fuchsia-500 text-white py-2 px-4 rounded">
-            Calculate 👍🏻
-          </button>
+          <button id="calcSubmit" type="submit"
+          class="bg-green-600 hover:bg-fuchsia-500 text-white py-2 px-4 rounded">
+    Calculate 👍🏻
+  </button>
         </div>
       </div>
       <!-- End of STEP 3 -->

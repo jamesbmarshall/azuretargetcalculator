@@ -7,6 +7,23 @@
  * and fading elements into view.
  ********************************************/
 
+// Define a mapping from currency codes to symbols.
+const currencySymbols = {
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  JPY: '¥',
+  AUD: '$',
+  CAD: '$',
+  CHF: 'CHF ',
+  CNY: '¥',
+  INR: '₹'
+};
+
+// Set default currency and symbol (assumes USD by default).
+let currentCurrency = 'USD';
+let currentCurrencySymbol = currencySymbols[currentCurrency];
+
 /**
  * Format a number to include commas and two decimal places.
  * This helper returns the raw formatted string.
@@ -39,9 +56,9 @@ function formatNum(num) {
  */
 function formatCurrency(num) {
   if (num < 0) {
-    return '<span class="number" style="font-family: \'Courier New\', Consolas, monospace;">($' + rawFormatNum(Math.abs(num)) + ')</span>';
+    return '<span class="number" style="font-family: \'Courier New\', Consolas, monospace;">(' + currentCurrencySymbol + rawFormatNum(Math.abs(num)) + ')</span>';
   }
-  return '<span class="number" style="font-family: \'Courier New\', Consolas, monospace;">$' + rawFormatNum(num) + '</span>';
+  return '<span class="number" style="font-family: \'Courier New\', Consolas, monospace;">' + currentCurrencySymbol + rawFormatNum(num) + '</span>';
 }
 
 /**
@@ -52,9 +69,9 @@ function formatCurrency(num) {
  */
 function rawFormatCurrency(num) {
   if (num < 0) {
-    return "($" + rawFormatNum(Math.abs(num)) + ")";
+    return "(" + currentCurrencySymbol + rawFormatNum(Math.abs(num)) + ")";
   }
-  return "$" + rawFormatNum(num);
+  return currentCurrencySymbol + rawFormatNum(num);
 }
 
 /**
@@ -215,6 +232,16 @@ document.getElementById('toggleDetails').addEventListener('click', function() {
   }
 });
 
+/********************************************
+ * Currency Selector Change Event
+ ********************************************/
+document.getElementById('currency').addEventListener('change', function() {
+  currentCurrency = this.value;
+  currentCurrencySymbol = currencySymbols[currentCurrency] || '$'; // fallback to '$' if not defined
+
+  // Optional: Trigger recalculation or update the displayed results if necessary
+  // document.getElementById('calcForm').dispatchEvent(new Event('submit'));
+});
 
 /********************************************
  * 5. FORM TOGGLE HANDLE (SHOW/HIDE)

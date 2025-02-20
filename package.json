@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build:css": "tailwindcss -i ./public/tailwind.css -o ./public/style.css --minify",
-    "watch:css": "tailwindcss -i ./public/tailwind.css -o ./public/style.css --watch"
+    "build:css": "tailwindcss -i ./public/style.css -o ./public/style.css --minify",
+    "watch:css": "tailwindcss -i ./public/style.css -o ./public/style.css --watch"
   },
   "keywords": [],
   "author": "",
