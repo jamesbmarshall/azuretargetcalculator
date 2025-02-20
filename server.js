@@ -27,21 +27,7 @@ app.use((req, res, next) => {
 });
 
 // Define the static file directory (adjust this to your /home/site/wwwroot equivalent)
-const staticDir = path.join(__dirname, 'wwwroot');
-
-// Serve static files with a custom index file order.
-// Note: The order here is: index.php, index.html, index.htm, hostingstart.html.
-app.use(express.static(staticDir, {
-  index: ['index.html', 'index.htm', 'hostingstart.html']
-}));
-
-// Fallback: If no static file is found, serve index.php
-// (This mimics "try_files $uri $uri/ /index.php?$args")
-app.use((req, res, next) => {
-  res.sendFile(path.join(staticDir, 'index.php'), err => {
-    if (err) next(err);
-  });
-});
+const staticDir = path.join(__dirname, 'public');
 
 // Custom error page for server errors (500, etc.)
 // Make sure the 50x.html file is placed in a directory named "html" at the same level as this file.
