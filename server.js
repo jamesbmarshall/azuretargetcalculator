@@ -26,11 +26,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// Define the static file directory (adjust this to your /home/site/wwwroot equivalent)
+// Define the static file directory (adjust this to your equivalent directory)
 const staticDir = path.join(__dirname, 'public');
 
+// Serve static files with a custom index order
+app.use(express.static(staticDir, {
+  index: ['index.html', 'index.htm', 'hostingstart.html']
+}));
+
 // Custom error page for server errors (500, etc.)
-// Make sure the 50x.html file is placed in a directory named "html" at the same level as this file.
+// Ensure the 50x.html file is placed in a directory named "html" at the same level as this file.
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).sendFile(path.join(__dirname, 'html', '50x.html'));
