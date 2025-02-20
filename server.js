@@ -2,12 +2,6 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Set default charset for responses (similar to "charset utf-8")
-app.use((req, res, next) => {
-  res.set('Content-Type', 'text/html; charset=utf-8');
-  next();
-});
-
 // Redirect www requests to the non-www domain
 app.use((req, res, next) => {
   const host = req.headers.host;
@@ -26,16 +20,25 @@ app.use((req, res, next) => {
   next();
 });
 
-// Define the static file directory (adjust this to your equivalent directory)
+// Define the static file directory
 const staticDir = path.join(__dirname, 'public');
 
-// Serve static files with a custom index order
+// Serve static files (this will automatically set proper Content-Types)
 app.use(express.static(staticDir, {
-  index: ['index.html', 'index.htm', 'hostingstart.html']
+  index: ['index.php', 'index.html', 'index.htm', 'hostingstart.html']
 }));
 
+// Middleware for setting HTML-specific headers only for non-static responses.
+// (This will run for any routes not handled by express.static.)
+app.use((req, res, next) => {
+  // Only set Content-Type to HTML if it hasn't been set already
+  if (!res.get('Content-Type')) {
+    res.set('Content-Type', 'text/html; charset=utf-8');
+  }
+  next();
+});
+
 // Custom error page for server errors (500, etc.)
-// Ensure the 50x.html file is placed in a directory named "html" at the same level as this file.
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).sendFile(path.join(__dirname, 'html', '50x.html'));
