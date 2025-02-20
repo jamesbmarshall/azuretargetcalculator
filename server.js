@@ -23,17 +23,18 @@ app.use((req, res, next) => {
 // Define the static file directory
 const staticDir = path.join(__dirname, 'public');
 
-// Serve static files (this will automatically set proper Content-Types)
+// Serve static files with express.static (this automatically sets correct MIME types)
 app.use(express.static(staticDir, {
   index: ['index.php', 'index.html', 'index.htm', 'hostingstart.html']
 }));
 
-// Middleware for setting HTML-specific headers only for non-static responses.
-// (This will run for any routes not handled by express.static.)
+// Middleware to set HTML-specific headers only on routes that are likely HTML pages.
+// This middleware checks if the requested URL has no file extension.
 app.use((req, res, next) => {
-  // Only set Content-Type to HTML if it hasn't been set already
-  if (!res.get('Content-Type')) {
-    res.set('Content-Type', 'text/html; charset=utf-8');
+  if (!path.extname(req.url)) {
+    if (!res.get('Content-Type')) {
+      res.set('Content-Type', 'text/html; charset=utf-8');
+    }
   }
   next();
 });
