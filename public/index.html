@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- ==========================
-       Basic Meta Information
-       ========================== -->
-  <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8">
   <title>Cloud Target Calculator | Optimise Revenue Growth</title>
   <meta name="description" content="Cloud Target Calculator helps you forecast revenue, optimise customer acquisition, and track growth trends effectively.">
   <meta name="keywords" content="Cloud Calculator, Revenue Growth, Customer Acquisition, Business Analytics, SaaS Metrics">
@@ -41,365 +38,34 @@
     }
   }
   </script>
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-  <!-- ==========================
-       Fonts and External Resources
-       ========================== -->
-  <!-- Import Open Sans from Google Fonts for a modern look -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-  <!-- Include Plotly for charts (deferred for performance) -->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js" defer></script>
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
-  <!-- Optional external stylesheet for additional custom styles -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-          <!-- Pixel Code for https://app.tinyanalytics.io/ -->
-          <script defer src="https://app.tinyanalytics.io/pixel/sXdJy9ttIP4OpOi5"></script>
-          <!-- END Pixel Code -->
-
-</head>
-<body class="font-[Open_Sans]">
-  
-  <!-- ==========================
-       Page Structure Begins Here
-       ========================== -->
-
-  <!-- HEADER / INTRODUCTORY SECTION -->
-  <section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto">
-    <!-- Main Heading -->
-    <h1 class="text-4xl font-bold mb-2">Cloud Target Calculator</h1>
-    <!-- Introductory Text -->
-    <p class="mb-4 text-sm">
-      Welcome to the Cloud Target Calculator—your go-to tool for planning and optimising 
-      revenue growth with confidence. Whether you’re forecasting customer acquisition, tracking churn, 
-      or setting ambitious revenue goals, this calculator simplifies complex data into clear, actionable 
-      insights. Discover how each customer impacts your bottom line, adjust growth scenarios with ease, 
-      and unlock smarter strategies for hitting your targets. 
-      <br />
-      <br />Ready to get started? Just fill in your key metrics below, and let’s map out your path to growth.
-    </p>
-  </section>
-
-  <!-- MAIN CALCULATOR SECTION -->
-  <section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto">
-    <!-- Section Title and Description -->
-    <h2 class="text-2xl font-semibold mb-3">Step 1: Key Revenue Inputs</h2>
-    <p class="mb-4">
-      Fill in the form below to get insights into the number of customer adds or the consumption growth 
-      you'll need to hit your overall cloud target. Use advanced options to adjust your lead conversion rates.
-    </p>
-
-    <!-- Step Navigation Tabs -->
-    <nav class="flex space-x-2 mb-4" aria-label="Form Steps">
-      <button type="button"
-              class="px-4 py-2 font-semibold rounded bg-blue-600 text-white stepNavBtn"
-              data-step="0">
-        Current Business
-      </button>
-      <button type="button"
-              class="px-4 py-2 font-semibold rounded bg-gray-200 text-gray-700 stepNavBtn"
-              data-step="1">
-        Targets
-      </button>
-      <button type="button"
-              class="px-4 py-2 font-semibold rounded bg-gray-200 text-gray-700 stepNavBtn"
-              data-step="2">
-        Settings
-      </button>
-    </nav>
-
-    <!-- Multi-step Form (novalidate used to manage validation manually) -->
-    <form id="calcForm" novalidate class="transition-all duration-500">
-      
-      <!-- ==========================
-           STEP 1: Current Business
-           ========================== -->
-      <div class="formStep" id="step1" data-step="0">
-        <!-- Use fieldset to group related inputs; grid layout for medium screens -->
-        <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
-          <!-- Ramp-up Period Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="ramp">A. Ramp-up Period in Months:*</label>
-            <p class="text-sm">How many months does it take for a new customer to reach a target spend, on average?</p>
-            <input type="number" id="ramp" value="1" min="1" step="1" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-          <!-- Organic Growth Rate Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="growth">B. Organic Growth Rate per Month [as %]:*</label>
-            <p class="text-sm">How much are customers 'growing themselves' without proactive engagement from your teams? (Can be zero.)</p>
-            <input type="number" id="growth" value="0" min="0" step="any" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-          <!-- Revenue Churn Rate Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="churn">C. Revenue Churn Rate per Month [as %]:*</label>
-            <p class="text-sm">How much revenue is your business losing each month from customers leaving or reducing spend? (Can be zero.)</p>
-            <input type="number" id="churn" value="0" min="0" step="any" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-          <!-- Baseline Recurring Revenue Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="baseline">D. Baseline Recurring Revenue per Month:*</label>
-            <p class="text-sm">What was the recurring revenue amount from the last month before your plan? <i>e.g. the last month of your financial year.</i> (Use zero if you're not sure!)</p>
-            <input type="number" id="baseline" value="0" min="0" step="any" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-        </fieldset>
-        <!-- Next Button -->
-        <div class="flex justify-end">
-          <button type="button"
-                  class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded nextStepBtn">
-            Next ▶️
-          </button>
-        </div>
-      </div>
-      <!-- End of STEP 1 -->
-
-      <!-- ==========================
-           STEP 2: Targets
-           ========================== -->
-      <div class="formStep hidden" id="step2" data-step="1">
-        <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
-          <!-- Target Spend per Customer Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="targetSpend">E. Target Spend per Customer, per Month:*</label>
-            <p class="text-sm max-w-md">This could be based on your current mean or median spend, or an aspirational amount. It should be what you're expecting <i>most</i> customers to approximately spend as it will be used to define how many customers you need to add.</p>
-            <input type="number" id="targetSpend" value="1000" min="1" step="any" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-          <!-- Total Revenue Target Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="targetRevenue">F. Total Revenue Target:*</label>
-            <p class="text-sm">Within the duration of your plan, how much revenue do you need to deliver?</p>
-            <input type="number" id="targetRevenue" value="78000" min="1" step="any" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-          <!-- Percentage of Additional Revenue from New Customers -->
-          <div>
-            <label class="block mb-2 font-semibold" for="pctAcq">G. % of Additional Revenue from New Customers (Acquisition):*</label>
-            <p class="text-sm max-w-md">How much of your revenue target do you expect to come from acquiring new customers, versus growing existing ones?</p>
-            <input type="number" id="pctAcq" value="50" min="0" max="100" step="any" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-        </fieldset>
-        <!-- Navigation Buttons for Step 2 -->
-        <div class="flex justify-between mt-4">
-          <button type="button"
-                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
-            ◀️ Back
-          </button>
-          <button type="button"
-                  class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded nextStepBtn">
-            Next ▶️
-          </button>
-        </div>
-      </div>
-      <!-- End of STEP 2 -->
-
-      <!-- ==========================
-           STEP 3: Advanced Settings
-           ========================== -->
-      <div class="formStep hidden" id="step3" data-step="2">
-        <!-- Calendar Settings Section -->
-        <legend class="text-lg font-semibold mb-3">Calendar Settings</legend>
-        <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
-          <!-- Months in Scope Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="months">H. Months in Scope:*</label>
-            <p class="text-sm max-w-md">How many months are you building a plan for?</p>
-            <input type="number" id="months" value="12" min="1" step="any" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-          <!-- Plan Start Month Dropdown -->
-          <div>
-            <label class="block mb-2 font-semibold" for="startMonth">I. Plan Start Month:</label>
-            <p class="text-sm max-w-md">In which month will you begin executing your plan?</p>
-            <select id="startMonth"
-                    class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
-              <option value="0">January</option>
-              <option value="1">February</option>
-              <option value="2">March</option>
-              <option value="3">April</option>
-              <option value="4">May</option>
-              <option value="5">June</option>
-              <option value="6">July</option>
-              <option value="7">August</option>
-              <option value="8">September</option>
-              <option value="9">October</option>
-              <option value="10">November</option>
-              <option value="11">December</option>
-            </select>
-          </div>
-          <!-- Plan Start Year Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="startYear">J. Plan Start Year:*</label>
-            <p class="text-sm max-w-md">In which year will you begin executing your plan?</p>
-            <input type="number" id="startYear" value="2025" min="2000" step="1" required
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-          <!-- Seasonal Adjustments Checkbox -->
-          <div>
-            <label class="block mb-2 font-semibold" for="startYear">K. Seasonality Adjustments:</label>
-            <p class="text-sm max-w-md">Do you want to apply calendar seasonality adjustments to the plan calculations?</p>
-            <input type="checkbox" id="seasonalToggle" checked/>
-          </div>
-          <!-- Currency -->
-           <!-- Currency -->
-<div>
-  <label class="block mb-2 font-semibold" for="currency">L. Currency:</label>
-  <p class="text-sm">Select the currency in which your revenue values are denominated.</p>
-  <select id="currency" name="currency" class="w-full max-w-md p-2 border border-gray-300 rounded mb-4">
-    <option value="USD" selected>USD - United States Dollar</option>
-    <option value="EUR">EUR - Euro</option>
-    <option value="GBP">GBP - British Pound</option>
-    <option value="JPY">JPY - Japanese Yen</option>
-    <option value="AUD">AUD - Australian Dollar</option>
-    <option value="CAD">CAD - Canadian Dollar</option>
-    <option value="CHF">CHF - Swiss Franc</option>
-    <option value="CNY">CNY - Chinese Yuan</option>
-    <option value="INR">INR - Indian Rupee</option>
-  </select>
-</div>
-        </fieldset>
-
-        <!-- Marketing Conversion Settings Section -->
-        <legend class="text-lg font-semibold mb-3">Marketing Conversion Settings (Optional)</legend>
-        <fieldset class="mb-4 md:grid md:grid-cols-2 md:gap-4">
-          <!-- MQLs per SQL Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="mqlPerSql">M. MQLs per SQL:</label>
-            <p class="text-sm max-w-md">How many marketing qualified leads (MQLs) do you need to generate a sales qualified lead (SQL)?</p>
-            <input type="number" id="mqlPerSql" value="5" min="0" step="any"
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-          <!-- SQLs per Win Input -->
-          <div>
-            <label class="block mb-2 font-semibold" for="sqlPerWin">N. SQLs per Win:</label>
-            <p class="text-sm max-w-md">How may sales qualified leads (SQLs) do you need per won customer?</p>
-            <input type="number" id="sqlPerWin" value="3" min="0" step="any"
-                   class="w-full max-w-md p-2 border border-gray-300 rounded mb-4" />
-          </div>
-        </fieldset>
-        <!-- Navigation Buttons for Step 3: Back and Calculate -->
-        <div class="flex justify-between mt-4">
-          <button type="button"
-                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded prevStepBtn">
-                  ◀️ Back
-          </button>
-          <button id="calcSubmit" type="submit"
-          class="bg-green-600 hover:bg-fuchsia-500 text-white py-2 px-4 rounded">
-    Calculate 👍🏻
-  </button>
-        </div>
-      </div>
-      <!-- End of STEP 3 -->
-    </form>
-
-    <!-- ==========================
-         Form Toggle Handle (Show/Hide)
-         ========================== -->
-    <div id="formToggleHandle"
-         class="text-center mt-4 bg-blue-100 text-blue-600 rounded-b-lg p-2 font-semibold cursor-pointer">
-      ⬆️ Hide Form
-    </div>
-  </section>
-
-  <!-- ==========================
-       RESULTS SECTION
-       ========================== -->
-  <section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto" id="resultsContainer">
-    <h2 class="text-2xl font-semibold mb-3">Step 2: Review Your Personalised Plan</h2>
-    <!-- Button to Toggle Detailed Columns in the Results Table -->
-    <button type="button" id="toggleDetails"
-            class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded mb-4"
-            aria-label="Toggle Detailed Columns">
-      Show Detailed Columns
-    </button>
-    <!-- Share Button for the Page -->
-    <button id="shareBtn" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
-      Share
-    </button>
-    <!-- Container for the Dynamic Results Table -->
-    <div class="table-responsive overflow-x-auto" id="resultsTable"></div>
-    <!-- Container for the Revenue Waterfall Chart -->
-    <div class="chart-responsive overflow-x-auto mt-6">
-      <div id="waterfallChart"
-           style="height: 400px;"
-           role="region"
-           aria-label="Revenue Waterfall Chart showing monthly revenue contributions">
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================
-       MARKETING FUNNEL SECTION
-       ========================== -->
-  <section class="bubble bg-white rounded-lg shadow-md mb-6 p-4 relative mx-auto" id="funnelContainer">
-    <h2 class="text-2xl font-semibold mb-3">Step 3: Review Your Marketing Funnel</h2>
-    <div class="table-responsive overflow-x-auto" id="marketingInsights"></div>
-    
-    <!-- Container for the Funnel Chart -->
-    <div class="chart-responsive overflow-x-auto">
-      <div id="funnelChart"
-           style="height: 400px;"
-           role="region"
-           aria-label="Funnel Chart showing lead-to-win conversion rates">
-      </div>
-    </div>
-    <!-- Container for the Funnel Table (if applicable) -->
-    <div class="table-responsive overflow-x-auto mt-4" id="funnelTable"></div>
-  </section>
-
-  <!-- ==========================
-       FOOTER SECTION
-       ========================== -->
-       <footer class="mx-auto text-center py-4">
-        <!-- Social Sharing Links -->
-        <div class="flex justify-center space-x-4 mb-2">
-          <a href="https://twitter.com/intent/tweet?text=Check%20out%20Cloud%20Target%20Calculator!&url=https://targetcalculator.cloud" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             aria-label="Share on Twitter"
-             class="text-gray-600 hover:text-blue-500">
-            <!-- Twitter Icon (inline SVG) -->
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.954 4.569c-.885.392-1.83.656-2.825.775a4.958 4.958 0 002.163-2.723 9.93 9.93 0 01-3.127 1.184 4.925 4.925 0 00-8.384 4.482A13.978 13.978 0 011.671 3.149 4.822 4.822 0 003.149 9.72a4.904 4.904 0 01-2.229-.616v.06a4.927 4.927 0 003.946 4.827 4.902 4.902 0 01-2.224.085 4.93 4.93 0 004.604 3.417 9.868 9.868 0 01-6.102 2.104c-.395 0-.787-.023-1.175-.068a13.945 13.945 0 007.557 2.212c9.054 0 14.001-7.496 14.001-13.986 0-.21 0-.423-.015-.634A9.935 9.935 0 0024 4.59z"/>
-            </svg>
-          </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://targetcalculator.cloud" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             aria-label="Share on Facebook"
-             class="text-gray-600 hover:text-blue-700">
-            <!-- Facebook Icon (inline SVG) -->
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M22.675 0H1.325C.593 0 0 .593 0 1.326v21.348C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.099 2.795.143v3.24l-1.918.001c-1.504 0-1.794.715-1.794 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.407 24 24 23.407 24 22.674V1.326C24 .593 23.407 0 22.675 0z"/>
-            </svg>
-          </a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://targetcalculator.cloud&title=Cloud%20Target%20Calculator" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             aria-label="Share on LinkedIn"
-             class="text-gray-600 hover:text-blue-600">
-            <!-- LinkedIn Icon (inline SVG) -->
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.327-.027-3.037-1.849-3.037-1.851 0-2.135 1.445-2.135 2.937v5.669H9.353V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.372-1.85 3.605 0 4.27 2.373 4.27 5.457v6.284zM5.337 7.433a2.062 2.062 0 11.001-4.124 2.062 2.062 0 010 4.124zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .771 0 1.723v20.554C0 23.229.792 24 1.771 24h20.451C23.207 24 24 23.229 24 22.277V1.723C24 .771 23.207 0 22.225 0z"/>
-            </svg>
-          </a>
-        </div>
-        <!-- Copyright Notice -->
-        <p class="text-sm text-gray-500">© 2025 James Marshall. All rights reserved.</p>
-      </footer>
-
-  <!-- ==========================
-       Main JavaScript File for Calculations
-       ========================== -->
-  <script src="app.js" defer></script>
-
-</body>
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
 </html>
